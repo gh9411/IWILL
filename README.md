@@ -8,5 +8,5 @@
 |이동옥|X|okdong23@naver.com|
 ||X||
 ||X||
-||X||
+|이원호|X|dldnjsgh71@naver.com|
 |박기훈|X|gh9411@gmail.com|
