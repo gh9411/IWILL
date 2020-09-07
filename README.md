@@ -5,7 +5,7 @@
 
 |NAME|X|EMAIL|
 |------|---|---|
-||X||
+|이동옥|X|okdong23@naver.com|
 ||X||
 ||X||
 ||X||
