@@ -7,6 +7,6 @@
 |------|---|---|
 |이동옥|X|okdong23@naver.com|
 ||X||
-||X||
+|최현민|X|hunmin8788@naver.com|
 |이원호|X|dldnjsgh71@naver.com|
 |박기훈|X|gh9411@gmail.com|
