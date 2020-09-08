@@ -16,3 +16,5 @@
 ### ERD
 
 ![ERD](C:\Users\multicampus\Desktop\SSAFY\2.Specialization\blockchain-skeleton\WhatTodo\ERD.PNG)
+
+잠시 테스트 합니다. ㅎㅎ
