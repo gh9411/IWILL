@@ -64,7 +64,12 @@
 			</exclusions>
 		</dependency>
 
-
+		<!--file io-->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+		</dependency>
 		
 		<!-- 디비 셋팅 주석 -->
 		<dependency>
