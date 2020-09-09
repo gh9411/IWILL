@@ -6,7 +6,7 @@
           <div
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
-            <login-card header-color="green">
+            <login-card header-color="grey">
               <h2 slot="title" class="card-title">Login</h2>
 
               <!-- SNS 로그인 버튼 -->
@@ -26,12 +26,8 @@
               </md-button>
 
             
-              <md-field class="md-form-group" slot="inputs">
-                <md-icon>face</md-icon>
-                <label>First Name...</label>
-                <md-input v-model="firstname"></md-input>
-              </md-field>
-              <md-field class="md-form-group" slot="inputs">
+              <!-- 데이터 입력 -->
+              <md-field class="md-form-group" slot="inputs" style="margin-top: 3em">
                 <md-icon>email</md-icon>
                 <label>Email...</label>
                 <md-input v-model="email" type="email"></md-input>
@@ -41,9 +37,16 @@
                 <label>Password...</label>
                 <md-input v-model="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-success md-lg">
-                Get Started
+              <md-button slot="footer" class="md-simple md-lg">
+                <span style="font-size: 1.4em" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='grey'">
+                  Get Started
+                </span>
               </md-button>
+              <hr slot="hr" style="margin-right: 2em; margin-left: 2em">
+              <div slot="a" style="margin-left: 2em;  ">
+                <p style="float: left;">아직 회원이 아니신가요?</p>
+                <a slot="a" href="#" style="margin-left: 6em;">fdfd</a>
+              </div>
             </login-card>
           </div>
         </div>
@@ -62,7 +65,6 @@ export default {
   bodyClass: "login-page",
   data() {
     return {
-      firstname: null,
       email: null,
       password: null
     };
@@ -83,4 +85,6 @@ export default {
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css">
+
+</style>

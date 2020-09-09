@@ -9,14 +9,14 @@
             <img :src="leaf2" alt="leaf2" class="leaf2" v-show="leafShow" />
             <img :src="leaf1" alt="leaf1" class="leaf1" v-show="leafShow" />
             <div class="brand">
-              <h1>Vue Material Kit</h1>
-              <h3>A Badass Vue.js UI Kit made with Material Design.</h3>
+              <h1 class="title">IWILL</h1>
+              <h3>남아있는 소중한 사람들에게 전하고 싶은 말</h3>
             </div>
           </div>
         </div>
       </div>
     </parallax>
-    <div class="main main-raised">
+    <div class="main main-raised" style="background-color: ivory">
       <div class="section section-basic">
         <div class="container">
           <div class="title">
