@@ -13,7 +13,7 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/main",
       name: "index",
       components: { default: Index, header: MainNavbar, footer: MainFooter },
       props: {
@@ -31,7 +31,7 @@ export default new Router({
       }
     },
     {
-      path: "/login",
+      path: "/",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {

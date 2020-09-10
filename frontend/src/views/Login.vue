@@ -7,7 +7,7 @@
             class="md-layout-item md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto"
           >
             <login-card header-color="grey">
-              <h2 slot="title" class="card-title">Login</h2>
+              <h2 slot="title" class="card-title">IWILL</h2>
 
               <!-- SNS 로그인 버튼 -->
               <md-button
@@ -37,16 +37,24 @@
                 <label>Password...</label>
                 <md-input v-model="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-lg">
+              <md-button slot="footer" class="md-simple md-lg" @click="gotoMain()">
                 <span style="font-size: 1.4em" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='grey'">
-                  Get Started
+                  로그인
                 </span>
               </md-button>
-              <hr slot="hr" style="margin-right: 2em; margin-left: 2em">
-              <div slot="a" style="margin-left: 2em;  ">
-                <p style="float: left;">아직 회원이 아니신가요?</p>
-                <a slot="a" href="#" style="margin-left: 6em;">fdfd</a>
+              
+              <hr slot="hr" style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em">
+              
+              <div slot="a" style="margin-left: 2em; margin-right: 2em;">
+                <span style="font-size: 0.9em; font-weight:500">아직 회원이 아니라면</span>
+                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">가입하기</a>
               </div>
+              <div slot="a" style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em">
+                <span style="font-size: 0.9em; font-weight:500;" >
+                비밀번호를 잊으셨나요?</span>
+                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">비밀번호 찾기</a>
+              </div>
+
             </login-card>
           </div>
         </div>
@@ -73,6 +81,11 @@ export default {
     header: {
       type: String,
       default: require("@/assets/img/profile_city.jpg")
+    }
+  },
+  methods: {
+    gotoMain() {
+      this.$router.push("/main")
     }
   },
   computed: {
