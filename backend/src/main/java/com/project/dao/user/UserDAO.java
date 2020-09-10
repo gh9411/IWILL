@@ -1,5 +1,11 @@
 package com.project.dao.user;
 
-public class UserDAO {
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.project.model.user.UserEntity;
+
+public interface UserDAO extends JpaRepository<UserEntity, Long> {
+	
+	;
 }
