@@ -1,14 +1,18 @@
 package com.project.controller.user;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.project.model.user.UserEntity;
+import com.project.service.user.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +24,26 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class UserController {
 
+	@Autowired
+	UserService userService;
+	
+	@PostMapping("/user/login")
+    @ApiOperation(value = "로그인", notes = "로그인 입니다.")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "email", value = "사용자 E-mail", required = true, dataType = "string"),
+        @ApiImplicitParam(name = "upw", value = "사용자 Password", required = true, dataType = "string")
+    })
+    public UserEntity login(@Valid @RequestParam String email, @RequestParam String password){
+        
+        return userService.login(email, password);
+    }
+
+    @RequestMapping("/user/logout")
+    @ApiOperation(value = "로그아웃", notes = "로그아웃 입니다.")
+    public String logout(HttpSession session){
+        return "/user/login";
+    }
+    
     @PostMapping("/user/register")
     @ApiOperation(value = "회원가입", notes = "회원 가입 입니다.")
     @ApiImplicitParams({
