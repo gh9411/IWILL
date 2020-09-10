@@ -6,14 +6,14 @@ import Login from "./views/Login.vue";
 import Profile from "./views/Profile.vue";
 import MainNavbar from "./layout/MainNavbar.vue";
 import MainFooter from "./layout/MainFooter.vue";
-
+import Signup from "./views/Signup.vue";
 Vue.use(Router);
 
 export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/main",
+      path: "/",
       name: "index",
       components: { default: Index, header: MainNavbar, footer: MainFooter },
       props: {
@@ -31,7 +31,7 @@ export default new Router({
       }
     },
     {
-      path: "/",
+      path: "/login",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {
@@ -42,6 +42,15 @@ export default new Router({
       path: "/profile",
       name: "profile",
       components: { default: Profile, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/signup",
+      name: "signup",
+      components: { default: Signup, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
