@@ -34,7 +34,6 @@ public class UserController {
         @ApiImplicitParam(name = "upw", value = "사용자 Password", required = true, dataType = "string")
     })
     public UserEntity login(@Valid @RequestParam String email, @RequestParam String password){
-        
         return userService.login(email, password);
     }
 
@@ -56,33 +55,36 @@ public class UserController {
             @ApiImplicitParam(name = "profile", value = "자기 소개", required = true, dataType = "string"),
             @ApiImplicitParam(name = "usertype", value = "회원 유형", required = true, dataType = "int"),          
     })
-    public ResponseEntity<Object> register(@Valid @RequestBody UserEntity user){
+    public int register(@Valid @RequestBody UserEntity user){
         System.out.println(user);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        return userService.register(user);
+        
     }
 
     @PostMapping("/user/detail")
     @ApiOperation(value = "회원 정보", notes = "회원 정보 조회 입니다.")
-    public ResponseEntity<Object> detail(@Valid @RequestParam int uid){
-
-        return new ResponseEntity<>("success", HttpStatus.OK);
+    @ApiImplicitParam(name = "email", value = "사용자 E-mail", required = true, dataType = "int")
+    public UserEntity detail(@RequestParam String email){
+    	return userService.detail(email);
     }
 
-    @PostMapping("/user/update")
+    @PostMapping("/user/modify")
     @ApiOperation(value = "회원 정보 수정", notes ="회원 정보 수정 입니다.")
-    public void update(@Valid @RequestParam int uid){
-        ;
+    @ApiImplicitParam(name = "userdto", value ="UserDto", required = true, dataType = "List")
+    public int modify(@Valid @RequestParam UserEntity user){
+        return userService.modify(user);
     }
 
     @PostMapping("/user/delete")
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 입니다.")
-    public void delete(@Valid @RequestParam int uid){
-        ;
+    @ApiImplicitParam(name = "uid", value = "사용자 uid", required = true, dataType =  "int")
+    public int delete(@RequestParam int uid){
+        return userService.delete(uid);
     }
 
-    // @PostMapping("/user/findPw")
-    // @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 입니다.")
-    // public ResponseEntity<Object>(@Valid @RequestParam String email){
-    //     ;
-    // }
+     @PostMapping("/user/findPw")
+     @ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 입니다.")
+     public UserEntity findpw(@RequestParam String email){
+         return userService.findpw(email);
+     }
 }
