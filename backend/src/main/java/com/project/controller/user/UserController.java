@@ -48,7 +48,7 @@ public class UserController {
     @PostMapping("/user/register")
     @ApiOperation(value = "회원가입", notes = "회원 가입 입니다.")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "uid", value = "사용자 UID", required = true, dataType = "int"),
+            @ApiImplicitParam(name = "uid", value = "사용자 UID", required = true, dataType = "long"),
             @ApiImplicitParam(name = "upw", value = "사용자 Password", required = true, dataType = "string"),
             @ApiImplicitParam(name = "email", value = "사용자 E-mail", required = true, dataType = "string"),
             @ApiImplicitParam(name = "name", value = "사용자 이름", required = true, dataType = "string"),
@@ -78,7 +78,7 @@ public class UserController {
 
     @PostMapping("/user/delete")
     @ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 입니다.")
-    @ApiImplicitParam(name = "uid", value = "사용자 uid", required = true, dataType =  "int")
+    @ApiImplicitParam(name = "uid", value = "사용자 uid", required = true, dataType = "int")
     public void delete(@RequestParam int uid){
         userService.delete(uid);
     }
