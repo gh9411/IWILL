@@ -21,7 +21,7 @@ public class UserEntity {
 	@Id
 	@Column(name = "uid")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int uid; // uid
+	long uid; // uid
 	
 	@Column(name = "upw")
     String upw; // passwd
