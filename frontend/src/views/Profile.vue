@@ -18,8 +18,8 @@
                   />
                 </div>
                 <div class="name">
-                  <h3 class="title">Carla Hortensia</h3>
-                  <h6>Designer</h6>
+                  <h3 class="title">{{ this.username }}</h3>
+                  <h6>{{ this.email }}</h6>
                   <md-button
                     href="javascript:void(0)"
                     class="md-just-icon md-simple md-dribbble"
@@ -41,16 +41,13 @@
           </div>
           <div class="description text-center">
             <p>
-              An artist of considerable range, Chet Faker — the name taken by
-              Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs
-              and records all of his own music, giving it a warm, intimate feel
-              with a solid groove structure.
+              한 줄 소개 자리
             </p>
           </div>
           <div class="profile-tabs">
             <tabs
-              :tab-name="['Studio', 'Work', 'Favorite']"
-              :tab-icon="['camera', 'palette', 'favorite']"
+              :tab-name="['비밀번호 변경', '정보 변경', '지갑 키 확인']"
+              :tab-icon="['key', 'palette', 'wallet']"
               plain
               nav-pills-icons
               color-button="success"
@@ -111,6 +108,9 @@ export default {
   bodyClass: "profile-page",
   data() {
     return {
+      username : "",
+      email : "",
+      password : "",
       tabPane1: [
         { image: require("@/assets/img/examples/studio-1.jpg") },
         { image: require("@/assets/img/examples/studio-2.jpg") },
@@ -132,6 +132,14 @@ export default {
         { image: require("@/assets/img/examples/studio-1.jpg") }
       ]
     };
+  },
+  created() {
+    const data = new FormData();
+    data.append("uid", this.$cookies.get("UserInfo").uid);
+    this.$axios.post(this.$SERVER_URL + "user/detail2", data).then(res => {
+      this.username = res.data.nickname;
+      this.email = res.data.email;
+    });
   },
   props: {
     header: {

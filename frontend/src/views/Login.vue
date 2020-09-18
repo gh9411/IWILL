@@ -35,7 +35,7 @@
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>Password...</label>
-                <md-input v-model="password"></md-input>
+                <md-input v-model="password" type="password"></md-input>
               </md-field>
               <md-button slot="footer" class="md-simple md-lg" @click="gotoMain()">
                 <span style="font-size: 1.4em" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='grey'">
@@ -86,7 +86,19 @@ export default {
   methods: {
     gotoMain() {
       this.$router.push("/main")
-    }
+    },
+    onLogin(){
+      let { email, password } = this;
+      let data = {
+        email,
+        password
+      };
+      store.dispatch('login', {email: this.email, password: this.password});
+      if(this.$store.state.isLogin) {
+        this.$router.push("/main")
+      }
+    },
+
   },
   computed: {
     headerStyle() {

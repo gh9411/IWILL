@@ -9,7 +9,7 @@
   >
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title" style="font-weight: 600">IWILL</h3>
+        <h3 class="md-title" style="font-size:1.4em; font-weight: 600"><a href="/main">IWILL</a></h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -71,15 +71,6 @@
               >
                 <i class="material-icons">content_paste</i>
                 <p>Documentation</p>
-              </md-list-item>
-
-              <md-list-item
-                href="javascript:void(0)"
-                @click="scrollToElement()"
-                v-if="showDownload"
-              >
-                <i class="material-icons">cloud_download</i>
-                <p>Download</p>
               </md-list-item>
 
               <li class="md-list-item" v-else>

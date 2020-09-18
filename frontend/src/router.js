@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Index from "./views/Index.vue";
+import MainPage from "./views/MainPage.vue";
 import Landing from "./views/Landing.vue";
 import Login from "./views/Login.vue";
 import Profile from "./views/Profile.vue";
@@ -13,9 +13,9 @@ export default new Router({
   mode: "history",
   routes: [
     {
-      path: "/",
-      name: "index",
-      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      path: "/main",
+      name: "MainPage",
+      components: { default: MainPage, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
@@ -31,7 +31,7 @@ export default new Router({
       }
     },
     {
-      path: "/login",
+      path: "/",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {

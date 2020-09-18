@@ -26,7 +26,7 @@
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
-                <label>비밀번호확인...</label>
+                <label>비밀번호 확인...</label>
                 <md-input
                   v-model="passwordcheck"
                   @keydown.enter="Signup()"
