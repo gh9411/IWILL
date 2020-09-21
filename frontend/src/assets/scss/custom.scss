@@ -18,7 +18,6 @@
       height: inherit;
       float: left;
     }
-    .header-right{}
   }
 
   .content {
@@ -33,9 +32,9 @@
       height: 560px;
     }
     .content-right {
+      // background-color: blue;
       height: 560px;
       width: 74.3%;
-      background-color: white;
       position: relative;
       left: 24.4%;
       .menu {
@@ -67,5 +66,18 @@
   h3, h4, h5 {
     text-align: center;
   }
+}
 
+.writeWILL {
+  h3 {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  position: absolute;
+  left: 30px;
+  width: 92.7%;
+  // background-color: red; 
+  
+  margin-right:1em; 
+  margin-left:1em;
 }
