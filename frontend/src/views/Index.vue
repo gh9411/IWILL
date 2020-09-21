@@ -7,7 +7,7 @@
             <img :src="leaf4" alt="leaf4" class="leaf4" v-show="leafShow" />
             <img :src="leaf3" alt="leaf3" class="leaf3" v-show="leafShow" />
             <img :src="leaf2" alt="leaf2" class="leaf2" v-show="leafShow" />
-            <img :src="leaf1" alt="leaf1" class="leaf1" v-show="leafShow" />
+            <img :src="leaf1" alt="leaft1" class="leaf1" v-show="leafShow" />
             <div class="brand">
               <h1 class="title">IWILL</h1>
               <h3>남아있는 소중한 사람들에게 전하고 싶은 말</h3>
@@ -18,13 +18,36 @@
     </parallax>
     <div class="main main-raised" style="background-color: ivory">
       <div class="section section-basic">
-        <div class="container">
-          <div class="title">
-            <h2>Basic Elements</h2>
+        <div class="container" style="margin-bottom:300px;">
+          <div class="row" style="float:right; position:relative; left:-50%;">
+            <div class="title" style="width:50%; float:left; position:relative; left:50%;">
+              <h2 class="title">IWILL이란?</h2>
+              <h4>남겨진 이들을 위한 유언장 작성 플랫폼</h4>
+              <h4>블록체인 기반으로 안전하게 보관 가능</h4>
+            </div>
+            <div class="title" style="width:50%; float:left; position:relative; left:55%;">
+              <a href="#/profile" target="_blank">
+                <img :src="profile" alt="Rounded Image" class="img-raised rounded img-fluid" />
+              </a>
+            </div>
           </div>
-          <basic-elements></basic-elements>
+        </div>
+        <div class="container">
+          <div class="row" style="float:right; position:relative; left:-50%;">
+            <div class="title" style="width:50%; float:left; position:relative; left:50%;">
+              <h2 class="title">왜 블록체인을 사용하나요?</h2>
+              <h4>유언장 파기 및 변경이 불가능합니다</h4>
+              <h4>블록체인 기반으로 안전하게 보관 가능</h4>
+            </div>
+            <div class="title" style="width:50%; float:left; position:relative; left:55%;">
+              <a href="#/profile" target="_blank">
+                <img :src="profile" alt="Rounded Image" class="img-raised rounded img-fluid" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
+
       <div class="section section-navbars">
         <div class="container">
           <small-navigation></small-navigation>
@@ -62,9 +85,7 @@
       <div class="section">
         <div class="container text-center">
           <div class="md-layout">
-            <div
-              class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center"
-            >
+            <div class="md-layout-item md-size-66 md-xsmall-size-100 ml-auto mr-auto text-center">
               <h2>Completed with examples</h2>
               <h4>
                 The kit comes with three pre-built pages to help you get started
@@ -121,9 +142,7 @@
                   <label>Password...</label>
                   <md-input v-model="password"></md-input>
                 </md-field>
-                <md-button slot="footer" class="md-simple md-success md-lg">
-                  Get Started
-                </md-button>
+                <md-button slot="footer" class="md-simple md-success md-lg">Get Started</md-button>
               </login-card>
             </div>
           </div>
@@ -131,9 +150,7 @@
       </div>
       <div class="md-layout">
         <div class="md-layout-item text-center">
-          <md-button href="#/login" class="md-simple md-success md-lg"
-            >View Login Page</md-button
-          >
+          <md-button href="#/login" class="md-simple md-success md-lg">View Login Page</md-button>
         </div>
       </div>
       <div class="section section-examples">
@@ -141,27 +158,15 @@
           <div class="md-layout">
             <div class="md-layout-item">
               <a href="#/landing" target="_blank">
-                <img
-                  :src="landing"
-                  alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
-                />
+                <img :src="landing" alt="Rounded Image" class="img-raised rounded img-fluid" />
               </a>
-              <md-button href="#/landing" class="md-simple md-success md-lg"
-                >View Landing Page</md-button
-              >
+              <md-button href="#/landing" class="md-simple md-success md-lg">View Landing Page</md-button>
             </div>
             <div class="md-layout-item">
               <a href="#/profile" target="_blank">
-                <img
-                  :src="profile"
-                  alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
-                />
+                <img :src="profile" alt="Rounded Image" class="img-raised rounded img-fluid" />
               </a>
-              <md-button href="#/profile" class="md-simple md-success md-lg"
-                >View Profile Page</md-button
-              >
+              <md-button href="#/profile" class="md-simple md-success md-lg">View Profile Page</md-button>
             </div>
           </div>
         </div>
@@ -178,8 +183,7 @@
                 <a
                   href="https://themeisle.com/?utm_campaign=mkfree-hestia&amp;utm_source=creativetim&amp;utm_medium=website"
                   target="_blank"
-                  >ThemeIsle</a
-                >
+                >ThemeIsle</a>
                 created a Wordpress Theme which can be also downloaded for free.
                 Start a new project or give an old Bootstrap project a new look!
               </h4>
@@ -189,17 +193,20 @@
                 href="https://www.creative-tim.com/product/material-kit"
                 target="_blank"
                 class="md-success md-lg"
-                ><i class="fab fa-html5"></i> Free HTML Download</md-button
               >
+                <i class="fab fa-html5"></i> Free HTML Download
+              </md-button>
               <md-button
                 href="https://themeisle.com/themes/hestia/?utm_campaign=mkfree-hestia&amp;utm_source=creativetim&amp;utm_medium=website"
                 class="md-success md-lg"
                 target="_blank"
-                ><i class="fab fa-wordpress"></i> Wordpress Theme</md-button
               >
+                <i class="fab fa-wordpress"></i> Wordpress Theme
+              </md-button>
             </div>
           </div>
-          <br /><br />
+          <br />
+          <br />
 
           <div class="md-layout text-center">
             <div class="md-layout-item md-size-66 md-small-size-100 mx-auto">
@@ -209,14 +216,12 @@
                 <a
                   href="https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=utp-mk-demos"
                   target="_blank"
-                  >Vue Material Dashboard PRO</a
-                >
+                >Vue Material Dashboard PRO</a>
                 and
                 <a
                   href="https://www.creative-tim.com/product/vue-material-kit-pro?ref=utp-vmk-demos"
                   target="_blank"
-                  >Vue Material Kit PRO</a
-                >. Every product has a huge number of components, sections and
+                >Vue Material Kit PRO</a>. Every product has a huge number of components, sections and
                 example pages. Start Your Development With A Badass Bootstrap UI
                 Kit inspired by Material Design.
               </h4>
@@ -227,15 +232,17 @@
                   href="https://www.creative-tim.com/product/vue-material-kit-pro?ref=utp-vmk-demos"
                   class="md-button md-success md-lg md-upgrade"
                   target="_blank"
-                  ><md-icon>unarchive</md-icon>Vue Material Kit PRO</md-button
                 >
+                  <md-icon>unarchive</md-icon>Vue Material Kit PRO
+                </md-button>
                 <md-button
                   href="https://www.creative-tim.com/product/vue-material-dashboard-pro?ref=utp-vmd-demos"
                   class="md-button md-success md-lg md-upgrade"
                   target="_blank"
-                  ><md-icon>unarchive</md-icon>Vue Material Dashboard
-                  PRO</md-button
                 >
+                  <md-icon>unarchive</md-icon>Vue Material Dashboard
+                  PRO
+                </md-button>
               </div>
             </div>
           </div>
@@ -247,18 +254,18 @@
               </div>
             </div>
 
-            <md-button class="md-twitter"
-              ><i class="fab fa-twitter"></i>Tweet</md-button
-            >
-            <md-button class="md-facebook"
-              ><i class="fab fa-facebook-square"></i> Share</md-button
-            >
-            <md-button class="md-google"
-              ><i class="fab fa-google-plus"></i> Share</md-button
-            >
-            <md-button class="md-github"
-              ><i class="fab fa-github"></i> Star</md-button
-            >
+            <md-button class="md-twitter">
+              <i class="fab fa-twitter"></i>Tweet
+            </md-button>
+            <md-button class="md-facebook">
+              <i class="fab fa-facebook-square"></i> Share
+            </md-button>
+            <md-button class="md-google">
+              <i class="fab fa-google-plus"></i> Share
+            </md-button>
+            <md-button class="md-github">
+              <i class="fab fa-github"></i> Star
+            </md-button>
           </div>
         </div>
       </div>
@@ -267,7 +274,6 @@
 </template>
 
 <script>
-import BasicElements from "./components/BasicElementsSection";
 import Navigation from "./components/NavigationSection";
 import SmallNavigation from "./components/SmallNavigationSection";
 import Tabs from "./components/TabsSection";
@@ -279,7 +285,6 @@ import { LoginCard } from "@/components";
 
 export default {
   components: {
-    BasicElements,
     Navigation,
     SmallNavigation,
     Tabs,
