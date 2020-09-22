@@ -1,13 +1,13 @@
-import Vue from "vue"
-import Router from "vue-router"
-import MainPage from "./views/MainPage.vue"
-import Landing from "./views/Landing.vue"
-import Login from "./views/Login.vue"
-import Profile from "./views/Profile.vue"
-import MainNavbar from "./layout/MainNavbar.vue"
-import MainFooter from "./layout/MainFooter.vue"
-import Signup from "./views/Signup.vue"
-
+import Vue from "vue";
+import Router from "vue-router";
+import MainPage from "./views/MainPage.vue";
+import Landing from "./views/Landing.vue";
+import Login from "./views/Login.vue";
+import Profile from "./views/Profile.vue";
+import MainNavbar from "./layout/MainNavbar.vue";
+import MainFooter from "./layout/MainFooter.vue";
+import Signup from "./views/Signup.vue";
+import Index from "./views/Index.vue";
 Vue.use(Router);
 
 export default new Router({
@@ -25,6 +25,15 @@ export default new Router({
       path: "/main",
       name: "mainPage",
       components: { default: MainPage, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" }
+      }
+    },
+    {
+      path: "/index",
+      name: "Index",
+      components: { default: Index, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" }
