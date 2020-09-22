@@ -351,7 +351,7 @@ export default {
     MyRecord,
     WriteWill,
   },
-  name: "index",
+  name: "main",
   bodyClass: "index-page",
   props: {
     image: {
