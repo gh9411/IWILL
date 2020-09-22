@@ -20,7 +20,7 @@
     </parallax>
 
     <!-- 메인 페이지 헤더 -->
-    <div class="main main-raised">
+    <div class="main">
       <div class="headerblank"></div>
       <div class="header">
         <div class="header-left"></div>
