@@ -6,7 +6,10 @@ import java.io.InputStream;
 
 import javax.validation.Valid;
 
+import com.project.service.will.FileService;
+
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,19 +36,24 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 public class FileController {
-    
+   
+    @Autowired
+    FileService fileservice;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String upload(@RequestParam("file") final MultipartFile multipartFile) {
-		System.out.println("### upload");
-		final File targetFile = new File("/" + multipartFile.getOriginalFilename());
-		try {
-			final InputStream fileStream = multipartFile.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);
-		} catch (final IOException e) {
-			FileUtils.deleteQuietly(targetFile);
-			e.printStackTrace();
-		}
+    public String upload(@RequestParam("file") final MultipartFile multipartFile) throws Exception {
+        
+        fileservice.upload(multipartFile);
+
+		// System.out.println("### upload");
+		// final File targetFile = new File("/" + multipartFile.getOriginalFilename());
+		// try {
+		// 	final InputStream fileStream = multipartFile.getInputStream();
+		// 	FileUtils.copyInputStreamToFile(fileStream, targetFile);
+		// } catch (final IOException e) {
+		// 	FileUtils.deleteQuietly(targetFile);
+		// 	e.printStackTrace();
+		// }
 		return "redirect:/form";
 	}
 
