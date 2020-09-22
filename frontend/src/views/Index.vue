@@ -16,7 +16,7 @@
         </div>
       </div>
     </parallax>
-    <div class="main main-raised" style="background-color: ivory">
+    <div class="main" style="background-color: white">
       <div class="section section-basic">
         <div class="container" style="margin-bottom:300px;">
           <div class="row" style="float:right; position:relative; left:-50%;">
@@ -35,14 +35,17 @@
         <div class="container">
           <div class="row" style="float:right; position:relative; left:-50%;">
             <div class="title" style="width:50%; float:left; position:relative; left:50%;">
-              <h2 class="title">왜 블록체인을 사용하나요?</h2>
-              <h4>유언장 파기 및 변경이 불가능합니다</h4>
-              <h4>블록체인 기반으로 안전하게 보관 가능</h4>
+              <h2 class="title" style="width:250px;">왜 블록체인을 사용하나요?</h2>
             </div>
             <div class="title" style="width:50%; float:left; position:relative; left:55%;">
-              <a href="#/profile" target="_blank">
-                <img :src="profile" alt="Rounded Image" class="img-raised rounded img-fluid" />
-              </a>
+              <h4 style="margin:40px auto; width:375px;">
+                블록체인은 첨단 암호 기술의 매커니즘을 통해 보호됩니다.
+                블록체인 매커니즘의 2가지 특징을 소개합니다.
+              </h4>
+            </div>
+            <div class="title" style="width:50%; float:left; position:relative;">
+              <h1 style="color:gray;">1.</h1>
+              <hr style="width:60%; float:left;" />
             </div>
           </div>
         </div>
