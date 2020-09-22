@@ -6,14 +6,14 @@ import java.util.List;
 
 import com.project.model.will.WillEntity;
 
-public interface FileDAO extends JpaRepository<ReviewEntity, Long>{
+public interface FileDAO extends JpaRepository<WillEntity, Long>{
     //Get all File
-    public List<ReviewEntity> findAll();
+    public List<WillEntity> findAll();
 
     //Get all File of written by certain user
-    public List<ReviewEntity> findByUserId(String userId);
+    //public List<WillEntity> findByUserId(String userId);
 
-    public ReviewEntity findReviewById(long id);
+    //public WillEntity findReviewById(long id);
 
 
 }

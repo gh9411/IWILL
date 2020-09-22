@@ -1,15 +1,53 @@
 package com.project.service.will;
 
 import java.util.List;
-
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.project.dao.will.FileDAO;
 import com.project.model.will.WillEntity;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.validation.Valid;
+
+import com.project.service.will.FileService;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+
+import org.springframework.stereotype.Controller;
+
+
+import lombok.extern.slf4j.Slf4j;
 @Service
 public class FileService {
     @Autowired
@@ -19,7 +57,7 @@ public class FileService {
         return filedao.findAll();
     }
 
-    public void upload(final MultipartFile multipartFile){
+    public void upload(final MultipartFile multipartFile) throws Exception {
         //1. 파일 업로드
 
         final File targetFile = new File("/" + multipartFile.getOriginalFilename()); // 저장 위치 입력
@@ -31,11 +69,27 @@ public class FileService {
 			e.printStackTrace();
         }
         // 해쉬값 추출
-        String filehash = checkHash(targetFile);
+        String filehash = checkHash(targetFile.toString());
         
-        // 블록체인에 해쉬값 저장
-        
+		// 블록체인에 해쉬값 저장
+		String targetUrl = "http://0.0.0.0:8545";
 
+		//현재 getTransactionByHash로 테스트
+		//보내는사람 account key 파일 hash 저장 필요
+		String jsonValue = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getTransactionByHash\",\"params\":[\"0x6d6491f8b81031dda775fc38ba08a4f3b5f8bb56e17951b5853f9a80e3ceb363\"],\"id\":2}";
+		// String jsonValue = "{
+		// 	"jsonrpc":"2.0",
+		// 	"method":"personal_unlockAccount",
+		// 	"params": [
+		// 		"0x34ee5e2e9842d03c4000e9b2c70f398b04a69004",
+		// 		"123qwe",
+		// 		0
+		// 		],   
+		// 	"id":100
+		// }";
+        String transhash = sendPost(targetUrl, jsonValue);
+
+		System.out.println(transhash);
         // DB 저장
     }
 
@@ -111,4 +165,51 @@ public class FileService {
 		
 		return SHA;
 	}
+
+	// HTTP POST request
+	private String sendPost(String targetUrl, String jsonValue) throws Exception {
+
+		String inputLine = null;
+		StringBuffer outResult = new StringBuffer();
+
+		try {
+			System.out.println("Rest api - Send Post start");
+
+			URL url  = new URL(targetUrl);
+
+			HttpURLConnection conn =  (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(true);
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Accept-Charset", "UTF-8");
+			conn.setConnectTimeout(10000);
+			conn.setReadTimeout(10000);
+
+			OutputStream os = conn.getOutputStream();
+			os.write(jsonValue.getBytes("UTF-8"));
+			os.flush();
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+			
+			while((inputLine = in.readLine()) != null){
+				outResult.append(inputLine);
+			}
+
+			conn.disconnect();
+
+			System.out.println("Rest api - Send Post End");
+
+		} catch (Exception e) {
+			//TODO: handle exception
+			System.out.println("Rest api - Send Post Error");
+			e.printStackTrace();
+		}
+		// outResult == reponse data => json으로 변환해서 
+
+
+
+
+		return outResult.toString();
+	}
+	
 }
