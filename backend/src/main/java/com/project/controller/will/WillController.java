@@ -101,10 +101,10 @@ public class WillController {
      }
      
 
-     @GetMapping(value = "/will/recent/{userId}")
-     public Object getRecentReviewByUserId(@PathVariable String userId){
-         WillEntity will = willservice.getRecentWillByUid(userId);
-         return new ResponseEntity<WillEntity>(will, HttpStatus.OK);
-     }
+    //  @GetMapping(value = "/will/recent/{userId}")
+    //  public Object getRecentReviewByUserId(@PathVariable String userId){
+    //      WillEntity will = willservice.getRecentWillByUid(userId);
+    //      return new ResponseEntity<WillEntity>(will, HttpStatus.OK);
+    //  }
 
 }
