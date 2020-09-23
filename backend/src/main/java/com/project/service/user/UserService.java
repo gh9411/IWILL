@@ -28,7 +28,7 @@ public class UserService {
 		return user;
 	}
 
-	public Object signup(@RequestBody UserEntity user) {
+	public Object signup(UserEntity user) {
 
 		UserEntity newuser = new UserEntity();
 		newuser.setUid(user.getUid());
@@ -37,8 +37,8 @@ public class UserService {
 		newuser.setEmail(user.getEmail());
 		newuser.setName(user.getName());
 		newuser.setPhone(user.getPhone());
-		newuser.setCreateDate(user.getCreateDate());
-		newuser.setSendDate(user.getSendDate());
+		newuser.setCreatedate(user.getCreatedate());
+		newuser.setSenddate(user.getSenddate());
 		newuser.setProfile(user.getProfile());
 		newuser.setUsertype(user.getUsertype());
 
@@ -48,12 +48,12 @@ public class UserService {
 	}
 
 	public Object detail(String email) {
-		Optional<UserEntity> user = userdao.findByUid(email);
+		UserEntity user = userdao.getUserByEmail(email);
 
 		return user;
 	}
 
-	public void update(@RequestBody UserEntity user) {
+	public void update(UserEntity user) {
 		Optional<UserEntity> modify = userdao.findByUid(user.getUid());
 
 		modify.ifPresent(selectUser -> {
@@ -77,12 +77,9 @@ public class UserService {
 	}
 
 	public Object findpw(String email) {
-		Optional<UserEntity> user = userdao.findByEmail(email);
+		UserEntity user = userdao.getUserByEmail(email);
 		
-		if(user.isPresent())
-			return user;
-		
-		return null;
+		return user;
 	}
 
 }
