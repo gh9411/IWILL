@@ -1,52 +1,42 @@
 package com.project.model.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "user")
 public class UserEntity {
     
 	@Id
-	@Column(name = "uid")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long uid; // uid
+	private String uid; // uid
+	private String upw; // passwd
+	private String accounthash;
+	private String email; // email
+	private String name;  // 이름
+	private String phone; // phone
+	private String createDate; // 생성일
+	private String sendDate;
+	private String profile;    //
+	private int usertype;      // 회원 유형
 	
-	@Column(name = "upw")
-    String upw; // passwd
+	public UserEntity() {};
 	
-	@Column(name = "email")
-    String email; // email
+	public UserEntity(String uid, String upw, String accounthash, String email, String name, String phone,
+			String createDate, String sendDate, String profile, int usertype) {
+		super();
+		this.uid = uid;
+		this.upw = upw;
+		this.accounthash = accounthash;
+		this.email = email;
+		this.name = name;
+		this.phone = phone;
+		this.createDate = createDate;
+		this.sendDate = sendDate;
+		this.profile = profile;
+		this.usertype = usertype;
+	}
 	
-	@Column(name = "name")
-    String name;  // 이름
 	
-	@Column(name = "phone")
-    String phone; // phone
-	
-	@Column(name = "address")
-    String address; // address
-	
-	@Column(name = "createDate")
-    String createDate; // 생성일
-	
-	@Column(name = "sendDate")
-    String sendDate;
-	
-	@Column(name = "profile")
-    String profile;    //
-	
-	@Column(name = "usertype")
-    int usertype;      // 회원 유형
 }
