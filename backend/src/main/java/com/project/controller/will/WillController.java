@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-
 import com.project.model.will.WillEntity;
 import com.project.model.will.dto.WillCreateDTO;
 import com.project.service.will.FileService;
@@ -17,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,5 +86,25 @@ public class WillController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+
+    @GetMapping("/will/all")
+    public Object getAllWills(){
+        List<WillEntity> wills = willservice.findAll();
+        return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
+    }
+    
+     //Read wills by id 
+     @GetMapping(value = "/will/user/{userId}")
+     public Object getReviewByUserId(@PathVariable String userId){
+         List<WillEntity> wills = willservice.getWillByUid(userId);
+         return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
+     }
+     
+
+     @GetMapping(value = "/will/recent/{userId}")
+     public Object getRecentReviewByUserId(@PathVariable String userId){
+         WillEntity will = willservice.getRecentWillByUid(userId);
+         return new ResponseEntity<WillEntity>(will, HttpStatus.OK);
+     }
 
 }

@@ -6,17 +6,43 @@ import com.project.dao.will.WillDAO;
 import com.project.model.will.WillEntity;
 import com.project.util.HexToString;
 
+<<<<<<< backend/src/main/java/com/project/service/will/WillService.java
+import org.springframework.beans.factory.annotation.Autowired;
+=======
 import org.json.JSONArray;
 import org.json.JSONObject;
+>>>>>>> backend/src/main/java/com/project/service/will/WillService.java
 import org.springframework.stereotype.Service;
 
 @Service
 public class WillService {
-    WillDAO willdao;
+<<<<<<< backend/src/main/java/com/project/service/will/WillService.java
 
-    public List<WillEntity> findAll() {
-        return willdao.findAll();
+    @Autowired
+    WillDAO willDao;
+    
+    
+    public List<WillEntity> findAll(){
+        return willDao.findAll();
     }
+
+    public void register(WillEntity will){
+
+    }
+
+    public Object save(WillEntity newWill){ // 새로운 유언장 저장
+
+        return willDao.save(newWill);
+    }
+
+    public List<WillEntity> getWillByUid(String uid){
+        return willDao.findAllByUid(uid);
+    }
+
+    public WillEntity getRecentWillByUid(String uid){
+        return willDao.findTopByUidOrderByIdxDesc(uid);
+    }
+
 
     public void register(WillEntity will){
         willdao.save(will);

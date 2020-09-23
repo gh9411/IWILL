@@ -9,7 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface WillDAO extends JpaRepository<WillEntity, Long>{
+    
     // @Query(value = "SELECT uid,r_email FROM sendwill", nativeQuery = true)
     public List<WillEntity> findAll();
     
+    public List<WillEntity> findAllByUid(String uid);
+
+
+    public WillEntity findTopByUidOrderByIdxDesc(String uid);
 }
