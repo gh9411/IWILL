@@ -15,7 +15,9 @@
     border-bottom: 1.4px solid rgba(194, 183, 183, 0.5);
     .header-left {
       width: 31.9%;
+      background-color: white;
       height: inherit;
+      border-bottom: none;
       float: left;
     }
   }
@@ -80,4 +82,8 @@
   
   margin-right:1em; 
   margin-left:1em;
+}
+
+.maintap {
+  border-bottom: 1.4px solid rgba(194, 183, 183, 0.5);
 }

@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import axios from "axios";
 import MaterialKit from "./plugins/material-kit";
+import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
@@ -24,5 +25,6 @@ Vue.mixin({
 
 new Vue({
   router,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");

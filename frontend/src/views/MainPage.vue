@@ -25,12 +25,10 @@
       <div class="header">
         <div class="header-left"></div>
         <div>
-          <md-button class="md-button" @click="toggle('MyRecord')">
-            <md-icon>favorite</md-icon> 글 남기기
-          </md-button>
-          <md-button class="md-button" @click="toggle('WriteWill')">
-            <md-icon>favorite</md-icon> 나의 글
-          </md-button>
+          <v-tabs class="maintap">
+            <v-tab @click="toggle('MyRecord')">글 남기기</v-tab>
+            <v-tab @click="toggle('WriteWill')">내 기록 보기</v-tab>
+          </v-tabs>
         </div>
       </div>
 
