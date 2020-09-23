@@ -17,12 +17,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "will")
-public class WillEntity {
+@Table(name = "willlog")
+public class WillLogEntity {
     
     @Id
-    @Column(name="wid")
+    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int idx; // 인덱스
+
+    @Column(name="wid")
     int wid; // 유언장 번호 (같으면 인덱스 높은 순)
 
     @Column(name="uid")
