@@ -1,5 +1,8 @@
 package com.project.controller.will;
 
+import java.rmi.server.UID;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import com.project.model.will.dto.WillCreateDTO;
 import com.project.service.will.FileService;
 import com.project.service.will.WillService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +61,18 @@ public class WillController {
         final String TEXTPATH; // text file path
         final String VIDEOPATH; //  video file path
         final String IMAGEPATH; // image file path
+        final String DATE;
+
+
+        // int wid; // 유언장 번호 (같으면 인덱스 높은 순)
+        // String uid; // 유언장 해쉬값
+        // String title; // 유언장 해쉬값
+        // String filepath; // 유언장 해쉬값
+        // String transactionhash; // 유언장 해쉬값
+        // String receive; // 유언장 해쉬값
+        // String createdate; // 유언장 해쉬값
+        // int islawed; // 유언장 해쉬값
+        // String witness; // 유언장 해쉬값
 
         HashMap<String,String> videohm =  fileservice.upload(willdto.getVideo());
         HashMap<String,String> imagehm = fileservice.upload(willdto.getImage());
@@ -67,7 +83,23 @@ public class WillController {
         IMAGEPATH = imagehm.get("path");
         TRANSKEY = willservice.sendTransaction(imagehm.get("hash"), videohm.get("hash"), texthm.get("hash"));
 
-        // willservice.register(will);
+        JSONObject filepath = new JSONObject();
+        filepath.put("textpath", TEXTPATH);
+        filepath.put("videopath", VIDEOPATH);
+        filepath.put("imagepath", IMAGEPATH);
+
+        Date date = new Date();
+        SimpleDateFormat sdp = new SimpleDateFormat("YYYY.MM.dd HH.mm");
+        DATE = sdp.format(date);
+
+        WillEntity will = new WillEntity();
+        will.setUid(UID);
+        will.setTitle(TITLE);
+        will.setTransactionhash(TRANSKEY);
+        will.setFilepath(filepath.toString());
+        will.setCreatedate(DATE);
+        willservice.register(will);
+
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
@@ -95,9 +127,22 @@ public class WillController {
     
      //Read wills by id 
      @GetMapping(value = "/will/user/{userId}")
-     public Object getReviewByUserId(@PathVariable String userId){
-         List<WillEntity> wills = willservice.getWillByUid(userId);
-         return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
+     public Object getReviewByUserId(@PathVariable String userId) throws Exception{
+
+
+        List<WillEntity> wills = willservice.getWillByUid(userId);
+        WillEntity will = wills.get(1);
+
+        JSONObject pathobj = new JSONObject(will.getFilepath());
+        
+        String transkey = will.getTransactionhash();
+        JSONObject hashobj =  willservice.getFilehashByTranskey(transkey);
+        
+        boolean flag = willservice.compareTosha256(pathobj, hashobj);
+        System.out.println(flag);
+        
+        return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
+
      }
      
 

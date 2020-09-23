@@ -137,7 +137,7 @@ public class FileService {
 		return SHA;
 	}
 	
-	public static String extractFileHashSHA256(String filename) throws Exception {
+	public String extractFileHashSHA256(String filename) throws Exception {
 		
 		String SHA = ""; 
 		int buff = 16384;
@@ -245,95 +245,5 @@ public class FileService {
 		hm.put("hash", extractFileHashSHA256(file.toString()));
 		return hm;
 
-	}
-
-	public static void main(String[] args) throws Exception{
-		FileService fs = new FileService();
-
-		//sendtransaction body data
-		
-		JSONObject ob = new JSONObject();
-        ob.put("title", extractFileHashSHA256(new File("c:\\data\\text.txt").toString()));
-        ob.put("picture", extractFileHashSHA256(new File("c:\\data\\image.jpg").toString()));
-        ob.put("video", extractFileHashSHA256(new File("c:\\data\\video.avi").toString()));
-        //senddata to hex
-		String inputString = "0x"+ob.toString();
-		System.out.println("==========json data==========");
-		System.out.println(ob.toString());
-		System.out.println();
-        
-
-        JSONObject sendobj = new JSONObject();
-        sendobj.put("jsonrpc", "2.0");
-        sendobj.put("method", "eth_sendTransaction");
-        JSONArray params = new JSONArray();
-        JSONObject paramsobj = new JSONObject();
-        paramsobj.put("from", "0x8f600e28D0694F06A28C2edD74F2f3Bb9e865EcC");
-        paramsobj.put("to", "0x8f600e28D0694F06A28C2edD74F2f3Bb9e865EcC");
-        paramsobj.put("data", "0x"+HexToString.stringtohex(inputString));
-        params.put(paramsobj);
-        sendobj.put("params", params);
-		sendobj.put("id", 100);
-
-		System.out.println("==========sendTransaction body data==========");
-		System.out.println(sendobj);
-		System.out.println();
-		
-	
-		String result = fs.sendPost("http://localhost:8545/",sendobj.toString());
-		//보낸 결과값
-		System.out.println("==========sendTransaction result data==========");
-		System.out.println(result);
-		System.out.println();
-
-
-		JSONObject sendtransobj = new JSONObject(result);
-		sendobj = new JSONObject();
-        sendobj.put("jsonrpc", "2.0");
-        sendobj.put("method", "eth_getTransactionByHash");
-		params = new JSONArray();
-		params.put(sendtransobj.getString("result"));
-        sendobj.put("params", params);
-		sendobj.put("id", 100);
-
-		System.out.println("==========getTransaction body data==========");
-		System.out.println(sendobj);
-		System.out.println();
-		
-		result = fs.sendPost("http://localhost:8545/",sendobj.toString());
-		System.out.println("==========getTransaction result data==========");
-		System.out.println(result);
-		System.out.println();
-		
-		String input = new JSONObject(result).getJSONObject("result").getString("input");
-		input = input.substring(2,input.length());
-		
-		System.out.println("==========getTransaction result json hex data==========");
-		System.out.println(input);
-		System.out.println();
-		
-		String rresult = HexToString.hextostring(input);
-		rresult = rresult.substring(2,rresult.length());
-
-		JSONObject resultobj = new JSONObject(rresult);
-		System.out.println("==========json hex data To String==========");
-		System.out.println(resultobj.toString());
-		System.out.println();
-
-
-
-		if(extractFileHashSHA256(new File("c:\\data\\text.txt").toString()).equals(resultobj.get("title").toString())){
-			System.out.println("text equal");
-		}
-		if(extractFileHashSHA256(new File("c:\\data\\image.jpg").toString()).equals(resultobj.get("picture").toString())){
-			System.out.println("image equal");
-		}
-		if(extractFileHashSHA256(new File("c:\\data\\video.avi").toString()).equals(resultobj.get("video").toString())){
-			System.out.println("video equal");
-		}
-		
-		
-		
-	}
-	
+	}	
 }
