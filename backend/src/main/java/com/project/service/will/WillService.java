@@ -6,17 +6,14 @@ import com.project.dao.will.WillDAO;
 import com.project.model.will.WillEntity;
 import com.project.util.HexToString;
 
-<<<<<<< backend/src/main/java/com/project/service/will/WillService.java
 import org.springframework.beans.factory.annotation.Autowired;
-=======
+
 import org.json.JSONArray;
 import org.json.JSONObject;
->>>>>>> backend/src/main/java/com/project/service/will/WillService.java
 import org.springframework.stereotype.Service;
 
 @Service
 public class WillService {
-<<<<<<< backend/src/main/java/com/project/service/will/WillService.java
 
     @Autowired
     WillDAO willDao;
@@ -26,9 +23,6 @@ public class WillService {
         return willDao.findAll();
     }
 
-    public void register(WillEntity will){
-
-    }
 
     public Object save(WillEntity newWill){ // 새로운 유언장 저장
 
@@ -45,7 +39,7 @@ public class WillService {
 
 
     public void register(WillEntity will){
-        willdao.save(will);
+        willDao.save(will);
     }
 
     public String sendTransaction(String image,String video,String text) throws Exception{

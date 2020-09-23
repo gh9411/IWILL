@@ -15,6 +15,7 @@ public interface WillDAO extends JpaRepository<WillEntity, Long>{
     
     public List<WillEntity> findAllByUid(String uid);
 
+    
 
     public WillEntity findTopByUidOrderByIdxDesc(String uid);
 }
