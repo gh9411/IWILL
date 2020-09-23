@@ -24,7 +24,6 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-
             
               <!-- 데이터 입력 -->
               <md-field class="md-form-group" slot="inputs" style="margin-top: 3em">
@@ -47,7 +46,7 @@
               
               <div slot="a" style="margin-left: 2em; margin-right: 2em;">
                 <span style="font-size: 0.9em; font-weight:500">아직 회원이 아니라면</span>
-                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right" @click="goToSignup()">가입하기</a>
+                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right" @click="goToSignup">가입하기</a>
               </div>
               <div slot="a" style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em">
                 <span style="font-size: 0.9em; font-weight:500;" >

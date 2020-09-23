@@ -10,7 +10,6 @@
     <md-card-content>
       <slot name="description"></slot>
       <slot name="inputs"></slot>
-
     </md-card-content>
 
     <md-card-actions>
