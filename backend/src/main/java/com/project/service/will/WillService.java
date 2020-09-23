@@ -2,12 +2,13 @@ package com.project.service.will;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.project.dao.will.WillDAO;
 import com.project.model.will.WillEntity;
 import com.project.util.HexToString;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.apache.tomcat.jni.File;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class WillService {
 
     @Autowired
     WillDAO willDao;
+
+    FileService fs = new FileService();
     
     
     public List<WillEntity> findAll(){
@@ -43,8 +46,6 @@ public class WillService {
     }
 
     public String sendTransaction(String image,String video,String text) throws Exception{
-
-        FileService fs = new FileService();
 
         JSONObject ob = new JSONObject();
         
@@ -73,5 +74,42 @@ public class WillService {
         JSONObject sendtransobj = new JSONObject(result);
 		
         return sendtransobj.getString("result");
+    }
+
+    public JSONObject getFilehashByTranskey(String transkey) throws Exception{
+        
+        
+		JSONObject sendobj = new JSONObject();
+        sendobj.put("jsonrpc", "2.0");
+        sendobj.put("method", "eth_getTransactionByHash");
+		JSONArray params = new JSONArray();
+		params.put(transkey);
+        sendobj.put("params", params);
+        sendobj.put("id", 100);
+
+        String result = fs.sendPost("http://localhost:8545/",sendobj.toString());
+
+
+        String input = new JSONObject(result).getJSONObject("result").getString("input");
+		input = input.substring(2,input.length());
+		
+		String jsonhash = HexToString.hextostring(input);
+		jsonhash = jsonhash.substring(2,jsonhash.length());
+
+        return new JSONObject(jsonhash);
+    } 
+
+    public boolean compareTosha256(JSONObject path,JSONObject hash) throws Exception{
+        boolean flag = false;
+
+        final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
+        final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
+        final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
+        
+        if(texthash.equals(hash.getString("text")) && imagehash.equals(hash.getString("image")) && videohash.equals(hash.getString("video"))){
+            flag = true;
+        }
+
+        return flag;
     }
 }
