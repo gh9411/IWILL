@@ -69,9 +69,17 @@ public class WillController {
     }
     
      //Read wills by id 
-     @GetMapping(value = "/will/{userId}")
+     @GetMapping(value = "/will/user/{userId}")
      public Object getReviewByUserId(@PathVariable String userId){
          List<WillEntity> wills = willservice.getWillByUid(userId);
          return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
      }
+     
+
+     @GetMapping(value = "/will/recent/{userId}")
+     public Object getRecentReviewByUserId(@PathVariable String userId){
+         WillEntity will = willservice.getRecentWillByUid(userId);
+         return new ResponseEntity<WillEntity>(will, HttpStatus.OK);
+     }
+
 }

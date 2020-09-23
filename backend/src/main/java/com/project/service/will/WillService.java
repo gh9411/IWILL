@@ -31,4 +31,9 @@ public class WillService {
     public List<WillEntity> getWillByUid(String uid){
         return willDao.findAllByUid(uid);
     }
+
+    public WillEntity getRecentWillByUid(String uid){
+        return willDao.findTopByUidOrderByIdxDesc(uid);
+    }
+
 }
