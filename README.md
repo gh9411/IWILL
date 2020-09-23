@@ -5,8 +5,11 @@
 
 |NAME|X|EMAIL|
 |------|---|---|
-|이동옥|X|okdong23@naver.com|
+|이동옥(팀장)|X|okdong23@naver.com|
 <<<<<<< HEAD
+
+
+
 |김종관|X|colinder@naver.com|
 =======
 ||X||
