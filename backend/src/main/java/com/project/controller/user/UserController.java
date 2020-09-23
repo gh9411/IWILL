@@ -53,11 +53,12 @@ public class UserController {
 			@ApiImplicitParam(name = "email", value = "사용자 E-mail", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "name", value = "사용자 이름", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "phone", value = "연락처", required = true, dataType = "string"),
-			@ApiImplicitParam(name = "createDate", value = "생성 날짜", required = true, dataType = "string"),
-			@ApiImplicitParam(name = "sendDate", value = "전송 날짜", required = true, dataType = "string"),
+			@ApiImplicitParam(name = "createdate", value = "생성 날짜", required = true, dataType = "string"),
+			@ApiImplicitParam(name = "senddate", value = "전송 날짜", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "profile", value = "자기 소개", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "usertype", value = "회원 유형", required = true, dataType = "int"), })
-	public Object signup(@RequestBody UserEntity user) {
+	public Object signup(UserEntity user) {
+		System.out.println(user);
 		return userservice.signup(user);
 	}
 
@@ -65,13 +66,14 @@ public class UserController {
 	@ApiOperation(value = "회원 정보", notes = "회원 정보 조회 입니다.")
 	@ApiImplicitParam(name = "email", value = "사용자 E-mail", required = true, dataType = "string")
 	public Object detail(@RequestParam String email) {
+		
 		return userservice.detail(email);
 	}
 
 	@PostMapping("/user/update")
 	@ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정 입니다.")
 	@ApiImplicitParam(name = "userdto", value = "UserDto", required = true, dataType = "Object")
-	public void update(@RequestBody UserEntity user) {
+	public void update(UserEntity user) {
 		userservice.update(user);
 	}
 
@@ -85,6 +87,7 @@ public class UserController {
 	@PostMapping("/user/findPw")
 	@ApiOperation(value = "비밀번호 찾기", notes = "비밀번호 찾기 입니다.")
 	public Object findpw(@RequestParam String email) {
+		
 		return userservice.findpw(email);
 	}
 }
