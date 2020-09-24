@@ -18,10 +18,10 @@ export default new Vuex.Store({
           context.commit("IsLogin", true);
           context.commit("UserInfo", res);
           alert("로그인 성공");
+          this.$router.push("/main")
         })
         .catch(err => {
           alert("아이디 또는 비밀번호 실패입니다.");
-          router.push("/errorPage");
         });
     }
   }
