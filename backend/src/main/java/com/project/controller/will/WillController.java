@@ -74,13 +74,29 @@ public class WillController {
         // int islawed; // 유언장 해쉬값
         // String witness; // 유언장 해쉬값
 
-        HashMap<String,String> videohm =  fileservice.upload(willdto.getVideo());
-        HashMap<String,String> imagehm = fileservice.upload(willdto.getImage());
-        HashMap<String,String> texthm = fileservice.uploadtxt(willdto.getContent());
 
-        TEXTPATH = texthm.get("path");
+        HashMap<String,String> videohm = new HashMap<>();
+        HashMap<String,String> imagehm = new HashMap<>();
+        HashMap<String,String> texthm = new HashMap<>();
+        
+        if(!willdto.getVideo().isEmpty()){
+            videohm =  fileservice.upload(willdto.getVideo());
+            
+        }
+        if(!willdto.getImage().isEmpty()){
+            imagehm = fileservice.upload(willdto.getImage());
+            
+        }
+        if(!(willdto.getContent().equals(""))){
+            
+            texthm = fileservice.uploadtxt(willdto.getContent());
+        }
+        
+
         VIDEOPATH = videohm.get("path");
         IMAGEPATH = imagehm.get("path");
+        TEXTPATH = texthm.get("path");
+
         TRANSKEY = willservice.sendTransaction(imagehm.get("hash"), videohm.get("hash"), texthm.get("hash"));
 
         JSONObject filepath = new JSONObject();
@@ -103,22 +119,6 @@ public class WillController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @PostMapping("/will/read")
-    @ApiOperation(value = "유언장 읽기", notes = "유언장 읽기 기능입니다.")
-    @ApiImplicitParams({
-            // @ApiImplicitParam(name = "uid", value = "유언장 주인", required = true, dataType = "int"),
-            // @ApiImplicitParam(name = "receiver", value = "받을사람", required = true, dataType = "string"),
-    })
-    public ResponseEntity<Object> read(){
-    // public ResponseEntity<Object> read(@Valid @RequestBody WillEntity will){
-        List<WillEntity> list = willservice.findAll();
-        for(WillEntity will : list){
-            System.out.println(will);
-        }
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
-
-
     @GetMapping("/will/all")
     public Object getAllWills(){
         List<WillEntity> wills = willservice.findAll();
@@ -131,13 +131,13 @@ public class WillController {
 
 
         List<WillEntity> wills = willservice.getWillByUid(userId);
-        WillEntity will = wills.get(1);
+        WillEntity will = wills.get(wills.size()-1);
 
         JSONObject pathobj = new JSONObject(will.getFilepath());
         
         String transkey = will.getTransactionhash();
         JSONObject hashobj =  willservice.getFilehashByTranskey(transkey);
-        
+
         boolean flag = willservice.compareTosha256(pathobj, hashobj);
         System.out.println(flag);
         

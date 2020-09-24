@@ -100,15 +100,45 @@ public class WillService {
     } 
 
     public boolean compareTosha256(JSONObject path,JSONObject hash) throws Exception{
+
+        System.out.println(path.toString());
+        System.out.println(hash.toString());
         boolean flag = false;
 
-        final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
-        final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
-        final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
-        
-        if(texthash.equals(hash.getString("text")) && imagehash.equals(hash.getString("image")) && videohash.equals(hash.getString("video"))){
+        if(!path.isNull("textpath")){
+            final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
+
+            if(texthash.equals(hash.getString("text"))){
+                flag = true;
+            }
+        }
+        else{
             flag = true;
         }
+
+        if(!path.isNull("imagepath")){
+            final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
+
+            if(imagehash.equals(hash.getString("image"))){
+                flag = true;
+            }
+        }
+        else{
+            flag = true;
+        }
+
+        if(!path.isNull("video")){
+            final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
+
+            if(videohash.equals(hash.getString("video"))){
+                flag = true;
+            }
+        }
+        else{
+            flag = true;
+        }
+        
+        
 
         return flag;
     }
