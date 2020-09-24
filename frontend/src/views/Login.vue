@@ -15,16 +15,8 @@
                 href="javascript:void(0)"
                 class="md-just-icon md-simple md-white"
               >
-                <i class="fab fa-twitter"></i>
-              </md-button>
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-
             
               <!-- 데이터 입력 -->
               <md-field class="md-form-group" slot="inputs" style="margin-top: 3em">
@@ -37,22 +29,22 @@
                 <label>Password...</label>
                 <md-input v-model="password" type="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-lg" @click="gotoMain()">
+              <md-button slot="footer" class="md-simple md-lg" style="height: 4.5em" @click="goToMain()">
                 <span style="font-size: 1.4em" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='grey'">
                   로그인
                 </span>
               </md-button>
               
-              <hr slot="hr" style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em">
+              <hr slot="hrtag" style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em; margin-bottom: 0.5em">
               
-              <div slot="a" style="margin-left: 2em; margin-right: 2em;">
+              <div slot="atag" style="margin-left: 2em; margin-right: 2em;">
                 <span style="font-size: 0.9em; font-weight:500">아직 회원이 아니라면</span>
-                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">가입하기</a>
+                <a slot="atag" href="/signup" style="font-size: 0.96em; font-weight:600; color: grey; float: right">가입하기</a>
               </div>
-              <div slot="a" style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em">
+              <div slot="atag" style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em">
                 <span style="font-size: 0.9em; font-weight:500;" >
                 비밀번호를 잊으셨나요?</span>
-                <a slot="a" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">비밀번호 찾기</a>
+                <a slot="atag" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">비밀번호 찾기</a>
               </div>
 
             </login-card>
@@ -64,9 +56,10 @@
 </template>
 
 <script>
-import { LoginCard } from "@/components";
+import LoginCard from "../components/cards/LoginCard.vue";
 
 export default {
+  name: "Login",
   components: {
     LoginCard
   },
@@ -84,7 +77,7 @@ export default {
     }
   },
   methods: {
-    gotoMain() {
+    goToMain() {
       this.$router.push("/main")
     },
     onLogin(){
