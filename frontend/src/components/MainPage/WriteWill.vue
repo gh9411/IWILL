@@ -1,8 +1,7 @@
 <template>
   <div class="writeWILL">
-    <h3>글 남기기</h3>
 
-    <v-card flat>
+    <v-card class="willcard" flat>
       <v-form ref="form" @submit.prevent="submit">
         <v-container fluid>
           <v-row>
@@ -10,23 +9,27 @@
               <v-text-field
                 v-model="form.title"
                 :rules="rules.name"
-                label="제목"
+                label="Title"
                 required
               ></v-text-field>
             </v-col>
             
             <v-col cols="12">
-              <v-textarea v-model="form.content">
+              <v-textarea v-model="form.content" auto-grow row-height="50">
                 <template v-slot:label>
-                  <div>내용</div>
+                  <div>content</div>
                 </template>
               </v-textarea>
             </v-col>
           </v-row>
         </v-container>
-        <v-file-input show-size counter multiple label="File input"></v-file-input>
+        <!-- 파일 업로드 -->
+        <v-file-input show-size counter multiple label="File input" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
 
-        <md-button class="md-button"><span style="font-size: 1rem">글 남기기</span></md-button>
+        <!-- submit -->
+        <div class="buttoncenter">
+          <md-button class="md-button"><span style="font-size: 1rem;">글 남기기</span></md-button>
+        </div>
       </v-form>
     </v-card>
   </div>
