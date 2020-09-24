@@ -1,6 +1,5 @@
 <template>
-  <div class="writeWILL">
-    <h3>나의 글</h3>
+  <div class="MyRecord">
     <v-expansion-panels>
       <v-expansion-panel
         v-for="(item,i) in 10"
