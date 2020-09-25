@@ -2,7 +2,7 @@
   <div class="MyRecord">
     <v-expansion-panels>
       <v-expansion-panel v-for="(item,i) in 5" :key="i">
-        <v-expansion-panel-header>2020.{{i+1}}월의 기록</v-expansion-panel-header>
+        <v-expansion-panel-header>2020.{{i+1}}월의 기록입니다.</v-expansion-panel-header>
         <v-expansion-panel-content>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         
