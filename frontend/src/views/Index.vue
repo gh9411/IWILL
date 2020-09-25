@@ -16,63 +16,176 @@
         </div>
       </div>
     </parallax>
-    <div class="main" style="background-color: white">
-      <div class="section section-basic">
-        <div class="container" style="margin-bottom:300px;">
-          <div class="row" style="float:right; position:relative; left:-50%;">
+    <div class="maintab" style="background-color: white;">
+      <div class="section section-basic;">
+        <div class="container">
+          <div>
+            <p style="font-size:medium; font-weight:bold; color:green;">
+              Who we are
+            </p>
+          </div>
+          <div
+            class="row"
+            style="float:right; margin-top:0px; position:relative; left:-50%;"
+          >
             <div
               class="title"
-              style="width:50%; float:left; position:relative; left:50%;"
+              style="width:50%; float:left; margin-top:0px; position:relative; left:50%;"
             >
-              <h2 class="title">IWILL이란?</h2>
-              <h4>남겨진 이들을 위한 유언장 작성 플랫폼</h4>
-              <h4>블록체인 기반으로 안전하게 보관 가능</h4>
+              <h2 class="title" style="margin-top:0px;">IWILL이란?</h2>
+              <h3 class="title">남겨진 이들을 위한 유언장 작성 플랫폼</h3>
+              <h4>블록체인 기술을 이용해 작성한 글, 사진, 동영상을</h4>
+              <h4>위변조 걱정 없이 보관해드립니다.</h4>
             </div>
             <div
               class="title"
-              style="width:50%; float:left; position:relative; left:55%;"
+              style="width:50%; float:left; margin-top:0px; position:relative; left:55%;"
             >
-              <a href="#/profile" target="_blank">
+              <a href="/main" target="_blank" style="margin-top:0px;">
                 <img
-                  :src="profile"
+                  :src="service"
                   alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
+                  class="img-raised img-fluid"
                 />
               </a>
             </div>
           </div>
         </div>
         <div class="container">
+          <div>
+            <p style="font-size:medium; font-weight:bold; color:green;">
+              Our Technology
+            </p>
+          </div>
           <div class="row" style="float:right; position:relative; left:-50%;">
             <div
               class="title"
-              style="width:50%; float:left; position:relative; left:50%;"
+              style="width:50%; margin-top:0px; float:left; position:relative; left:50%;"
             >
-              <h2 class="title" style="width:250px;">
+              <h2 class="title" style="margin-top:0px; width:250px;">
                 왜 블록체인을 사용하나요?
               </h2>
             </div>
             <div
               class="title"
-              style="width:50%; float:left; position:relative; left:55%;"
+              style="width:50%; float:left; margin-top:0px; position:relative; left:55%;"
             >
-              <h4 style="margin:40px auto; width:375px;">
+              <h4 style=" margin:0px auto; width:375px;">
                 블록체인은 첨단 암호 기술의 매커니즘을 통해 보호됩니다. 블록체인
-                매커니즘의 2가지 특징을 소개합니다.
+                매커니즘의 3가지 특징을 소개합니다.
               </h4>
             </div>
+          </div>
+          <div class="container">
             <div
-              class="title"
-              style="width:50%; float:left; position:relative;"
+              class="row"
+              style=" display:flex; justify-content:space-around;"
             >
-              <h1 style="color:gray;">1.</h1>
-              <hr style="width:60%; float:left;" />
+              <div class="title col-4" style="padding:0px 10px 0px 0px;">
+                <h1 style="color:gray;">1.</h1>
+                <hr style="border:solid 0.1px gray; width:80%;" />
+                <h2>해싱(암호화)</h2>
+                <h4 style="width:80%;">
+                  블록 해시는 해당 블록의 데이터와 이전 블록의 해시를 기반으로
+                  만들어 보안을 유지합니다.
+                </h4>
+              </div>
+              <div class="title col-4" style="padding:0px 10px 0px 0px;">
+                <h1 style="color:gray;">2.</h1>
+                <hr style="border:solid 0.1px gray; width:80%;" />
+                <h2>기록</h2>
+                <h4 style="width:80%;">
+                  블록체인은 모든 변화에 대한 기록이 남습니다. 기록을 통해
+                  데이터의 무결성을 유지합니다.
+                </h4>
+              </div>
+              <div class="title col-4" style="padding:0px 10px 0px 0px;">
+                <h1 style="color:gray;">3.</h1>
+                <hr style="border:solid 0.1px gray; width:80%;" />
+                <h2>영원한 저장</h2>
+                <h4 style="width:80%;">
+                  블록체인의 기록은 영원히 저장되고 위변조 될 수 없습니다.
+                  데이터의 위변성을 막을 수 있습니다.
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container" style="margin-top:300px; column-gap:100px;">
+          <div>
+            <p
+              class="text-left"
+              style="font-size:medium; font-weight:bold; color:green; "
+            >
+              Our Member
+            </p>
+          </div>
+          <div
+            class="row"
+            style="margin-top:0px; display:flex; justify-content:space-around;
+          "
+          >
+            <div class="text-center">
+              <img
+                :src="dongock"
+                alt="Circle Image"
+                class="img-raised rounded-circle "
+              />
+              <br />
+              <p style="font-weight:bold;font-size:medium; margin-top:10px;">
+                이동옥
+              </p>
+            </div>
+            <div class="text-center">
+              <img
+                :src="hyunmin"
+                alt="Circle Image"
+                class="img-raised rounded-circle "
+              />
+              <br />
+              <p style="font-weight:bold;font-size:medium; margin-top:10px;">
+                최현민
+              </p>
+            </div>
+            <div class="text-center">
+              <img
+                :src="gihoon"
+                alt="Circle Image"
+                class="img-raised rounded-circle "
+              />
+              <br />
+              <p style="font-weight:bold;font-size:medium; margin-top:10px;">
+                박기훈
+              </p>
+            </div>
+            <div class="text-center">
+              <img
+                :src="wonho"
+                alt="Circle Image"
+                class="img-raised rounded-circle "
+              />
+              <br />
+              <p style="font-weight:bold;font-size:medium; margin-top:10px;">
+                이원호
+              </p>
+            </div>
+            <div class="text-center">
+              <img
+                :src="jonggwan"
+                alt="Circle Image"
+                class="img-raised rounded-circle "
+              />
+              <br />
+              <p style="font-weight:bold;font-size:medium; margin-top:10px;">
+                김종관
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="section section-navbars">
+      <!-- <div class="section section-navbars">
         <div class="container">
           <small-navigation></small-navigation>
         </div>
@@ -312,6 +425,43 @@
             </md-button>
           </div>
         </div>
+      </div> -->
+    </div>
+    <div style="background-color:#D8BFD8">
+      <div
+        class="text-center"
+        style="margin:0px; padding:0px; display:grid; justify-items:center;"
+      >
+        <div class="column" style="margin:150px 30px auto;">
+          <p style="font-size:medium; font-weight:bold; color:gray;">
+            Our Service
+          </p>
+          <div class="title">
+            <h2 class="title" style="margin:0px 0px auto; color:white ">
+              우리는 오로지
+            </h2>
+            <h2 class="title" style="margin-top:0px; color:white ">
+              고객의 데이터에 몰입합니다.
+            </h2>
+            <h4 style="color:white">남겨진 이들을 위해 글을 남겨보세요.</h4>
+            <h4 style="color:white">가장 안전하게 보관해드립니다.</h4>
+          </div>
+          <md-button
+            class="md-simple md-lg md-round btn"
+            onclick="location.href='/main'"
+          >
+            <p style="margin:0px; color:white;">글 남기러 가기</p>
+          </md-button>
+        </div>
+        <marquee
+          behavior="scroll"
+          direction="left"
+          scrollamount="15"
+          style="margin:100px 0px 100px 0px;"
+          ><h1 class="title" style="color:#E0FFFF">
+            BLOCKCHAIN + DATA = SECURITY
+          </h1></marquee
+        >
       </div>
     </div>
   </div>
@@ -329,14 +479,14 @@ import { LoginCard } from "@/components";
 
 export default {
   components: {
-    Navigation,
-    SmallNavigation,
-    Tabs,
-    NavPills,
-    Notifications,
-    TypographyImages,
-    JavascriptComponents,
-    LoginCard
+    // Navigation,
+    // SmallNavigation,
+    // Tabs,
+    // NavPills,
+    // Notifications,
+    // TypographyImages,
+    // JavascriptComponents,
+    // LoginCard
   },
   name: "index",
   bodyClass: "index-page",
@@ -361,17 +511,29 @@ export default {
       type: String,
       default: require("@/assets/img/leaf1.png")
     },
-    signup: {
+    dongock: {
       type: String,
-      default: require("@/assets/img/city.jpg")
+      default: require("@/assets/img/ok.jpg")
     },
-    landing: {
+    hyunmin: {
       type: String,
-      default: require("@/assets/img/landing.jpg")
+      default: require("@/assets/img/hm.jpg")
     },
-    profile: {
+    gihoon: {
       type: String,
-      default: require("@/assets/img/profile.jpg")
+      default: require("@/assets/img/gh.jpg")
+    },
+    wonho: {
+      type: String,
+      default: require("@/assets/img/wh.jpg")
+    },
+    jonggwan: {
+      type: String,
+      default: require("@/assets/img/jg.jpg")
+    },
+    service: {
+      type: String,
+      default: require("@/assets/img/service.jpg")
     }
   },
   data() {
@@ -417,6 +579,18 @@ export default {
   .md-button + .md-button {
     margin-left: 5px;
   }
+}
+.btn {
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px white solid;
+  margin: 15px auto;
+  text-align: center;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.9s, color 0.3;
 }
 
 @media all and (min-width: 991px) {

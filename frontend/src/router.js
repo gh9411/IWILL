@@ -18,8 +18,13 @@ export default new Router({
       name: "signup",
       components: { default: Signup, header: MainNavbar, footer: MainFooter },
       props: {
+<<<<<<< HEAD
         header: { colorOnScroll: 400 }
       }
+=======
+        header: { colorOnScroll: 400 },
+      },
+>>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
     },
     {
       path: "/main",
@@ -27,8 +32,17 @@ export default new Router({
       components: { default: MainPage, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
+    },
+    {
+      path: "/index",
+      name: "Index",
+      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
     },
     {
       path: "/index",
@@ -45,16 +59,16 @@ export default new Router({
       components: { default: Landing, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
     },
     {
       path: "/",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 }
-      }
+        header: { colorOnScroll: 400 },
+      },
     },
     {
       path: "/profile",
@@ -62,15 +76,21 @@ export default new Router({
       components: { default: Profile, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
+<<<<<<< HEAD
         footer: { backgroundColor: "black" }
       }
     }
+=======
+        footer: { backgroundColor: "black" },
+      },
+    },
+>>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
   ],
-  scrollBehavior: to => {
+  scrollBehavior: (to) => {
     if (to.hash) {
       return { selector: to.hash };
     } else {
       return { x: 0, y: 0 };
     }
-  }
+  },
 });

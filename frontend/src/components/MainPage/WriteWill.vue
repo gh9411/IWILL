@@ -24,7 +24,28 @@
           </v-row>
         </v-container>
         <!-- 파일 업로드 -->
-        <v-file-input show-size counter multiple label="File input" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+        <!-- <v-file-input 
+          show-size 
+          counter 
+          multiple 
+          chips="True" 
+          placeholder="한번에 여러 파일을 선택해 업로드도 가능합니다." 
+          label="File input"  
+          style="margin-right:1em; margin-left:0.5em;"
+        ></v-file-input> -->
+        <v-file-input
+          v-model="files"
+          placeholder="여러 파일 업로드도 가능합니다."
+          label="File input"
+          multiple
+          prepend-icon="mdi-paperclip"
+          style="margin-right:1em; margin-left:0.5em;"
+        >
+          <template v-slot:selection="{ text }">
+            <v-chip small label color="black">{{ text }}</v-chip>
+          </template>
+        </v-file-input>
+        <p>{{files}}</p>
 
 
         <!-- 날짜 입력 & 유언장 수신인 -->
@@ -42,7 +63,7 @@
         </div>
         <!-- submit -->
         <div class="buttoncenter">
-          <md-button class="md-button"><span style="font-size: 1rem;">글 남기기</span></md-button>
+          <md-button class="md-button" @click="submit()"><span style="font-size: 1rem;">글 남기기</span></md-button>
         </div>
       </v-form>
     </v-card>
@@ -68,7 +89,7 @@ export default {
       },
       Topic: "",
       content: "",
-      
+      files: [],      
     };
   },
   methods: {
@@ -79,6 +100,7 @@ export default {
     
     submit () {
       //만들어야함.
+      alert("글을 남겼습니다.")
     },
   },
   computed: {
