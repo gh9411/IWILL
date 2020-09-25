@@ -26,6 +26,20 @@
         <!-- 파일 업로드 -->
         <v-file-input show-size counter multiple label="File input" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
 
+
+        <!-- 날짜 입력 & 유언장 수신인 -->
+        <div class="container">
+          <!-- 유언장 수신인 주소 -->
+          <div>
+            <h3>누구에게?</h3>
+            <md-chips v-model="people" md-placeholder="Add people..."></md-chips>
+          </div>
+          
+          <div class="block">
+            <h3>언제?</h3>
+            <md-datepicker v-model="senddate" aria-placeholder="dd"/>
+          </div>
+        </div>
         <!-- submit -->
         <div class="buttoncenter">
           <md-button class="md-button"><span style="font-size: 1rem;">글 남기기</span></md-button>
@@ -39,11 +53,15 @@
 export default {
   name: "writeWILL",
   data() {
+    let dateFormat = this.$material.locale.dateFormat || 'yyyy-MM-dd'
+    let now = new Date()
     const defaultForm = Object.freeze({
       title: '',
       content: '',
     })
     return {
+      senddate: "",
+      people: [],
       form: Object.assign({}, defaultForm),
       rules: {
         name: [val => (val || '').length > 0 || '제목은 필수사항입니다.'],

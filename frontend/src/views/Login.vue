@@ -17,9 +17,13 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-            
+
               <!-- 데이터 입력 -->
-              <md-field class="md-form-group" slot="inputs" style="margin-top: 3em">
+              <md-field
+                class="md-form-group"
+                slot="inputs"
+                style="margin-top: 3em"
+              >
                 <md-icon>email</md-icon>
                 <label>Email...</label>
                 <md-input v-model="email" type="email"></md-input>
@@ -29,24 +33,51 @@
                 <label>Password...</label>
                 <md-input v-model="password" type="password"></md-input>
               </md-field>
-              <md-button slot="footer" class="md-simple md-lg" style="height: 4.5em" @click="goToMain()">
-                <span style="font-size: 1.4em" onMouseOver="this.style.color='#000000'" onMouseOut="this.style.color='grey'">
+              <md-button
+                slot="footer"
+                class="md-simple md-lg"
+                style="height: 4.5em"
+                @click="goToMain()"
+              >
+                <span
+                  style="font-size: 1.4em"
+                  onMouseOver="this.style.color='#000000'"
+                  onMouseOut="this.style.color='grey'"
+                >
                   로그인
                 </span>
               </md-button>
-              
-              <hr slot="hrtag" style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em; margin-bottom: 0.5em">
-              
-              <div slot="atag" style="margin-left: 2em; margin-right: 2em;">
-                <span style="font-size: 0.9em; font-weight:500">아직 회원이 아니라면</span>
-                <a slot="atag" href="/signup" style="font-size: 0.96em; font-weight:600; color: grey; float: right">가입하기</a>
-              </div>
-              <div slot="atag" style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em">
-                <span style="font-size: 0.9em; font-weight:500;" >
-                비밀번호를 잊으셨나요?</span>
-                <a slot="atag" href="#" style="font-size: 0.96em; font-weight:600; color: grey; float: right">비밀번호 찾기</a>
-              </div>
 
+              <hr
+                slot="hrtag"
+                style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em; margin-bottom: 0.5em"
+              />
+
+              <div slot="atag" style="margin-left: 2em; margin-right: 2em;">
+                <span style="font-size: 0.9em; font-weight:500"
+                  >아직 회원이 아니라면</span
+                >
+                <a
+                  slot="atag"
+                  href="/signup"
+                  style="font-size: 0.96em; font-weight:600; color: grey; float: right"
+                  >가입하기</a
+                >
+              </div>
+              <div
+                slot="atag"
+                style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em"
+              >
+                <span style="font-size: 0.9em; font-weight:500;">
+                  비밀번호를 잊으셨나요?</span
+                >
+                <a
+                  slot="atag"
+                  href="#"
+                  style="font-size: 0.96em; font-weight:600; color: grey; float: right"
+                  >비밀번호 찾기</a
+                >
+              </div>
             </login-card>
           </div>
         </div>
@@ -78,20 +109,19 @@ export default {
   },
   methods: {
     goToMain() {
-      this.$router.push("/main")
+      this.$router.push("/index");
     },
-    onLogin(){
+    onLogin() {
       let { email, password } = this;
       let data = {
         email,
         password
       };
-      store.dispatch('login', {email: this.email, password: this.password});
-      if(this.$store.state.isLogin) {
-        this.$router.push("/main")
+      store.dispatch("login", { email: this.email, password: this.password });
+      if (this.$store.state.isLogin) {
+        this.$router.push("/index");
       }
-    },
-
+    }
   },
   computed: {
     headerStyle() {
@@ -104,5 +134,4 @@ export default {
 </script>
 
 <style lang="css">
-
 </style>
