@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
 
-    <!-- 배경 및 안내 문구 -->
+    <!--상단 배경 및 안내 문구 -->
     <parallax class="page-header header-filter" :style="headerStyle">
       <div class="md-layout">
         <div class="md-layout-item">
@@ -27,7 +27,8 @@
         <div>
           <v-tabs class="maintap">
             <v-tab @click="toggle('MyRecord')">글 남기기</v-tab>
-            <v-tab @click="toggle('WriteWill')">내 기록 보기</v-tab>
+            <v-tab @click="toggle('WriteWill')">내 기록</v-tab>
+            <v-tab @click="toggle('receivedWill')">받은 유언장</v-tab>
           </v-tabs>
         </div>
       </div>
@@ -51,6 +52,9 @@
         
         <div class="content-right">
           <div class="menu">
+            <div v-if="categories[2].display">
+              <receivedWill/>
+            </div>
             <div v-if="categories[1].display">
               <MyRecord/>
             </div>
@@ -62,88 +66,23 @@
       </div>
 
 
-
-
-
-
-      <div></div>
-      <div class="section section-basic" >
-        <div class="container">
-          <div class="title" >
-            <h2 >Basic Elements</h2>
-          </div>
-          <basic-elements></basic-elements>
-        </div>
-      </div>
-      
-      
-      <div class="section section-navbars">
-        <div class="container">
-          <small-navigation></small-navigation>
-        </div>
-        <navigation></navigation>
-      </div>
-
-      <div class="section section-tabs">
-        <div class="container">
-          <tabs></tabs>
-        </div>
-      </div>
-      <div class="section section-white">
-        <div class="container">
-          <nav-pills></nav-pills>
-        </div>
-      </div>
-      <div class="section section-notifications">
-        <div class="container">
-          <div class="title">
-            <h3>Notifications</h3>
-          </div>
-        </div>
-        <notifications></notifications>
-      </div>
-      <div class="section">
-        <div class="container">
-          <typography-images></typography-images>
-        </div>
-      </div>
-      <div class="section section-javascript">
-        <div class="container">
-          <javascript-components></javascript-components>
-        </div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import BasicElements from "./components/BasicElementsSection";
-import Navigation from "./components/NavigationSection";
-import SmallNavigation from "./components/SmallNavigationSection";
-import Tabs from "./components/TabsSection";
-import NavPills from "./components/NavPillsSection";
-import Notifications from "./components/NotificationsSection";
-import TypographyImages from "./components/TypographyImagesSection";
-import JavascriptComponents from "./components/JavascriptComponentsSection";
-// import { LoginCard } from "@/components";
+
 import "../assets/scss/custom.scss"
 
 import MyRecord from "../components/MainPage/MyRecord"
 import WriteWill from "../components/MainPage/WriteWill"
+import receivedWill from "../components/MainPage/receivedWill"
 
 export default {
   components: {
-    BasicElements,
-    Navigation,
-    SmallNavigation,
-    Tabs,
-    NavPills,
-    Notifications,
-    TypographyImages,
-    JavascriptComponents,
-    // LoginCard,
     MyRecord,
     WriteWill,
+    receivedWill,
   },
   name: "mainpage",
   bodyClass: "index-page",
@@ -190,6 +129,7 @@ export default {
       categories: [
         {display: true, name: 'MyRecord'},
         {display: false, name: 'WriteWill'},
+        {display: false, name: 'receivedWill'},
       ]
     };
   },
