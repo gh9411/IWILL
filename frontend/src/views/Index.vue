@@ -16,9 +16,9 @@
         </div>
       </div>
     </parallax>
-    <div class="main" style="background-color: white">
-      <div class="section section-basic">
-        <div class="container" style="margin-bottom:300px;">
+    <div class="maintab" style="background-color: white;">
+      <div class="section section-basic;">
+        <div class="container">
           <div>
             <p style="font-size:medium; font-weight:bold; color:green;">
               Who we are
@@ -41,11 +41,11 @@
               class="title"
               style="width:50%; float:left; margin-top:0px; position:relative; left:55%;"
             >
-              <a href="#/profile" target="_blank" style="margin-top:0px;">
+              <a href="/main" target="_blank" style="margin-top:0px;">
                 <img
-                  :src="profile"
+                  :src="service"
                   alt="Rounded Image"
-                  class="img-raised rounded img-fluid"
+                  class="img-raised img-fluid"
                 />
               </a>
             </div>
@@ -112,10 +112,7 @@
           </div>
         </div>
 
-        <div
-          class="container"
-          style="margin-top:300px; column-gap:100px; position:relative;  "
-        >
+        <div class="container" style="margin-top:300px; column-gap:100px;">
           <div>
             <p
               class="text-left"
@@ -430,7 +427,7 @@
         </div>
       </div> -->
     </div>
-    <div class="main" style="background-color:#D8BFD8">
+    <div style="background-color:#D8BFD8">
       <div
         class="text-center"
         style="margin:0px; padding:0px; display:grid; justify-items:center;"
@@ -496,51 +493,55 @@ export default {
   props: {
     image: {
       type: String,
-      default: require("@/assets/img/vue-mk-header.jpg"),
+      default: require("@/assets/img/vue-mk-header.jpg")
     },
     leaf4: {
       type: String,
-      default: require("@/assets/img/leaf4.png"),
+      default: require("@/assets/img/leaf4.png")
     },
     leaf3: {
       type: String,
-      default: require("@/assets/img/leaf3.png"),
+      default: require("@/assets/img/leaf3.png")
     },
     leaf2: {
       type: String,
-      default: require("@/assets/img/leaf2.png"),
+      default: require("@/assets/img/leaf2.png")
     },
     leaf1: {
       type: String,
-      default: require("@/assets/img/leaf1.png"),
+      default: require("@/assets/img/leaf1.png")
     },
     dongock: {
       type: String,
-      default: require("@/assets/img/ok.jpg"),
+      default: require("@/assets/img/ok.jpg")
     },
     hyunmin: {
       type: String,
-      default: require("@/assets/img/hm.jpg"),
+      default: require("@/assets/img/hm.jpg")
     },
     gihoon: {
       type: String,
-      default: require("@/assets/img/gh.jpg"),
+      default: require("@/assets/img/gh.jpg")
     },
     wonho: {
       type: String,
-      default: require("@/assets/img/wh.jpg"),
+      default: require("@/assets/img/wh.jpg")
     },
     jonggwan: {
       type: String,
-      default: require("@/assets/img/jg.jpg"),
+      default: require("@/assets/img/jg.jpg")
     },
+    service: {
+      type: String,
+      default: require("@/assets/img/service.jpg")
+    }
   },
   data() {
     return {
       firstname: null,
       email: null,
       password: null,
-      leafShow: false,
+      leafShow: false
     };
   },
   methods: {
@@ -550,19 +551,19 @@ export default {
       } else {
         this.leafShow = true;
       }
-    },
+    }
   },
   computed: {
     headerStyle() {
       return {
-        backgroundImage: `url(${this.image})`,
+        backgroundImage: `url(${this.image})`
       };
     },
     signupImage() {
       return {
-        backgroundImage: `url(${this.signup})`,
+        backgroundImage: `url(${this.signup})`
       };
-    },
+    }
   },
   mounted() {
     this.leafActive();
@@ -570,7 +571,7 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.leafActive);
-  },
+  }
 };
 </script>
 <style lang="scss">
