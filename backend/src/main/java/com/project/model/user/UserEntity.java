@@ -12,32 +12,33 @@ public class UserEntity {
     
 	@Id
 	@Column(name="uid")
-	private String uid; // uid
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int uid; // uid
 	
 	@Column(name="upw")
-	private String upw; // passwd
+	String upw; // passwd
 	
 	@Column(name="accounthash")
-	private String accounthash; // 해쉬값
+	String accounthash; // 해쉬 값
 	
 	@Column(name="email")
-	private String email; // email
+	String email; // email
 	
 	@Column(name="name")
-	private String name;  // 이름
+	String name;  // 이름
 	
 	@Column(name="phone")
-	private String phone; // phone
+	String phone; // phone
 	
 	@Column(name="createdate")
-	private String createdate; // 생성일
+	String createdate; // 생성일
 	
 	@Column(name="senddate")
-	private String senddate;  // 공개 날짜
+	String senddate;  // 공개 날짜
 	
 	@Column(name="profile")
-	private String profile;    // 사진
+	String profile;    // 사진
 	
 	@Column(name="usertype")
-	private int usertype;      // 회원 유형
+	int usertype;      // 회원 유형
 }
