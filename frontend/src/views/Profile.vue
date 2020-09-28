@@ -4,23 +4,24 @@
       class="section page-header header-filter"
       :style="headerStyle"
     ></parallax>
-    <div class="main main-raised">
+    <div class="maintab main-raised">
       <div class="section profile-content">
         <div class="container">
           <div class="md-layout">
-            <div class="md-layout-item md-size-50 mx-auto">
+            <div class="md-layout-item md-size-150 mx-auto">
               <div class="profile">
                 <div class="avatar">
                   <img
-                    :src="img"
+                    :src="imageUrl"
                     alt="Circle Image"
                     class="img-raised rounded-circle img-fluid"
+                    @click="onClickImageUpload"
                   />
                 </div>
                 <div class="name">
                   <h3 class="title">{{ this.username }}</h3>
                   <h6>{{ this.email }}</h6>
-                  <md-button
+                  <!-- <md-button
                     href="javascript:void(0)"
                     class="md-just-icon md-simple md-dribbble"
                     ><i class="fab fa-dribbble"></i
@@ -34,15 +35,15 @@
                     href="javascript:void(0)"
                     class="md-just-icon md-simple md-pinterest"
                     ><i class="fab fa-pinterest"></i
-                  ></md-button>
+                  ></md-button> -->
                 </div>
               </div>
             </div>
           </div>
-          <div class="description text-center">
-            <p>
-              한 줄 소개 자리
-            </p>
+          <div class="description text-center" style="width:450px;">
+            <md-field>
+              <md-input class="text-center" v-model="explain"></md-input>
+            </md-field>
           </div>
           <div class="profile-tabs">
             <tabs
@@ -108,9 +109,11 @@ export default {
   bodyClass: "profile-page",
   data() {
     return {
-      username : "",
-      email : "",
-      password : "",
+      explain: "한 줄 자기소개",
+      username: "",
+      email: "",
+      password: "",
+      imageUrl: require("@/assets/img/guest.jpg"),
       tabPane1: [
         { image: require("@/assets/img/examples/studio-1.jpg") },
         { image: require("@/assets/img/examples/studio-2.jpg") },
@@ -145,10 +148,6 @@ export default {
     header: {
       type: String,
       default: require("@/assets/img/city-profile.jpg")
-    },
-    img: {
-      type: String,
-      default: require("@/assets/img/faces/christian.jpg")
     }
   },
   computed: {
@@ -156,6 +155,20 @@ export default {
       return {
         backgroundImage: `url(${this.header})`
       };
+    }
+  },
+  methods: {
+    onClickImageUpload(e) {
+      var input = e.target;
+      console.log(input);
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        console.log(reader);
+        reader.onload = e => {
+          this.imageUrl = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
     }
   }
 };
