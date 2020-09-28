@@ -67,7 +67,7 @@ public class UserService {
 
 	}
 
-	public void delete(String uid) {
+	public void delete(int uid) {
 		Optional<UserEntity> del = userdao.findByUid(uid);
 
 		del.ifPresent(selectUser -> {
