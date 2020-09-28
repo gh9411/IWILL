@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.project.dao.user.UserDAO;
 import com.project.model.user.UserEntity;
+import com.project.service.will.FileService;
 
 @Service
 public class UserService {
@@ -19,6 +22,8 @@ public class UserService {
 	@Autowired
 	UserDAO userdao;
 
+	FileService fs = new FileService();
+	
 	public Object login(String email, String password) {
 		if (email == null || password == null)
 			return null;
@@ -28,12 +33,11 @@ public class UserService {
 		return user;
 	}
 
-	public Object signup(UserEntity user) {
+	public Object signup(UserEntity user) throws Exception {
 
 		UserEntity newuser = new UserEntity();
 		newuser.setUid(user.getUid());
 		newuser.setUpw(user.getUpw());
-		newuser.setAccounthash(user.getAccounthash());
 		newuser.setEmail(user.getEmail());
 		newuser.setName(user.getName());
 		newuser.setPhone(user.getPhone());
@@ -42,6 +46,18 @@ public class UserService {
 		newuser.setProfile(user.getProfile());
 		newuser.setUsertype(user.getUsertype());
 
+		JSONObject request = new JSONObject();
+		JSONArray params = new JSONArray();
+		request.put("jsonrpc", "2.0");
+		request.put("method", "personal_newAccount");
+		params.put("");
+		request.put("params", params);
+		request.put("id", 10);
+		
+		String result = fs.sendPost("http://localhost:8545/", request.toString());
+		request = new JSONObject(result);
+		
+		newuser.setAccounthash(request.getString("result"));
 		userdao.save(newuser);
 
 		return new ResponseEntity<UserEntity>(newuser, HttpStatus.OK);

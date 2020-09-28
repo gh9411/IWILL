@@ -57,8 +57,8 @@ public class UserController {
 			@ApiImplicitParam(name = "senddate", value = "전송 날짜", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "profile", value = "자기 소개", required = true, dataType = "string"),
 			@ApiImplicitParam(name = "usertype", value = "회원 유형", required = true, dataType = "int"), })
-	public Object signup(UserEntity user) {
-		System.out.println(user);
+	public Object signup(UserEntity user) throws Exception {
+		
 		return userservice.signup(user);
 	}
 
