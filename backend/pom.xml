@@ -44,6 +44,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -93,6 +94,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+		
 
 		<!--이메일 인증-->
 		

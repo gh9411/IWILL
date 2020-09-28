@@ -7,19 +7,37 @@ import Profile from "./views/Profile.vue";
 import MainNavbar from "./layout/MainNavbar.vue";
 import MainFooter from "./layout/MainFooter.vue";
 import Signup from "./views/Signup.vue";
+import Index from "./views/Index.vue";
 Vue.use(Router);
 
 export default new Router({
   mode: "history",
   routes: [
     {
+      path: "/signup",
+      name: "signup",
+      components: { default: Signup, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+      },
+    },
+    {
       path: "/main",
-      name: "MainPage",
+      name: "mainPage",
       components: { default: MainPage, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
+    },
+    {
+      path: "/index",
+      name: "Index",
+      components: { default: Index, header: MainNavbar, footer: MainFooter },
+      props: {
+        header: { colorOnScroll: 400 },
+        footer: { backgroundColor: "black" },
+      },
     },
     {
       path: "/landing",
@@ -27,16 +45,16 @@ export default new Router({
       components: { default: Landing, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
     },
     {
       path: "/",
       name: "login",
       components: { default: Login, header: MainNavbar, footer: MainFooter },
       props: {
-        header: { colorOnScroll: 400 }
-      }
+        header: { colorOnScroll: 400 },
+      },
     },
     {
       path: "/profile",
@@ -44,24 +62,15 @@ export default new Router({
       components: { default: Profile, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
     },
-    {
-      path: "/signup",
-      name: "signup",
-      components: { default: Signup, header: MainNavbar, footer: MainFooter },
-      props: {
-        header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
-    }
   ],
-  scrollBehavior: to => {
+  scrollBehavior: (to) => {
     if (to.hash) {
       return { selector: to.hash };
     } else {
       return { x: 0, y: 0 };
     }
-  }
+  },
 });
