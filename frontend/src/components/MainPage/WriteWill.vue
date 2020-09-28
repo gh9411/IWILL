@@ -29,18 +29,21 @@
         이걸 백으로 어떻게 넘기는게 편할지 몰라 일단 그냥 두겠습니다. -->
         <v-file-input @change="uploadFile" chips multiple label="File input" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
 
-
+        <div class="setReciver" >
+          <md-switch v-model="switch1">수신인 설정하기</md-switch>
+        </div>
         <!-- 날짜 입력 & 유언장 수신인 -->
-        <div class="container">
+        <div class="container" v-if="switch1">
           <!-- 유언장 수신인 주소 -->
           <div class="who">
             <h3>누구에게?</h3>
             <md-chips
-              v-model="people" 
+              v-model="chips" 
               md-check-duplicated=true 
-              md-placeholder="Add people..." 
+              md-placeholder="Add people email..." 
               style="margin-top: 0px; padding-top: .2em;"
             ></md-chips>
+
             
           </div>
           <!-- 유언장 전달일자 -->
@@ -50,6 +53,9 @@
           </div>
         </div>
         
+
+        <div class="box"></div>
+
         <!-- submit -->
         <div class="buttoncenter">
           <md-button class="md-button" @click="submit()"><span style="font-size: 1rem;">글 남기기</span></md-button>
@@ -74,6 +80,7 @@ export default {
       content: '',
     })
     return {
+      switch1: true,
       senddate: "",
       form: Object.assign({}, defaultForm),
       rules: {
@@ -82,7 +89,7 @@ export default {
       Topic: "",
       content: "",
       files: [],
-      people: [],
+      chips: ['colinder@naver.com'],
     };
   },
   methods: {
@@ -105,5 +112,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
