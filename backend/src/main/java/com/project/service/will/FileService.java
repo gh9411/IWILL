@@ -174,9 +174,8 @@ public class FileService {
 			SHA = sb.toString();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
 		return SHA;
 	}
 
@@ -229,7 +228,7 @@ public class FileService {
 	public HashMap<String,String> uploadtxt(String content) throws Exception{
 
 		File file = new File("c:\\data\\text.txt");
-		String str = "Hello world!";
+		String str = content;
 		HashMap<String,String> hm = new HashMap<>();
 		
 		try {

@@ -100,16 +100,53 @@ public class WillService {
     } 
 
     public boolean compareTosha256(JSONObject path,JSONObject hash) throws Exception{
-        boolean flag = false;
 
-        final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
-        final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
-        final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
-        
-        if(texthash.equals(hash.getString("text")) && imagehash.equals(hash.getString("image")) && videohash.equals(hash.getString("video"))){
-            flag = true;
+        System.out.println(path.toString());
+        System.out.println(hash.toString());
+        boolean resultflag = false;
+        boolean textflag = false;
+        boolean viedoflag = false;
+        boolean imageflag = false;
+
+        if(!path.isNull("textpath")){
+            final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
+
+            if(texthash.equals(hash.getString("text"))){
+                textflag = true;
+            }
+        }
+        else{
+            textflag = true;
         }
 
-        return flag;
+        if(!path.isNull("imagepath")){
+            final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
+
+            if(imagehash.equals(hash.getString("image"))){
+                imageflag = true;
+            }
+        }
+        else{
+            imageflag = true;
+        }
+
+        if(!path.isNull("video")){
+            final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
+
+            if(videohash.equals(hash.getString("video"))){
+                viedoflag = true;
+            }
+        }
+        else{
+            viedoflag = true;
+        }
+        
+
+        if(imageflag && viedoflag && textflag){
+            resultflag = true;
+        }
+        
+
+        return resultflag;
     }
 }
