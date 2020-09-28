@@ -50,4 +50,6 @@ public class WillEntity {
     @Column(name="witness")
     String witness; // 유언장 해쉬값
 
+    @Column(name="senddate")
+    String senddate; // 전송날짜
 }

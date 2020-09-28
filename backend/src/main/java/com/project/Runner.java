@@ -1,6 +1,12 @@
 package com.project;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.Min;
 
 import com.project.model.will.WillEntity;
 import com.project.service.will.WillService;
@@ -18,8 +24,55 @@ public class Runner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<WillEntity> list =  service.findAll();
-        System.out.println(list);
+        // List<WillEntity> list =  service.findAll();
+        // System.out.println(list);
+        checkDateForSendEmail ct = new checkDateForSendEmail();
+        Thread t = new Thread(ct);
+        t.start();
+    }
 
+    public class checkDateForSendEmail implements Runnable{
+
+
+        @Override
+        public void run() {
+            while(true){
+
+                //현재 시간에서 정각의 시간까지 스레드슬립을위한 부분
+                Date date = new Date();
+                SimpleDateFormat sdp = new SimpleDateFormat("HH.mm");
+                String[] time = sdp.format(date).split("\\.");
+                
+                int Hour = Integer.parseInt(time[0]);
+                int Min = Integer.parseInt(time[1]);
+
+                int timeDif = 0;
+                if(Min == 0){//0분일때
+                    timeDif = (24 - Hour)*1000*60 ;
+                }
+                else{
+                    timeDif = ((23 - Hour) * 1000 * 60) + ((60 - Min) * 1000) ;
+                }
+                // System.out.println(timeDif);
+
+                try{
+                    // Thread.sleep(timeDif);
+
+                    String day = new SimpleDateFormat("dd").format(new Date());
+                    
+                    List<WillEntity> list = service.findAll();
+
+                    for(WillEntity will : list) {
+                        int sendday = Integer.parseInt(will.getSenddate().split("-")[0].split("\\.")[2]);
+                        
+                    }
+                }
+                catch(Exception e){
+    
+                }
+            }
+        }
     }
 }
+
+
