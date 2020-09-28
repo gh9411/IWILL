@@ -103,43 +103,50 @@ public class WillService {
 
         System.out.println(path.toString());
         System.out.println(hash.toString());
-        boolean flag = false;
+        boolean resultflag = false;
+        boolean textflag = false;
+        boolean viedoflag = false;
+        boolean imageflag = false;
 
         if(!path.isNull("textpath")){
             final String texthash = fs.extractFileHashSHA256(path.getString("textpath"));
 
             if(texthash.equals(hash.getString("text"))){
-                flag = true;
+                textflag = true;
             }
         }
         else{
-            flag = true;
+            textflag = true;
         }
 
         if(!path.isNull("imagepath")){
             final String imagehash = fs.extractFileHashSHA256(path.getString("imagepath"));
 
             if(imagehash.equals(hash.getString("image"))){
-                flag = true;
+                imageflag = true;
             }
         }
         else{
-            flag = true;
+            imageflag = true;
         }
 
         if(!path.isNull("video")){
             final String videohash = fs.extractFileHashSHA256(path.getString("videopath"));
 
             if(videohash.equals(hash.getString("video"))){
-                flag = true;
+                viedoflag = true;
             }
         }
         else{
-            flag = true;
+            viedoflag = true;
         }
         
+
+        if(imageflag && viedoflag && textflag){
+            resultflag = true;
+        }
         
 
-        return flag;
+        return resultflag;
     }
 }

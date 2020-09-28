@@ -174,9 +174,8 @@ public class FileService {
 			SHA = sb.toString();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
 		return SHA;
 	}
 

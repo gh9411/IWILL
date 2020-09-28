@@ -15,6 +15,7 @@ import com.project.model.will.dto.WillCreateDTO;
 import com.project.service.will.FileService;
 import com.project.service.will.WillService;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -131,17 +132,35 @@ public class WillController {
 
 
         List<WillEntity> wills = willservice.getWillByUid(userId);
-        WillEntity will = wills.get(wills.size()-1);
 
-        JSONObject pathobj = new JSONObject(will.getFilepath());
-        
-        String transkey = will.getTransactionhash();
-        JSONObject hashobj =  willservice.getFilehashByTranskey(transkey);
 
-        boolean flag = willservice.compareTosha256(pathobj, hashobj);
-        System.out.println(flag);
+        JSONArray result = new JSONArray();
+
+        for(WillEntity will : wills){
+            System.out.println("==========================");
+
+            JSONObject pathobj = new JSONObject(will.getFilepath());
         
-        return new ResponseEntity<List<WillEntity>>(wills, HttpStatus.OK);
+            String transkey = will.getTransactionhash();
+            System.out.println("key : " + transkey);
+            JSONObject hashobj =  willservice.getFilehashByTranskey(transkey);
+
+            boolean flag = willservice.compareTosha256(pathobj, hashobj);
+            JSONArray jsonarr = new JSONArray();
+            jsonarr.put(will);
+            jsonarr.put(pathobj);
+            
+            System.out.println(flag);
+            System.out.println(jsonarr.toString());
+            
+            if(flag){
+                result.put(jsonarr);
+            }
+            System.out.println("==========================");
+        }
+        System.out.println(result.toString());
+        
+        return new ResponseEntity<>(result.toList(), HttpStatus.OK);
 
      }
      
