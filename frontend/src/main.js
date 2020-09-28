@@ -26,9 +26,5 @@ Vue.mixin({
 new Vue({
   router,
   vuetify,
-<<<<<<< HEAD
-  render: h => h(App)
-=======
-  render: (h) => h(App),
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
+  render: h => h(App),
 }).$mount("#app");

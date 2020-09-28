@@ -17,11 +17,6 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
               <!-- 데이터 입력 -->
               <md-field
                 class="md-form-group"
@@ -113,11 +108,7 @@ export default {
   },
   methods: {
     goToMain() {
-<<<<<<< HEAD
-      this.$router.push("/main")
-=======
       this.$router.push("/index");
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
     },
     onLogin() {
       let { email, password } = this;
@@ -142,8 +133,4 @@ export default {
 </script>
 
 <style lang="css">
-<<<<<<< HEAD
-
-=======
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
 </style>

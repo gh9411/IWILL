@@ -18,13 +18,8 @@ export default new Router({
       name: "signup",
       components: { default: Signup, header: MainNavbar, footer: MainFooter },
       props: {
-<<<<<<< HEAD
-        header: { colorOnScroll: 400 }
-      }
-=======
         header: { colorOnScroll: 400 },
       },
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
     },
     {
       path: "/main",
@@ -76,15 +71,9 @@ export default new Router({
       components: { default: Profile, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-<<<<<<< HEAD
-        footer: { backgroundColor: "black" }
-      }
-    }
-=======
         footer: { backgroundColor: "black" },
       },
     },
->>>>>>> 0ff7d8c68c64d66c7ef4f79a1e66535b5f5ca0c8
   ],
   scrollBehavior: (to) => {
     if (to.hash) {
