@@ -156,6 +156,9 @@ public class WillService {
 
         return resultflag;
     }
+    public WillEntity updateWill(int wid){
+        return willDao.getWillByWid(wid);
+    }
 
     //예약 날짜에 이메일 보내기
     public void sendEmail(String email){ 

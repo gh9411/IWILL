@@ -18,5 +18,7 @@ public interface WillDAO extends JpaRepository<WillEntity, Long>{
     @Query(value = "SELECT * FROM will where wid = (select max(wid) from will)" , nativeQuery = true)
     public WillEntity findTop();
 
+    public WillEntity getWillByWid(int wid);
+
     // public WillEntity findTopByWidOrderByWidDesc(); //로그에나 씁시다
 }
