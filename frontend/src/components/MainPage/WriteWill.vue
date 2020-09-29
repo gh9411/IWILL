@@ -52,7 +52,6 @@
             <md-datepicker v-model="senddate"/>
           </div>
         </div>
-        
 
         <div class="box"></div>
 
@@ -80,7 +79,7 @@ export default {
       content: '',
     })
     return {
-      switch1: true,
+      switch1: false,
       senddate: "",
       form: Object.assign({}, defaultForm),
       rules: {
@@ -89,7 +88,7 @@ export default {
       Topic: "",
       content: "",
       files: [],
-      chips: ['colinder@naver.com'],
+      chips: [],
     };
   },
   methods: {
