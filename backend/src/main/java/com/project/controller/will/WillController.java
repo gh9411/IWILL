@@ -122,6 +122,10 @@ public class WillController {
         will.setTransactionhash(TRANSKEY);
         will.setFilepath(filepath.toString());
         will.setCreatedate(DATE);
+        will.setReceive(willdto.getReceive());
+        will.setSenddate(willdto.getSenddate());
+        will.setWitness(willdto.getWitness());
+
         willservice.register(will);
 
         

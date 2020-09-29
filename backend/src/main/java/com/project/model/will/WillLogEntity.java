@@ -53,6 +53,9 @@ public class WillLogEntity {
     @Column(name="witness")
     String witness; 
 
+    @Column(name="senddate")
+    String senddate;
+
     public WillLogEntity(WillEntity entity){
         this.wid = entity.getWid();
         this.uid = entity.getUid();
@@ -63,5 +66,6 @@ public class WillLogEntity {
         this.createdate = entity.getCreatedate();
         this.islawed = entity.getIslawed();
         this.witness = entity.getWitness();
+        this.senddate = entity.getSenddate();
     }
 }
