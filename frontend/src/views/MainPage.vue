@@ -53,7 +53,7 @@
         <div class="content-right">
           <div class="menu">
             <div v-if="categories[2].display">
-              <receivedWill/>
+              <ReceivedWill/>
             </div>
             <div v-if="categories[1].display">
               <MyRecord/>
@@ -76,13 +76,13 @@ import "../assets/scss/custom.scss"
 
 import MyRecord from "../components/MainPage/MyRecord"
 import WriteWill from "../components/MainPage/WriteWill"
-import receivedWill from "../components/MainPage/receivedWill"
+import ReceivedWill from "../components/MainPage/ReceivedWill"
 
 export default {
   components: {
     MyRecord,
     WriteWill,
-    receivedWill,
+    ReceivedWill,
   },
   name: "mainpage",
   bodyClass: "index-page",

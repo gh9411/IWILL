@@ -1,15 +1,7 @@
 package com.project.model.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.*;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -19,34 +11,33 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
     
 	@Id
-	@Column(name = "uid")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long uid; // uid
+	@Column(name="uid")
+	private String uid; // uid
 	
-	@Column(name = "upw")
-    String upw; // passwd
+	@Column(name="upw")
+	private String upw; // passwd
 	
-	@Column(name = "email")
-    String email; // email
+	@Column(name="accounthash")
+	private String accounthash; // 해쉬값
 	
-	@Column(name = "name")
-    String name;  // 이름
+	@Column(name="email")
+	private String email; // email
 	
-	@Column(name = "phone")
-    String phone; // phone
+	@Column(name="name")
+	private String name;  // 이름
 	
-	@Column(name = "address")
-    String address; // address
+	@Column(name="phone")
+	private String phone; // phone
 	
-	@Column(name = "createDate")
-    String createDate; // 생성일
+	@Column(name="createdate")
+	private String createdate; // 생성일
 	
-	@Column(name = "sendDate")
-    String sendDate;
+	@Column(name="senddate")
+	private String senddate;  // 공개 날짜
 	
-	@Column(name = "profile")
-    String profile;    //
+	@Column(name="profile")
+	private String profile;    // 사진
 	
-	@Column(name = "usertype")
-    int usertype;      // 회원 유형
+	@Column(name="usertype")
+	private int usertype;      // 회원 유형
 }

@@ -1,8 +1,11 @@
 package com.project.service.will;
 
+import java.util.HashMap;
 import java.util.List;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.project.dao.will.FileDAO;
 import com.project.model.will.WillEntity;
 
@@ -25,8 +29,11 @@ import java.io.InputStreamReader;
 import javax.validation.Valid;
 
 import com.project.service.will.FileService;
+import com.project.util.HexToString;
 
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,26 +64,33 @@ public class FileService {
         return filedao.findAll();
     }
 
-    public void upload(final MultipartFile multipartFile) throws Exception {
+    public HashMap<String,String> upload(final MultipartFile multipartFile) throws Exception {
         //1. 파일 업로드
 
-        final File targetFile = new File("/" + multipartFile.getOriginalFilename()); // 저장 위치 입력
+		final File targetFile = new File("c:\\data\\" + multipartFile.getOriginalFilename()); // 저장 위치 입력
+		System.out.println(targetFile.toPath());
 		try {
 			final InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
 		} catch (final IOException e) {
 			FileUtils.deleteQuietly(targetFile);
 			e.printStackTrace();
-        }
+		}
+		
+		HashMap<String,String> hm = new HashMap<>();
+		hm.put("path", targetFile.getAbsolutePath());
+		hm.put("hash", extractFileHashSHA256(targetFile.toString()));
+
+		return hm;
         // 해쉬값 추출
-        String filehash = checkHash(targetFile.toString());
+        // String filehash = checkHash(targetFile.toString());
         
 		// 블록체인에 해쉬값 저장
-		String targetUrl = "http://0.0.0.0:8545";
+		// String targetUrl = "http://0.0.0.0:8545";
 
 		//현재 getTransactionByHash로 테스트
 		//보내는사람 account key 파일 hash 저장 필요
-		String jsonValue = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getTransactionByHash\",\"params\":[\"0x6d6491f8b81031dda775fc38ba08a4f3b5f8bb56e17951b5853f9a80e3ceb363\"],\"id\":2}";
+		// String jsonValue = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getTransactionByHash\",\"params\":[\"0x6d6491f8b81031dda775fc38ba08a4f3b5f8bb56e17951b5853f9a80e3ceb363\"],\"id\":2}";
 		// String jsonValue = "{
 		// 	"jsonrpc":"2.0",
 		// 	"method":"personal_unlockAccount",
@@ -87,9 +101,9 @@ public class FileService {
 		// 		],   
 		// 	"id":100
 		// }";
-        String transhash = sendPost(targetUrl, jsonValue);
+        // String transhash = sendPost(targetUrl, jsonValue);
 
-		System.out.println(transhash);
+		// System.out.println(transhash);
         // DB 저장
     }
 
@@ -123,7 +137,7 @@ public class FileService {
 		return SHA;
 	}
 	
-	public static String extractFileHashSHA256(String filename) throws Exception {
+	public String extractFileHashSHA256(String filename) throws Exception {
 		
 		String SHA = ""; 
 		int buff = 16384;
@@ -167,7 +181,7 @@ public class FileService {
 	}
 
 	// HTTP POST request
-	private String sendPost(String targetUrl, String jsonValue) throws Exception {
+	public String sendPost(String targetUrl, String jsonValue) throws Exception {
 
 		String inputLine = null;
 		StringBuffer outResult = new StringBuffer();
@@ -211,5 +225,25 @@ public class FileService {
 
 		return outResult.toString();
 	}
-	
+
+	public HashMap<String,String> uploadtxt(String content) throws Exception{
+
+		File file = new File("c:\\data\\text.txt");
+		String str = "Hello world!";
+		HashMap<String,String> hm = new HashMap<>();
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			writer.write(str);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+		hm.put("path", file.toString());
+		hm.put("hash", extractFileHashSHA256(file.toString()));
+		return hm;
+
+	}	
 }

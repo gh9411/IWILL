@@ -43,7 +43,7 @@ public class FileController {
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String upload(@RequestParam("file") final MultipartFile multipartFile) throws Exception {
         
-        fileservice.upload(multipartFile);
+        // fileservice.upload(multipartFile);
 
 		// System.out.println("### upload");
 		// final File targetFile = new File("/" + multipartFile.getOriginalFilename());
