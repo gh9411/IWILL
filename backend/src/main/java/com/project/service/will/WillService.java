@@ -157,9 +157,9 @@ public class WillService {
         return resultflag;
     }
 
-
+    //예약 날짜에 이메일 보내기
     public void sendEmail(String email){ 
-        System.out.println("hello");
+        System.out.println("sendEmail : "+email);
 
         String setfrom = "admin@gamil.com";
         String tomail = email; // 받는 사람 이메일

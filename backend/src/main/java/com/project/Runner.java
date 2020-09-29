@@ -24,15 +24,12 @@ public class Runner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // List<WillEntity> list =  service.findAll();
-        // System.out.println(list);
         checkDateForSendEmail ct = new checkDateForSendEmail();
         Thread t = new Thread(ct);
         t.start();
     }
 
     public class checkDateForSendEmail implements Runnable{
-
 
         @Override
         public void run() {
@@ -47,24 +44,31 @@ public class Runner implements ApplicationRunner {
                 int Min = Integer.parseInt(time[1]);
 
                 int timeDif = 0;
-                if(Min == 0){//0분일때
+                if(Min == 0){//00분일때
                     timeDif = (24 - Hour)*1000*60 ;
                 }
                 else{
-                    timeDif = ((23 - Hour) * 1000 * 60) + ((60 - Min) * 1000) ;
+                    timeDif = ((23 - Hour) * 1000 * 60 * 60) + ((60 - Min) * 1000 * 60) ;
                 }
+                // System.out.println("Hour : " + Hour);
+                // System.out.println("Min : " + Min);
                 // System.out.println(timeDif);
-
                 try{
-                    // Thread.sleep(timeDif);
+                    Thread.sleep(timeDif);    
 
-                    String day = new SimpleDateFormat("dd").format(new Date());
+                    int day = Integer.parseInt(new SimpleDateFormat("dd").format(new Date()));
                     
                     List<WillEntity> list = service.findAll();
 
                     for(WillEntity will : list) {
                         int sendday = Integer.parseInt(will.getSenddate().split("-")[0].split("\\.")[2]);
-                        
+                        if(day == sendday){
+                            String emails[] = will.getReceive().split("\\,");
+                            System.out.println(Arrays.toString(emails));
+                            for(String email : emails){
+                                service.sendEmail(email);
+                            }
+                        }
                     }
                 }
                 catch(Exception e){
