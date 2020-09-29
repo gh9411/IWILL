@@ -98,7 +98,7 @@ export default {
     
     submit () {
       //만들어야함.
-      alert("글을 남겼습니다.")
+      alert("글을 남겼습니다다다다.")
     },
   },
   computed: {

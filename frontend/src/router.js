@@ -29,6 +29,7 @@ export default new Router({
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" },
       },
+<<<<<<< HEAD
     },
     {
       path: "/index",
@@ -38,6 +39,8 @@ export default new Router({
         header: { colorOnScroll: 400 },
         footer: { backgroundColor: "black" },
       },
+=======
+>>>>>>> d1e006f6ac412a0df5a0cbbac88806e988f75842
     },
     {
       path: "/index",
@@ -45,8 +48,8 @@ export default new Router({
       components: { default: Index, header: MainNavbar, footer: MainFooter },
       props: {
         header: { colorOnScroll: 400 },
-        footer: { backgroundColor: "black" }
-      }
+        footer: { backgroundColor: "black" },
+      },
     },
     {
       path: "/landing",
