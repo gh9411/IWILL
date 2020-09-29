@@ -5,14 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.Random;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
+import com.project.dao.will.WillDAO;
+import com.project.dao.will.WilllogDAO;
 import com.project.model.will.WillEntity;
+import com.project.model.will.WillLogEntity;
 import com.project.model.will.dto.WillCreateDTO;
 import com.project.service.will.FileService;
+import com.project.service.will.WillLogService;
 import com.project.service.will.WillService;
 
 import org.json.JSONArray;
@@ -20,11 +25,16 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
@@ -42,7 +52,13 @@ public class WillController {
     WillService willservice;
 
     @Autowired
+    JavaMailSender mailSender;
+
+    @Autowired
     FileService fileservice;
+
+    @Autowired
+    WillLogService willlogservice;
     
 
     @PostMapping("/will/register")
@@ -64,33 +80,28 @@ public class WillController {
         final String IMAGEPATH; // image file path
         final String DATE;
 
-
-        // int wid; // 유언장 번호 (같으면 인덱스 높은 순)
-        // String uid; // 유언장 해쉬값
-        // String title; // 유언장 해쉬값
-        // String filepath; // 유언장 해쉬값
-        // String transactionhash; // 유언장 해쉬값
-        // String receive; // 유언장 해쉬값
-        // String createdate; // 유언장 해쉬값
-        // int islawed; // 유언장 해쉬값
-        // String witness; // 유언장 해쉬값
+        Date date = new Date();
+        SimpleDateFormat sdp = new SimpleDateFormat("YYYY.MM.dd-HH.mm");
+        DATE = sdp.format(date);
 
 
         HashMap<String,String> videohm = new HashMap<>();
         HashMap<String,String> imagehm = new HashMap<>();
         HashMap<String,String> texthm = new HashMap<>();
-        
+
+        String userKey = "0x8f600e28D0694F06A28C2edD74F2f3Bb9e865EcC";
+
+
         if(!willdto.getVideo().isEmpty()){
-            videohm =  fileservice.upload(willdto.getVideo());
+            videohm =  fileservice.upload(willdto.getVideo(),UID,DATE);
             
         }
         if(!willdto.getImage().isEmpty()){
-            imagehm = fileservice.upload(willdto.getImage());
+            imagehm = fileservice.upload(willdto.getImage(),UID,DATE);
             
         }
         if(!(willdto.getContent().equals(""))){
-            
-            texthm = fileservice.uploadtxt(willdto.getContent());
+            texthm = fileservice.uploadtxt(willdto.getContent(),UID,DATE);
         }
         
 
@@ -98,16 +109,12 @@ public class WillController {
         IMAGEPATH = imagehm.get("path");
         TEXTPATH = texthm.get("path");
 
-        TRANSKEY = willservice.sendTransaction(imagehm.get("hash"), videohm.get("hash"), texthm.get("hash"));
+        TRANSKEY = willservice.sendTransaction(imagehm.get("hash"), videohm.get("hash"), texthm.get("hash"),userKey);
 
         JSONObject filepath = new JSONObject();
         filepath.put("textpath", TEXTPATH);
         filepath.put("videopath", VIDEOPATH);
         filepath.put("imagepath", IMAGEPATH);
-
-        Date date = new Date();
-        SimpleDateFormat sdp = new SimpleDateFormat("YYYY.MM.dd HH.mm");
-        DATE = sdp.format(date);
 
         WillEntity will = new WillEntity();
         will.setUid(UID);
@@ -116,6 +123,13 @@ public class WillController {
         will.setFilepath(filepath.toString());
         will.setCreatedate(DATE);
         willservice.register(will);
+
+        
+        //방금 저장한 will 가져와서 넣기
+        willlogservice.register(willservice.findTopWill());
+
+        // willservice.findTopWidii();
+
 
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
@@ -138,7 +152,7 @@ public class WillController {
 
         for(WillEntity will : wills){
             System.out.println("==========================");
-
+            System.out.println(will);
             JSONObject pathobj = new JSONObject(will.getFilepath());
         
             String transkey = will.getTransactionhash();
@@ -165,10 +179,13 @@ public class WillController {
      }
      
 
-    //  @GetMapping(value = "/will/recent/{userId}")
-    //  public Object getRecentReviewByUserId(@PathVariable String userId){
-    //      WillEntity will = willservice.getRecentWillByUid(userId);
-    //      return new ResponseEntity<WillEntity>(will, HttpStatus.OK);
+    //  @GetMapping(value = "/will/top")
+    //  public Object getRecentReviewByUserId(){
+    //     WillEntity will = willservice.findTopWill();
+    //      return new ResponseEntity<Object>(will, HttpStatus.OK);
     //  }
+
+    
+
 
 }

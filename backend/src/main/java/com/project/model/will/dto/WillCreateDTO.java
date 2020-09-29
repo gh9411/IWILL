@@ -8,6 +8,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class WillCreateDTO {
+    int wid;
     String uid;
 
     String title;

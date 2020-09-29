@@ -29,28 +29,39 @@ public class WillLogEntity {
     int wid; // 유언장 번호 (같으면 인덱스 높은 순)
 
     @Column(name="uid")
-    String uid; // 유언장 해쉬값
+    String uid; 
 
     @Column(name="title")
-    String title; // 유언장 해쉬값
+    String title; 
 
     @Column(name="filepath")
-    String filepath; // 유언장 해쉬값
+    String filepath; 
 
     @Column(name="transactionhash")
-    String transactionhash; // 유언장 해쉬값
+    String transactionhash; 
 
     @Column(name="receive")
-    String receive; // 유언장 해쉬값
+    String receive; 
 
     @Column(name="createdate")
-    String createdate; // 유언장 해쉬값
+    String createdate;
 
     @Column(name="islawed")
     @ColumnDefault("0") //default 0
-    int islawed; // 유언장 해쉬값
+    int islawed; 
 
     @Column(name="witness")
-    String witness; // 유언장 해쉬값
+    String witness; 
 
+    public WillLogEntity(WillEntity entity){
+        this.wid = entity.getWid();
+        this.uid = entity.getUid();
+        this.title = entity.getTitle();
+        this.filepath = entity.getFilepath();
+        this.transactionhash = entity.getTransactionhash();
+        this.receive = entity.getReceive();
+        this.createdate = entity.getCreatedate();
+        this.islawed = entity.getIslawed();
+        this.witness = entity.getWitness();
+    }
 }
