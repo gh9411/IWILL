@@ -8,19 +8,17 @@ import lombok.ToString;
 @Data
 @ToString
 public class WillCreateDTO {
-    int wid;
-    String uid;
+    int wid;// 유언장 아이디
+    String uid;// 사용자 아이디
 
-    String title;
+    String title;//제목
 
-    String content;
-    MultipartFile video;
-    MultipartFile image;
+    String content;//내용
+    MultipartFile video;//비디오
+    MultipartFile image;//이미지
+
+    String witness; //증인
+    String receive; //이메일 받을사람
+    String senddate; // 이메일 전송 날짜
     
-    // receive text, ## 받을사람 list 구분자로 
-    
-    // filepath text, ## json 파일 위치들 글/사진s/동영상
-    // trasactionhash  text, ## json 해쉬 모음
-    // createDate text,
-    // islawed int, ## 법적 효력이 있는지 0or1
 }
