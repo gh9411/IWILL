@@ -30,10 +30,10 @@
 
 
           <md-switch v-model="switch2"><span v-if="switch2" style="color: black">이미지 추가하기</span><span v-if="switch2==false">이미지 추가하기</span></md-switch>
-          <v-file-input v-if="switch2" @change="uploadFile" chips multiple label="Image input" accept="image/jpeg, image/png" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+          <v-file-input v-if="switch2" @change="uploadFileImage" small-chips multiple label="Image input" accept="image/jpeg, image/png" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
 
           <md-switch v-model="switch3" style="margin-top: 1em"><span v-if="switch3" style="color: black">영상 추가하기</span><span v-if="switch3==false">영상 추가하기</span></md-switch>
-          <v-file-input v-if="switch3" @change="uploadFile" chips multiple label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+          <v-file-input v-if="switch3" @change="uploadFileVideo" small-chips multiple label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
       
 
         <div style="margin-top: 1em; margin-right: 1em;" >
@@ -45,6 +45,7 @@
           <div class="who">
             <h3>누구에게?</h3>
             <md-chips
+              small-chips
               v-model="chips" 
               md-check-duplicated=true 
               md-placeholder="Add people email..." 
@@ -102,7 +103,10 @@ export default {
     };
   },
   methods: {
-    uploadFile(e) {
+    uploadFileImage(e) {
+      console.log(e)
+    },
+    uploadFileVideo(e) {
       console.log(e)
     },
     
