@@ -4,13 +4,19 @@
       class="section page-header header-filter"
       :style="headerStyle"
     ></parallax>
-    <div class="maintab main-raised">
+    <div class="maintab ">
       <div class="section profile-content">
         <div class="container">
           <div class="md-layout">
             <div class="md-layout-item md-size-150 mx-auto">
               <div class="profile">
                 <div class="avatar">
+                  <input
+                    type="file"
+                    ref="imageInput"
+                    hidden
+                    @change="onChangeImages"
+                  />
                   <img
                     :src="imageUrl"
                     alt="Circle Image"
@@ -21,74 +27,73 @@
                 <div class="name">
                   <h3 class="title">{{ this.username }}</h3>
                   <h6>{{ this.email }}</h6>
-                  <!-- <md-button
-                    href="javascript:void(0)"
-                    class="md-just-icon md-simple md-dribbble"
-                    ><i class="fab fa-dribbble"></i
-                  ></md-button>
-                  <md-button
-                    href="javascript:void(0)"
-                    class="md-just-icon md-simple md-twitter"
-                    ><i class="fab fa-twitter"></i
-                  ></md-button>
-                  <md-button
-                    href="javascript:void(0)"
-                    class="md-just-icon md-simple md-pinterest"
-                    ><i class="fab fa-pinterest"></i
-                  ></md-button> -->
                 </div>
               </div>
             </div>
           </div>
-          <div class="description text-center" style="width:450px;">
+          <div class="description text-center col" style="width:450px;">
+            <h4>Who am I?</h4>
             <md-field>
               <md-input class="text-center" v-model="explain"></md-input>
             </md-field>
           </div>
           <div class="profile-tabs">
             <tabs
-              :tab-name="['비밀번호 변경', '정보 변경', '지갑 키 확인']"
-              :tab-icon="['key', 'palette', 'wallet']"
+              :tab-name="['비밀번호 변경', '내 유언장 보기']"
+              :tab-icon="['vpn_key', 'chrome_reader_mode']"
               plain
               nav-pills-icons
               color-button="success"
+              style="margin-bottom:200px;"
             >
               <!-- here you can add your content for tab-content -->
-              <template slot="tab-pane-1">
-                <div class="md-layout">
-                  <div class="md-layout-item md-size-25 ml-auto">
-                    <img :src="tabPane1[0].image" class="rounded" />
-                    <img :src="tabPane1[1].image" class="rounded" />
-                  </div>
-                  <div class="md-layout-item md-size-25 mr-auto">
-                    <img :src="tabPane1[3].image" class="rounded" />
-                    <img :src="tabPane1[2].image" class="rounded" />
+              <template slot="tab-pane-1" class="text-center">
+                <div class="text-center">
+                  <div class="col" style="width:600px;">
+                    <div
+                      class="col"
+                      style="display:flex; justify-content:center;"
+                    >
+                      <md-field class="md-form-group" slot="inputs">
+                        <md-icon>lock_outline</md-icon>
+                        <label>현재 비밀번호를 적어주세요.</label>
+                        <md-input type="password" v-model="password"></md-input>
+                      </md-field>
+                    </div>
+                    <div
+                      class="col"
+                      style="display:flex; justify-content:center;"
+                    >
+                      <md-field class="md-form-group" slot="inputs">
+                        <md-icon>lock_outline</md-icon>
+                        <label>변경하실 비밀번호를 적어주세요.</label>
+                        <md-input
+                          type="password"
+                          v-model="newpassword"
+                        ></md-input>
+                      </md-field>
+                    </div>
+
+                    <div
+                      class="col"
+                      style="display:flex; justify-content:center;"
+                    >
+                      <md-field class="md-form-group" slot="inputs">
+                        <md-icon>lock_outline</md-icon>
+                        <label>적으신 비밀번호를 확인해주세요.</label>
+                        <md-input
+                          type="password"
+                          v-model="newpasswordcheck"
+                        ></md-input>
+                      </md-field>
+                    </div>
                   </div>
                 </div>
               </template>
               <template slot="tab-pane-2">
-                <div class="md-layout">
-                  <div class="md-layout-item md-size-25 ml-auto">
-                    <img :src="tabPane2[0].image" class="rounded" />
-                    <img :src="tabPane2[1].image" class="rounded" />
-                    <img :src="tabPane2[2].image" class="rounded" />
-                  </div>
-                  <div class="md-layout-item md-size-25 mr-auto">
-                    <img :src="tabPane2[3].image" class="rounded" />
-                    <img :src="tabPane2[4].image" class="rounded" />
-                  </div>
-                </div>
-              </template>
-              <template slot="tab-pane-3">
-                <div class="md-layout">
-                  <div class="md-layout-item md-size-25 ml-auto">
-                    <img :src="tabPane3[0].image" class="rounded" />
-                    <img :src="tabPane3[1].image" class="rounded" />
-                  </div>
-                  <div class="md-layout-item md-size-25 mr-auto">
-                    <img :src="tabPane3[2].image" class="rounded" />
-                    <img :src="tabPane3[3].image" class="rounded" />
-                    <img :src="tabPane3[4].image" class="rounded" />
+                <div class="text-center" style="margin-bottom:200px;">
+                  <div class="col" style="width:600px;">
+                    <MyRecord style="margin-bottom:100px;" />
                   </div>
                 </div>
               </template>
@@ -102,17 +107,21 @@
 
 <script>
 import { Tabs } from "@/components";
+import MyRecord from "../components/MainPage/MyRecord";
 export default {
   components: {
-    Tabs
+    Tabs,
+    MyRecord
   },
   bodyClass: "profile-page",
   data() {
     return {
-      explain: "한 줄 자기소개",
+      explain: "한 줄 자기소개를 적어주세요",
+      password: "",
+      newpassword: "",
+      newpasswordcheck: "",
       username: "",
       email: "",
-      password: "",
       imageUrl: require("@/assets/img/guest.jpg"),
       tabPane1: [
         { image: require("@/assets/img/examples/studio-1.jpg") },
@@ -158,16 +167,15 @@ export default {
     }
   },
   methods: {
-    onClickImageUpload(e) {
-      var input = e.target;
-      console.log(input);
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        console.log(reader);
-        reader.onload = e => {
-          this.imageUrl = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
+    onClickImageUpload() {
+      this.$refs.imageInput.click();
+    },
+    onChangeImages(e) {
+      const file = e.target.files[0];
+      if (!file.type.match("image/.*")) {
+        alert("이미지만 업로드 가능합니다");
+      } else {
+        this.imageUrl = URL.createObjectURL(file);
       }
     }
   }
