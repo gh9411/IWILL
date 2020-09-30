@@ -66,7 +66,7 @@ public class Runner implements ApplicationRunner {
                             String emails[] = will.getReceive().split("\\,");
                             System.out.println(Arrays.toString(emails));
                             for(String email : emails){
-                                service.sendEmail(email);
+                                service.sendEmail(email,will.getTransactionhash());
                             }
                         }
                     }

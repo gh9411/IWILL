@@ -95,9 +95,6 @@ public class WillController {
         HashMap<String,String> texthm = new HashMap<>();
 
         UserEntity user = (UserEntity)userservice.detail(willdto.getUid()); 
-        System.out.println("-----------------------------------------");
-        System.out.println(user);
-        System.out.println("-----------------------------------------");
         System.out.println(user.getAccounthash());
         String userKey = user.getAccounthash();
 
