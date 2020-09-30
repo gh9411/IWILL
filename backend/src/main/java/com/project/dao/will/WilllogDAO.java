@@ -17,6 +17,5 @@ public interface WilllogDAO extends JpaRepository<WillLogEntity, Long>{
     public List<WillLogEntity> findAllByUid(String uid);
 
     
-
     public WillLogEntity findTopByUidOrderByIdxDesc(String uid);
 }

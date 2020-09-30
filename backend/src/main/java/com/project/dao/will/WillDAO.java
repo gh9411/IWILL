@@ -20,5 +20,6 @@ public interface WillDAO extends JpaRepository<WillEntity, Long>{
 
     public WillEntity getWillByWid(int wid);
 
-    // public WillEntity findTopByWidOrderByWidDesc(); //로그에나 씁시다
+    public WillEntity getWillByTransactionhash(String transactionhash);
+
 }
