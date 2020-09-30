@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <!--상단 배경 및 안내 문구 -->
     <parallax class="page-header header-filter" :style="headerStyle">
       <div class="md-layout">
@@ -46,43 +45,44 @@
           </div>
           <div class="underImg">
             <h4>내 아이디</h4>
-            <md-button class="md-block" href="/profile"><span style="font-size: 1.3em; height: 1em;">프로필 페이지</span></md-button>
+            <md-button class="md-block" href="/profile"
+              ><span style="font-size: 1.3em; height: 1em;"
+                >프로필 페이지</span
+              ></md-button
+            >
           </div>
         </div>
-        
+
         <div class="content-right">
           <div class="menu">
             <div v-if="categories[2].display">
-              <ReceivedWill/>
+              <ReceivedWill />
             </div>
             <div v-if="categories[1].display">
-              <MyRecord/>
+              <MyRecord />
             </div>
             <div v-if="categories[0].display">
-              <WriteWill/>
+              <WriteWill />
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </template>
 
 <script>
+import "../assets/scss/custom.scss";
 
-import "../assets/scss/custom.scss"
-
-import MyRecord from "../components/MainPage/MyRecord"
-import WriteWill from "../components/MainPage/WriteWill"
-import ReceivedWill from "../components/MainPage/ReceivedWill"
+import MyRecord from "../components/MainPage/MyRecord";
+import WriteWill from "../components/MainPage/WriteWill";
+import ReceivedWill from "../components/MainPage/ReceivedWill";
 
 export default {
   components: {
     MyRecord,
     WriteWill,
-    ReceivedWill,
+    ReceivedWill
   },
   name: "mainpage",
   bodyClass: "index-page",
@@ -127,9 +127,9 @@ export default {
       password: null,
       leafShow: false,
       categories: [
-        {display: true, name: 'MyRecord'},
-        {display: false, name: 'WriteWill'},
-        {display: false, name: 'receivedWill'},
+        { display: true, name: "MyRecord" },
+        { display: false, name: "WriteWill" },
+        { display: false, name: "receivedWill" }
       ]
     };
   },
@@ -142,11 +142,11 @@ export default {
       }
     },
     toggle(text) {
-      for(var i = 0; i < this.categories.length; i++) {
-        if(text == this.categories[i].name) {
-          this.categories[i].display = true
+      for (var i = 0; i < this.categories.length; i++) {
+        if (text == this.categories[i].name) {
+          this.categories[i].display = true;
         } else {
-          this.categories[i].display = false
+          this.categories[i].display = false;
         }
       }
     }
