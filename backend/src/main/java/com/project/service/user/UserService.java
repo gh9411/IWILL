@@ -24,19 +24,46 @@ public class UserService {
 
 	FileService fs = new FileService();
 	
-	public Object login(String email, String password) {
+	public Object login(String email, String password){
 		if (email == null || password == null)
 			return null;
 
-		Optional<UserEntity> user = userdao.findByEmailAndUpw(email, password);
 
-		return user;
+		Optional<UserEntity> user = userdao.findByEmailAndUpw(email, password);
+		
+
+		if(user != null){
+			JSONObject request = new JSONObject();
+			JSONArray params = new JSONArray();
+			request.put("jsonrpc", "2.0");
+			request.put("method", "personal_unlockAccount");
+			System.out.println(user.get().getAccounthash());
+			params.put(user.get().getAccounthash());
+			params.put("");
+			params.put(0);
+			request.put("params", params);
+			request.put("id", 10);
+			try{
+				String result = fs.sendPost("http://localhost:8545/", request.toString());
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+			
+			
+
+			return user;
+		}
+		else{
+			return null;
+		}
+
+		
 	}
 
 	public Object signup(UserEntity user) throws Exception {
 
 		UserEntity newuser = new UserEntity();
-		newuser.setUid(user.getUid());
 		newuser.setUpw(user.getUpw());
 		newuser.setEmail(user.getEmail());
 		newuser.setName(user.getName());
