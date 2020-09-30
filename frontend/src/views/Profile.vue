@@ -79,6 +79,7 @@
                       <md-button
                         slot="footer"
                         class="md-simple md-success md-lg"
+                        @click="submitInfo"
                       >
                         추가 및 변경하기
                       </md-button>
@@ -158,10 +159,10 @@ export default {
   },
   created() {
     const data = new FormData();
-    data.append("uid", this.$cookies.get("UserInfo").uid);
+    data.append("email", this.$cookies.get("UserInfo").email);
     this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
-      this.username = res.data.nickname;
       this.email = res.data.email;
+      this.username = res.data.name;
     });
   },
   props: {

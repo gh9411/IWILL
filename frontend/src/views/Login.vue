@@ -114,7 +114,7 @@ export default {
     goToMain() {
       const loginData = new FormData();
       loginData.append("email", this.email);
-      loginData.append("upw", this.password);
+      loginData.append("password", this.password);
       this.$axios
         .post(this.$SERVER_URL + "user/login", loginData)
         .then(res => {
