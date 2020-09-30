@@ -1,10 +1,13 @@
 module.exports = {
+  devServer: {
+    overlay: false,
+  },
   css: {
     loaderOptions: {
       css: {
-        sourceMap: true
-      }
-    }
+        sourceMap: true,
+      },
+    },
   },
-  transpileDependencies: ["vuetify"]
+  transpileDependencies: ["vuetify"],
 };

@@ -17,7 +17,7 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-              
+
               <!-- 데이터 입력 -->
               <md-field
                 class="md-form-group"
@@ -97,8 +97,8 @@ export default {
   bodyClass: "login-page",
   data() {
     return {
-      email: null,
-      password: null
+      email: "",
+      password: ""
     };
   },
   props: {
@@ -108,8 +108,23 @@ export default {
     }
   },
   methods: {
+    setCookie(UserInfo) {
+      this.$cookies.set("UserInfo", UserInfo);
+    },
     goToMain() {
-      this.$router.push("/index");
+      const loginData = new FormData();
+      loginData.append("email", this.email);
+      loginData.append("upw", this.password);
+      this.$axios
+        .post(this.$SERVER_URL + "user/login", loginData)
+        .then(res => {
+          const UserData = res.data;
+          this.setCookie(UserData);
+          this.$router.push("/index");
+        })
+        .then(err => {
+          console.log(err);
+        });
     },
     onLogin() {
       let { email, password } = this;
