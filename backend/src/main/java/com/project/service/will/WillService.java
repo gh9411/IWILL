@@ -77,7 +77,8 @@ public class WillService {
 		sendobj.put("id", 100);
 
 		String result = fs.sendPost("http://localhost:8545/",sendobj.toString());
-		//보낸 결과값
+        //보낸 결과값
+        System.out.println(result);
         
         JSONObject sendtransobj = new JSONObject(result);
 		
