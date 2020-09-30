@@ -25,15 +25,30 @@
                 style="margin-top: 3em"
               >
                 <md-icon>email</md-icon>
-                <label>Email...</label>
-                <md-input v-model="email" type="email"></md-input>
+                <label class="ml-3 text-warning text-sm" v-if="!valid.email">이메일 형식과 다릅니다.</label>
+                <md-input 
+                          placeholder="Email"
+                          alternative
+                          type="email"
+                          :valid="valid.email"
+                          v-model="model.email" 
+                          @keydown.enter="goToMain"
+                >
+                </md-input>
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
-                <label>Password...</label>
-                <md-input v-model="password" type="password"></md-input>
+                <label class="ml-3 text-warning text-sm" v-if="!valid.password">8글자 이상이어야 합니다.</label>
+                <md-input 
+                          placeholder="Password"
+                          alternative
+                          type="password"
+                          :valid="valid.password"
+                          v-model="model.password" 
+                          @keydown.enter="goToMain">
+                </md-input>
               </md-field>
-              <md-button
+              <md-button :disabled="!isPossible"
                 slot="footer"
                 class="md-simple md-lg"
                 style="height: 4.5em"
@@ -97,8 +112,20 @@ export default {
   bodyClass: "login-page",
   data() {
     return {
-      email: "",
-      password: ""
+      model: {
+          email: '',
+          password: '',
+        },
+        error: {
+          email: false,
+          password: false
+        },
+        isSubmit: false,
+        isPossible: false,
+        valid: {
+          email: false,
+          password: false,
+        }
     };
   },
   props: {
@@ -107,14 +134,22 @@ export default {
       default: require("@/assets/img/profile_city.jpg")
     }
   },
+  watch: {
+    model: {
+      deep: true,
+      handler(){
+        this.validCheck(this.model)
+      }
+    }
+  },
   methods: {
     setCookie(UserInfo) {
       this.$cookies.set("UserInfo", UserInfo);
     },
     goToMain() {
       const loginData = new FormData();
-      loginData.append("email", this.email);
-      loginData.append("password", this.password);
+      loginData.append("email", this.model.email);
+      loginData.append("upw", this.model.password);
       this.$axios
         .post(this.$SERVER_URL + "user/login", loginData)
         .then(res => {
@@ -136,7 +171,20 @@ export default {
       if (this.$store.state.isLogin) {
         this.$router.push("/index");
       }
-    }
+    },
+    validCheck(model) {
+      if (/^\w+([.-]?\w+)@\w+([.-]?\w+)*(.\w{2,3})+$/.test(model.email)) {
+          this.valid.email = true
+      } else this.valid.email = false;
+
+      if (model.password.length > 7) {
+          this.valid.password = true
+      } else this.valid.password = false;
+
+      if (this.valid.email && this.valid.password) {
+          this.isPossible = true
+      } else this.valid.isPossible = false;
+    },
   },
   computed: {
     headerStyle() {
