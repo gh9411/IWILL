@@ -1,5 +1,5 @@
 <template>
-  <div class="receivedWill">
+  <div class="ReceivedWill">
     <v-expansion-panels>
       <v-expansion-panel v-for="(item,i) in 3" :key="i">
         <v-expansion-panel-header>아무개님의 전달</v-expansion-panel-header>
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "receivedWill"
+  name: "ReceivedWill"
 }
 </script>
 
