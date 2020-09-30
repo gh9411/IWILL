@@ -65,7 +65,7 @@
                       <md-field class="md-form-group" slot="inputs">
                         <md-icon>phone</md-icon>
                         <label>전화번호...</label>
-                        <md-input v-model="email" type="phone"></md-input>
+                        <md-input v-model="phone" type="phone"></md-input>
                       </md-field>
                     </div>
                     <div class="col">
@@ -118,6 +118,15 @@
                         ></md-input>
                       </md-field>
                     </div>
+                    <div class="col">
+                      <md-button
+                        slot="footer"
+                        class="md-simple md-success md-lg"
+                        @click="changepwd"
+                      >
+                        변경하기
+                      </md-button>
+                    </div>
                   </div>
                 </div>
               </template>
@@ -154,6 +163,7 @@ export default {
       newpasswordcheck: "",
       username: "",
       email: "",
+      phone: "",
       imageUrl: require("@/assets/img/guest.jpg")
     };
   },
@@ -188,6 +198,54 @@ export default {
         alert("이미지만 업로드 가능합니다");
       } else {
         this.imageUrl = URL.createObjectURL(file);
+      }
+    },
+    submitInfo() {
+      const data = new FormData();
+      data.append("upw", this.$cookies.get("UserInfo").password);
+      data.append("email", this.$cookies.get("UserInfo".email));
+      data.append("name", this.username);
+      data.append("phone", this.phone);
+      data.append("createdate", this.$cookies.get("UserInfo").createdate);
+      data.append("senddate", this.$cookies.get("UserInfo").senddate);
+      data.append("profile", this.imageUrl);
+      data.append("usertype", this.$cookies.get("UserInfo").usertype);
+      data.append("explain", this.explain);
+      this.$axios
+        .post(this.$SERVER_URL + "user/update", data)
+        .then(res => {
+          console.log(res);
+        })
+        .then(err => {
+          console.log(err);
+        });
+    },
+    changepwd() {
+      if (
+        length(this.password) == 0 ||
+        length(this.newpassword) == 0 ||
+        length(this.newpasswordcheck) == 0
+      ) {
+        alert("빈 칸이 존재합니다. 채워서 다시 변경해주세요.");
+        return;
+      } else if (this.password != this.$cookies.get("UserInfo").password) {
+        alert("현재 비밀번호를 잘못 적으셨습니다. 확인해주세요");
+        return;
+      } else if (this.newpassword != this.newpasswordcheck) {
+        alert("새 비밀번호와 비밀번호 확인이 다릅니다. 적어주세요");
+        return;
+      } else {
+        const data = new FormData();
+        data.append("email", this.email);
+        data.append("password", this.newpassword);
+        this.$axios
+          .post(this.$SERVER_URL + "user/updatepw", data)
+          .then(res => {
+            console.log(res);
+          })
+          .then(err => {
+            console.log(err);
+          });
       }
     }
   }
