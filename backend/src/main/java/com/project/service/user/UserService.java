@@ -142,6 +142,18 @@ public class UserService {
 
 	}
 
+	public void updatepassword(String email, String pwd) {
+		Optional<UserEntity> modify = userdao.findByEmail(email);
+
+		modify.ifPresent(selectUser -> {
+			selectUser.setUpw(pwd);
+
+			userdao.save(selectUser);
+			System.out.println("update password!!");
+		});
+
+	}
+
 	public void delete(int uid) {
 		Optional<UserEntity> del = userdao.findByUid(uid);
 

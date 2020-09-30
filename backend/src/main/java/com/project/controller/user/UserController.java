@@ -77,6 +77,16 @@ public class UserController {
 		userservice.update(user);
 	}
 
+	@PostMapping("/user/updatepw")
+	@ApiOperation(value = "비밀번호 수정", notes = "비밀번호 수정 입니다.")
+	@ApiImplicitParam(name = "userdto", value = "UserDto", required = true, dataType = "Object")
+	public Object updatepw(String email, String upw) {
+		userservice.updatepassword(email, upw);
+
+		return userservice.detail(email);
+	}
+
+
 	@PostMapping("/user/delete")
 	@ApiOperation(value = "회원 탈퇴", notes = "회원 탈퇴 입니다.")
 	@ApiImplicitParam(name = "uid", value = "사용자 uid", required = true, dataType = "int")
