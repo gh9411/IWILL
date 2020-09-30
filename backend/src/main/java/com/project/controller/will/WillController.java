@@ -13,9 +13,11 @@ import javax.validation.Valid;
 
 import com.project.dao.will.WillDAO;
 import com.project.dao.will.WilllogDAO;
+import com.project.model.user.UserEntity;
 import com.project.model.will.WillEntity;
 import com.project.model.will.WillLogEntity;
 import com.project.model.will.dto.WillCreateDTO;
+import com.project.service.user.UserService;
 import com.project.service.will.FileService;
 import com.project.service.will.WillLogService;
 import com.project.service.will.WillService;
@@ -59,6 +61,9 @@ public class WillController {
 
     @Autowired
     WillLogService willlogservice;
+
+    @Autowired
+    UserService userservice;
     
 
     @PostMapping("/will/register")
@@ -89,7 +94,12 @@ public class WillController {
         HashMap<String,String> imagehm = new HashMap<>();
         HashMap<String,String> texthm = new HashMap<>();
 
-        String userKey = "0x8f600e28D0694F06A28C2edD74F2f3Bb9e865EcC";
+        UserEntity user = (UserEntity)userservice.detail(willdto.getUid()); 
+        System.out.println("-----------------------------------------");
+        System.out.println(user);
+        System.out.println("-----------------------------------------");
+        System.out.println(user.getAccounthash());
+        String userKey = user.getAccounthash();
 
 
         if(!willdto.getVideo().isEmpty()){

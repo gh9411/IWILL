@@ -64,20 +64,25 @@ public class WillService {
         //senddata to hex
 		String inputString = "0x"+ob.toString();
         
+        
+		String coinbase = "0x34ee5e2e9842d03c4000e9b2c70f398b04a69004";
+
+
         JSONObject sendobj = new JSONObject();
         sendobj.put("jsonrpc", "2.0");
         sendobj.put("method", "eth_sendTransaction");
         JSONArray params = new JSONArray();
         JSONObject paramsobj = new JSONObject();
         paramsobj.put("from", userKey);
-        paramsobj.put("to", userKey);
+        paramsobj.put("to", coinbase);
         paramsobj.put("data", "0x"+HexToString.stringtohex(inputString));
         params.put(paramsobj);
         sendobj.put("params", params);
 		sendobj.put("id", 100);
 
 		String result = fs.sendPost("http://localhost:8545/",sendobj.toString());
-		//보낸 결과값
+        //보낸 결과값
+        System.out.println(result);
         
         JSONObject sendtransobj = new JSONObject(result);
 		

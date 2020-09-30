@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,10 @@ import com.project.dao.user.UserDAO;
 import com.project.model.user.UserEntity;
 import com.project.service.will.FileService;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 @Service
 public class UserService {
 
@@ -24,19 +29,46 @@ public class UserService {
 
 	FileService fs = new FileService();
 	
-	public Object login(String email, String password) {
+	public Object login(String email, String password){
 		if (email == null || password == null)
 			return null;
 
-		Optional<UserEntity> user = userdao.findByEmailAndUpw(email, password);
 
-		return user;
+		Optional<UserEntity> user = userdao.findByEmailAndUpw(email, password);
+		
+
+		if(user != null){
+			JSONObject request = new JSONObject();
+			JSONArray params = new JSONArray();
+			request.put("jsonrpc", "2.0");
+			request.put("method", "personal_unlockAccount");
+			System.out.println(user.get().getAccounthash());
+			params.put(user.get().getAccounthash());
+			params.put("");
+			params.put(0);
+			request.put("params", params);
+			request.put("id", 10);
+			try{
+				String result = fs.sendPost("http://localhost:8545/", request.toString());
+			}
+			catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+			
+			
+
+			return user;
+		}
+		else{
+			return null;
+		}
+
+		
 	}
 
 	public Object signup(UserEntity user) throws Exception {
 
 		UserEntity newuser = new UserEntity();
-		newuser.setUid(user.getUid());
 		newuser.setUpw(user.getUpw());
 		newuser.setEmail(user.getEmail());
 		newuser.setName(user.getName());
@@ -59,6 +91,33 @@ public class UserService {
 		
 		newuser.setAccounthash(request.getString("result"));
 		userdao.save(newuser);
+
+
+		// 생성 유저에 코인 지급
+		//String coinbase = "0x34ee5e2e9842d03c4000e9b2c70f398b04a69004"; // 배포 환경마다 코인베이스 변경 필요
+		JSONObject request2 = new JSONObject();
+		JSONArray params2 = new JSONArray();
+		request2.put("jsonrpc", "2.0");
+		request2.put("method", "eth_sendTransaction");
+		
+		
+
+		String coinbase = "0x34ee5e2e9842d03c4000e9b2c70f398b04a69004";
+
+
+		JSONObject paramsobj = new JSONObject();
+        paramsobj.put("from", coinbase);
+        paramsobj.put("to", request.getString("result"));
+        paramsobj.put("value", "0x5150ae84a8cdf00000");
+        params2.put(paramsobj);
+		
+		request2.put("params", params2);
+		request2.put("id", 10);
+		
+		String result2 = fs.sendPost("http://localhost:8545/", request2.toString());
+		request2 = new JSONObject(result2);
+		
+		System.out.println(request2);
 
 		return new ResponseEntity<UserEntity>(newuser, HttpStatus.OK);
 	}

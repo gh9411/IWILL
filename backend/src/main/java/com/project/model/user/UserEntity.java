@@ -41,4 +41,5 @@ public class UserEntity {
 	
 	@Column(name="usertype")
 	int usertype;      // 회원 유형
+	
 }
