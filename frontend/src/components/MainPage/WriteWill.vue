@@ -23,35 +23,63 @@
             </v-col>
           </v-row>
         </v-container>
+
         <!-- 파일 업로드 -->
-        <v-file-input show-size counter multiple label="File input" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+        <!-- v-model을 files라는 data에 연결했지만, 메서드를 보면, 그냥 e에 다 담겨 있습니다 
+        이걸 백으로 어떻게 넘기는게 편할지 몰라 일단 그냥 두겠습니다. -->
 
 
+          <md-switch v-model="switch2"><span v-if="switch2" style="color: black">이미지 추가하기</span><span v-if="switch2==false">이미지 추가하기</span></md-switch>
+          <v-file-input v-if="switch2" @change="uploadFileImage" small-chips multiple label="Image input" accept="image/jpeg, image/png" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+
+          <md-switch v-model="switch3" style="margin-top: 1em"><span v-if="switch3" style="color: black">영상 추가하기</span><span v-if="switch3==false">영상 추가하기</span></md-switch>
+          <v-file-input v-if="switch3" @change="uploadFileVideo" small-chips multiple label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+      
+
+        <div style="margin-top: 1em; margin-right: 1em;" >
+          <md-switch v-model="switch1"><span v-if="switch1" style="color: black">수신인 설정하기</span><span v-if="switch1==false">수신인 설정하기</span></md-switch>
+        </div>
         <!-- 날짜 입력 & 유언장 수신인 -->
-        <div class="container">
+        <div class="container" v-if="switch1">
           <!-- 유언장 수신인 주소 -->
-          <div>
+          <div class="who">
             <h3>누구에게?</h3>
-            <md-chips v-model="people" md-placeholder="Add people..."></md-chips>
+            <md-chips
+              small-chips
+              v-model="chips" 
+              md-check-duplicated=true 
+              md-placeholder="Add people email..." 
+              style="margin-top: 0px; padding-top: .2em;"
+            ></md-chips>
+
+            
           </div>
-          
-          <div class="block">
+          <!-- 유언장 전달일자 -->
+          <div>
             <h3>언제?</h3>
-            <md-datepicker v-model="senddate" aria-placeholder="dd"/>
+            <md-datepicker v-model="senddate"/>
           </div>
         </div>
+
+        <div class="box"></div>
+
         <!-- submit -->
         <div class="buttoncenter">
-          <md-button class="md-button"><span style="font-size: 1rem;">글 남기기</span></md-button>
+          <md-button class="md-button" @click="submit()"><span style="font-size: 1rem;">글 남기기</span></md-button>
         </div>
+
       </v-form>
     </v-card>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: "writeWILL",
+  name: "WriteWill",
+  components: {
+    
+  },
   data() {
     let dateFormat = this.$material.locale.dateFormat || 'yyyy-MM-dd'
     let now = new Date()
@@ -60,25 +88,31 @@ export default {
       content: '',
     })
     return {
+      switch1: false,
+      switch2: false,
+      switch3: false,
       senddate: "",
-      people: [],
       form: Object.assign({}, defaultForm),
       rules: {
         name: [val => (val || '').length > 0 || '제목은 필수사항입니다.'],
       },
       Topic: "",
       content: "",
-      
+      files: [],
+      chips: [],
     };
   },
   methods: {
-    uploadFile(e) {
-      let file = e
+    uploadFileImage(e) {
+      console.log(e)
+    },
+    uploadFileVideo(e) {
       console.log(e)
     },
     
     submit () {
       //만들어야함.
+      alert("글을 남겼습니다다다다.")
     },
   },
   computed: {
@@ -91,5 +125,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
