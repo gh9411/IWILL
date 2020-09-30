@@ -22,13 +22,14 @@
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>비밀번호...</label>
-                <md-input v-model="password"></md-input>
+                <md-input v-model="password" type="password"></md-input>
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
                 <label>비밀번호 확인...</label>
                 <md-input
                   v-model="passwordcheck"
+                  type="password"
                   @keydown.enter="Signup()"
                 ></md-input>
               </md-field>
@@ -39,27 +40,26 @@
               >
                 가입하기
               </md-button>
-              
             </login-card>
           </div>
           <modal
-              v-if="this.modals.equalpassword"
-              gradient="danger"
-              class="text-center"
-            >
-          <template slot="header">
+            v-if="this.modals.equalpassword"
+            gradient="danger"
+            class="text-center"
+          >
+            <template slot="header">
               <div class="py-3 text-center mb-0">
                 <h4 class="text-danger">경고!</h4>
               </div>
             </template>
             <template slot="body">
               <h4 class="text-success mb-3">
-                  비밀번호가 일치하지 않습니다! 다시 적어주세요!
-                </h4>
+                비밀번호가 일치하지 않습니다! 다시 적어주세요!
+              </h4>
             </template>
             <template slot="footer">
               <div class="text-center">
-              <md-button
+                <md-button
                   size="sm"
                   type="secondary"
                   @click="modals.equalpassword = false"
@@ -77,15 +77,15 @@
             </template>
             <template slot="body">
               <h4 class="text-success mb-3">
-                  빈 칸이 존재합니다. 모두 채워주세요!
-                </h4>
+                빈 칸이 존재합니다. 모두 채워주세요!
+              </h4>
             </template>
             <template slot="footer">
               <div class="text-center">
-              <md-button
+                <md-button
                   size="sm"
                   class="md-simple md-default"
-                  @click="modals.empty=false"
+                  @click="modals.empty = false"
                   >닫기</md-button
                 >
               </div>
@@ -112,12 +112,16 @@ export default {
       name: "",
       email: "",
       password: "",
-      passwordcheck: "", 
+      passwordcheck: "",
       isPossible: false,
+      phone: "",
+      createdate: "",
+      usertype: 0,
+      imageUrl: require("@/assets/img/guest.jpg"),
       modals: {
         empty: false,
-        equalpassword: false,
-      },
+        equalpassword: false
+      }
     };
   },
   props: {
@@ -135,23 +139,36 @@ export default {
   },
   methods: {
     Signup() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      const date = today.getDate();
+      let hour = today.getHours();
+      let minute = today.getMinutes();
+      this.createdate = `${year}.${month}.${date}-${hour}.${minute}`;
+      const senddate = null;
       const SignData = new FormData();
       SignData.append("name", this.name);
       SignData.append("email", this.email);
-      SignData.append("password", this.password);
+      SignData.append("upw", this.password);
+      SignData.append("createdate", this.createdate);
+      SignData.append("profile", this.imageUrl);
+      SignData.append("senddate", senddate);
+      SignData.append("phone", this.phone);
+      SignData.append("usertype", this.usertype);
       if (
         this.password == this.passwordcheck &&
         this.password != "" &&
         this.passwordcheck != ""
       ) {
         this.$axios
-          .post(this.$SERVER_URL + "user/signUp", SignData)
+          .post(this.$SERVER_URL + "user/signup", SignData)
           .then(res => {
             this.$router.push({ name: "login" });
           })
           .catch(err => {
-            console.log(err)
-          })
+            console.log(err);
+          });
       } else if (
         this.name == "" ||
         this.email == "" ||
