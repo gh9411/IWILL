@@ -17,7 +17,7 @@
               >
                 <i class="fab fa-google-plus-g"></i>
               </md-button>
-
+              
               <!-- 데이터 입력 -->
               <md-field
                 class="md-form-group"

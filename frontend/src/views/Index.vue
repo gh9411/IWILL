@@ -18,7 +18,7 @@
     </parallax>
     <div class="maintab" style="background-color: white;">
       <div class="section section-basic;">
-        <div class="container">
+        <div class="container" style="margin-bottom:500px;">
           <div>
             <p style="font-size:medium; font-weight:bold; color:green;">
               Who we are
@@ -112,7 +112,7 @@
           </div>
         </div>
 
-        <div class="container" style="margin-top:300px; column-gap:100px;">
+        <div class="container" style="margin-top:500px; column-gap:100px;">
           <div>
             <p
               class="text-left"
@@ -447,7 +447,7 @@
             <h4 style="color:white">가장 안전하게 보관해드립니다.</h4>
           </div>
           <md-button
-            class="md-simple md-lg md-round btn"
+            class="md-simple md-lg md-round"
             onclick="location.href='/main'"
           >
             <p style="margin:0px; color:white;">글 남기러 가기</p>
@@ -586,7 +586,6 @@ export default {
   height: 40px;
   line-height: 40px;
   border: 1px white solid;
-  margin: 15px auto;
   text-align: center;
   background-color: white;
   cursor: pointer;
