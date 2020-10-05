@@ -42,9 +42,15 @@
               :tab-name="[
                 '개인정보 추가/변경',
                 '비밀번호 변경',
-                '내 유언장 보기'
+                '내 유언장 보기',
+                '받은 유언장 보기'
               ]"
-              :tab-icon="['perm_identity', 'vpn_key', 'chrome_reader_mode']"
+              :tab-icon="[
+                'perm_identity',
+                'vpn_key',
+                'chrome_reader_mode',
+                'fact_check'
+              ]"
               plain
               nav-pills-icons
               color-button="success"
@@ -137,6 +143,16 @@
                   </div>
                 </div>
               </template>
+              <template slot="tab-pane-4">
+                <div
+                  class="text-center"
+                  style="margin-bottom:200px; width:600px;"
+                >
+                  <div class="col" style="width:600px;">
+                    <ReceivedWill style="margin-bottom:100px;" />
+                  </div>
+                </div>
+              </template>
             </tabs>
           </div>
         </div>
@@ -148,10 +164,12 @@
 <script>
 import { Tabs } from "@/components";
 import MyRecord from "../components/MainPage/MyRecord";
+import ReceivedWill from "../components/MainPage/ReceivedWill";
 export default {
   components: {
     Tabs,
-    MyRecord
+    MyRecord,
+    ReceivedWill
   },
   bodyClass: "profile-page",
   data() {
@@ -168,6 +186,16 @@ export default {
     };
   },
   created() {
+    if (this.$cookies.get("UserInfo") == null) {
+      alert("로그인이 필요합니다.");
+      this.$router.push({ name: "login" });
+      location.reload();
+    }
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
     const data = new FormData();
     data.append("email", this.$cookies.get("UserInfo").email);
     this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
@@ -214,7 +242,7 @@ export default {
       this.$axios
         .post(this.$SERVER_URL + "user/update", data)
         .then(res => {
-          console.log(res);
+          console.log(res.data);
         })
         .then(err => {
           console.log(err);

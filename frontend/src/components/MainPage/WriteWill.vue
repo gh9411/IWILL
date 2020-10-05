@@ -28,12 +28,19 @@
         <!-- v-model을 files라는 data에 연결했지만, 메서드를 보면, 그냥 e에 다 담겨 있습니다 
         이걸 백으로 어떻게 넘기는게 편할지 몰라 일단 그냥 두겠습니다. -->
 
-
           <md-switch v-model="switch2"><span v-if="switch2" style="color: black">이미지 추가하기</span><span v-if="switch2==false">이미지 추가하기</span></md-switch>
-          <v-file-input v-if="switch2" @change="uploadFileImage" small-chips multiple label="Image input" accept="image/jpeg, image/png" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+          <v-file-input 
+            v-if="switch2" 
+            @change="uploadFileImage"
+            ref="willimage"
+            small-chips label="Image input"
+            accept="image/jpeg, image/png"
+            enctype="multipart/form-data" 
+            style="margin-right:1em; margin-left:0.5em;"
+          ></v-file-input>
 
           <md-switch v-model="switch3" style="margin-top: 1em"><span v-if="switch3" style="color: black">영상 추가하기</span><span v-if="switch3==false">영상 추가하기</span></md-switch>
-          <v-file-input v-if="switch3" @change="uploadFileVideo" small-chips multiple label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+          <v-file-input v-if="switch3" @change="uploadFileVideo" small-chips  label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
       
 
         <div style="margin-top: 1em; margin-right: 1em;" >
@@ -46,7 +53,7 @@
             <h3>누구에게?</h3>
             <md-chips
               small-chips
-              v-model="chips" 
+              v-model="receive" 
               md-check-duplicated=true 
               md-placeholder="Add people email..." 
               style="margin-top: 0px; padding-top: .2em;"
@@ -67,18 +74,15 @@
         <div class="buttoncenter">
           <md-button class="md-button" @click="submit()"><span style="font-size: 1rem;">글 남기기</span></md-button>
         </div>
-
       </v-form>
     </v-card>
   </div>
 </template>
 
 <script>
-
 export default {
   name: "WriteWill",
-  components: {
-    
+  components: {    
   },
   data() {
     let dateFormat = this.$material.locale.dateFormat || 'yyyy-MM-dd'
@@ -88,6 +92,7 @@ export default {
       content: '',
     })
     return {
+      userdata: "",
       switch1: false,
       switch2: false,
       switch3: false,
@@ -96,23 +101,60 @@ export default {
       rules: {
         name: [val => (val || '').length > 0 || '제목은 필수사항입니다.'],
       },
-      Topic: "",
       content: "",
-      files: [],
-      chips: [],
+      willImage: null,
+      willVideo: null,
+      witness: "",
+      receive: [],
+      
     };
   },
+  created() {
+    this.userdata = this.$cookies.get("UserInfo")
+  },
   methods: {
-    uploadFileImage(e) {
-      console.log(e)
+    uploadFileImage: function (e) {
+        this.willImage = e
     },
     uploadFileVideo(e) {
-      console.log(e)
+      this.willVideo = e
     },
-    
     submit () {
-      //만들어야함.
-      alert("글을 남겼습니다다다다.")
+      var fs = require("fs");
+      let today = new Date();
+      let year = today.getFullYear(); // 년도
+      let month = today.getMonth() + 1;  // 월
+      let date = today.getDate();  // 날짜
+      let day = today.getDay();  // 요일
+      let hours = today.getHours(); // 시
+      let minutes = today.getMinutes();  // 분
+
+      const createdDate = year + '.' + month + '.' + date + "-" + hours + '.' + minutes
+
+      const formData = new FormData();
+      formData.append("uid", this.userdata.email);
+      formData.append("title", this.form.title);
+      formData.append("content", this.form.content);
+      formData.append("witness", this.witness);
+      formData.append("receive", this.receive);
+      formData.append("senddata", createdDate);
+      // multipartfile 구성
+      formData.append("video", this.willVideo, this.willVideo.name);
+      formData.append("image", this.willImage, this.willImage.name);
+      
+
+      this.$axios.post(this.$SERVER_URL + "will/register", formData, {headers: {
+        "content-Type": "multipart/form-data"
+        }
+      })
+        .then(
+          res => {console.log(res)}
+        )
+        .catch(
+          err => {console.log(err)}
+        )         
+
+      alert("글을 남겼습니다.")
     },
   },
   computed: {
@@ -121,7 +163,7 @@ export default {
         this.form.title &&
         this.form.content
       )
-    },
-  },
+    }
+  }
 };
 </script>

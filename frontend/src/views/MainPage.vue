@@ -133,6 +133,17 @@ export default {
       ]
     };
   },
+  created() {
+    if (this.$cookies.get("UserInfo") == null) {
+      alert("로그인이 필요합니다.");
+      this.$router.push({ name: "login" });
+    }
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
+  },
   methods: {
     leafActive() {
       if (window.innerWidth < 768) {

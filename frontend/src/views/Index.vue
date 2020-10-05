@@ -544,6 +544,13 @@ export default {
       leafShow: false
     };
   },
+  created() {
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
+  },
   methods: {
     leafActive() {
       if (window.innerWidth < 768) {

@@ -9,15 +9,6 @@
             <login-card header-color="grey">
               <h2 slot="title" class="card-title">IWILL</h2>
 
-              <!-- SNS 로그인 버튼 -->
-              <md-button
-                slot="buttons"
-                href="javascript:void(0)"
-                class="md-just-icon md-simple md-white"
-              >
-                <i class="fab fa-google-plus-g"></i>
-              </md-button>
-
               <!-- 데이터 입력 -->
               <md-field
                 class="md-form-group"
@@ -74,7 +65,10 @@
                 style="margin-right: 2em; margin-left: 2em; margin-top: 1.7em; margin-bottom: 0.5em"
               />
 
-              <div slot="atag" style="margin-left: 2em; margin-right: 2em;">
+              <div
+                slot="atag"
+                style="margin-left: 2em; margin-right: 2em; margin-bottom: 1em;"
+              >
                 <span style="font-size: 0.9em; font-weight:500"
                   >아직 회원이 아니라면</span
                 >
@@ -83,20 +77,6 @@
                   href="/signup"
                   style="font-size: 0.96em; font-weight:600; color: grey; float: right"
                   >가입하기</a
-                >
-              </div>
-              <div
-                slot="atag"
-                style="margin-left: 2em; margin-right: 2em; margin-bottom: .7em"
-              >
-                <span style="font-size: 0.9em; font-weight:500;">
-                  비밀번호를 잊으셨나요?</span
-                >
-                <a
-                  slot="atag"
-                  href="#"
-                  style="font-size: 0.96em; font-weight:600; color: grey; float: right"
-                  >비밀번호 찾기</a
                 >
               </div>
             </login-card>
@@ -148,6 +128,17 @@ export default {
       }
     }
   },
+  created() {
+    if (this.$cookies.get("UserInfo") != null) {
+      alert("이미 로그인 되어있습니다.");
+      this.$router.push({ name: "profile" });
+    }
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
+  },
   methods: {
     setCookie(UserInfo) {
       this.$cookies.set("UserInfo", UserInfo);
@@ -162,6 +153,7 @@ export default {
           const UserData = res.data;
           this.setCookie(UserData);
           this.$router.push("/index");
+          location.reload();
         })
         .then(err => {
           console.log(err);

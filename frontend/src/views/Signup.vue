@@ -14,10 +14,16 @@
                 <label>이름...</label>
                 <md-input v-model="name"></md-input>
               </md-field>
-              <md-field class="md-form-group" slot="inputs">
+              <md-field class="md-form-group row" slot="inputs">
                 <md-icon>email</md-icon>
                 <label>이메일...</label>
-                <md-input v-model="email" type="email"></md-input>
+                <md-input v-model="email" type="email"></md-input
+                ><md-button
+                  size="sm"
+                  class=" md-just-icon md-round"
+                  @click="emailcheck"
+                  ><md-icon>done</md-icon></md-button
+                >
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
@@ -91,6 +97,75 @@
               </div>
             </template>
           </modal>
+
+          <modal v-if="this.modals.duple" class="text-center">
+            <template slot="header">
+              <div class="py-3 text-center mb-0">
+                <h4 class="text-danger">경고!</h4>
+              </div>
+            </template>
+            <template slot="body">
+              <h4 class="text-success mb-3">
+                이메일 중복체크가 되지 않았습니다!
+              </h4>
+            </template>
+            <template slot="footer">
+              <div class="text-center">
+                <md-button
+                  size="sm"
+                  class="md-simple md-default"
+                  @click="modals.duple = false"
+                  >닫기</md-button
+                >
+              </div>
+            </template>
+          </modal>
+
+          <modal v-if="this.modals.passwordlength" class="text-center">
+            <template slot="header">
+              <div class="py-3 text-center mb-0">
+                <h4 class="text-danger">경고!</h4>
+              </div>
+            </template>
+            <template slot="body">
+              <h4 class="text-success mb-3">
+                비밀번호는 8자리 입력해야합니다.
+              </h4>
+            </template>
+            <template slot="footer">
+              <div class="text-center">
+                <md-button
+                  size="sm"
+                  class="md-simple md-default"
+                  @click="modals.passwordlength = false"
+                  >닫기</md-button
+                >
+              </div>
+            </template>
+          </modal>
+
+          <modal v-if="this.modals.emailcheck" class="text-center">
+            <template slot="header">
+              <div class="py-3 text-center mb-0">
+                <h4 class="text-danger">성공!</h4>
+              </div>
+            </template>
+            <template slot="body">
+              <h4 class="text-success mb-3">
+                중복된 이메일이 없습니다!
+              </h4>
+            </template>
+            <template slot="footer">
+              <div class="text-center">
+                <md-button
+                  size="sm"
+                  class="md-simple md-default"
+                  @click="modals.emailcheck = false"
+                  >닫기</md-button
+                >
+              </div>
+            </template>
+          </modal>
         </div>
       </div>
     </div>
@@ -111,6 +186,7 @@ export default {
     return {
       name: "",
       email: "",
+      duplemail: false,
       password: "",
       passwordcheck: "",
       isPossible: false,
@@ -120,7 +196,10 @@ export default {
       imageUrl: require("@/assets/img/guest.jpg"),
       modals: {
         empty: false,
-        equalpassword: false
+        equalpassword: false,
+        duple: false,
+        passwordlength: false,
+        emailcheck: false
       }
     };
   },
@@ -138,6 +217,24 @@ export default {
     }
   },
   methods: {
+    emailcheck() {
+      const data = new FormData();
+      data.append("email", this.email);
+      if (this.email == "") {
+        alert("이메일을 적어주세요");
+        return;
+      }
+      this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
+        if ((this.email = res.data.email)) {
+          alert("기존에 존재하는 이메일입니다.");
+          this.email = "";
+        } else {
+          this.modals.emailcheck = true;
+          this.duplemail = true;
+          this.email = data.email;
+        }
+      });
+    },
     Signup() {
       const today = new Date();
       const year = today.getFullYear();
@@ -159,12 +256,14 @@ export default {
       if (
         this.password == this.passwordcheck &&
         this.password != "" &&
-        this.passwordcheck != ""
+        this.passwordcheck != "" &&
+        this.duplemail == true
       ) {
         this.$axios
           .post(this.$SERVER_URL + "user/signup", SignData)
           .then(res => {
             this.$router.push({ name: "login" });
+            location.reload();
           })
           .catch(err => {
             console.log(err);
@@ -176,6 +275,11 @@ export default {
         this.passwordcheck == ""
       ) {
         this.modals.empty = true;
+      } else if (this.duplemail == false) {
+        this.modals.duple = true;
+        this.email = "";
+      } else if (this.password.length <= 7) {
+        this.modals.passwordlength = true;
       } else {
         (this.modals.equalpassword = true),
           (this.password = ""),
