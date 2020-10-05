@@ -21,6 +21,7 @@ export default new Router({
         header: { colorOnScroll: 400 },
       },
     },
+
     {
       path: "/main",
       name: "mainPage",

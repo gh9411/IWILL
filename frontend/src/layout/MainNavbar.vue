@@ -9,11 +9,21 @@
   >
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title" style="font-size:1.4em; font-weight: 600">
-          <a href="/main" style="color: white">IWILL</a>
+        <h3
+          class="md-title"
+          style="font-size:1.4em; font-weight: 600; margin-top:20px;"
+        >
+          <h1 style="color: white; " @click="move">IWILL</h1>
         </h3>
       </div>
-
+      <div class="md-toolbar-section-end">
+        <h3 class="md-title" style="font-size:1.4em; font-weight: 600; ">
+          <h3 style="color: white; " @click="movemypage">Mypage</h3>
+        </h3>
+        <h3 class="md-title" style="font-size:1.4em; font-weight: 600; ">
+          <h3 style="color: white;" @click="log">{{ this.logstate }}</h3>
+        </h3>
+      </div>
     </div>
   </md-toolbar>
 </template>
@@ -32,11 +42,9 @@ function resizeThrottler(actualResizeHandler) {
   }
 }
 
-
 export default {
   name: "MainNavbar",
-  components: {
-  },
+  components: {},
   props: {
     type: {
       type: String,
@@ -61,7 +69,8 @@ export default {
   data() {
     return {
       extraNavClasses: "",
-      toggledClass: false
+      toggledClass: false,
+      logstate: "LogIn"
     };
   },
   computed: {
@@ -70,7 +79,27 @@ export default {
       return excludedRoutes.every(r => r !== this.$route.name);
     }
   },
+  created() {
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
+  },
   methods: {
+    log() {
+      if (this.$cookies.get("UserInfo") == null) {
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+          location.reload();
+        });
+      } else {
+        this.$cookies.remove("UserInfo");
+        location.reload();
+      }
+    },
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
 
@@ -84,6 +113,37 @@ export default {
         bodyClick.addEventListener("click", this.toggleNavbarMobile);
       } else {
         bodyClick.remove();
+      }
+    },
+    move() {
+      if (this.$cookies.get("UserInfo") == null) {
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      } else {
+        this.$router.push("/index").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      }
+    },
+    movemypage() {
+      if (this.$cookies.get("UserInfo") == null) {
+        alert("로그인이 필요합니다.");
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      } else {
+        this.$router.push("/main").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
       }
     },
     handleScroll() {

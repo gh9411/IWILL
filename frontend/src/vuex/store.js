@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     userInfo: {},
-    isLogin: false
+    isLogin: false,
+    logstate: "LogIn",
   },
   getters: {},
   mutations: {},
@@ -14,15 +15,15 @@ export default new Vuex.Store({
     login(context, { email, password }) {
       http
         .post(`user/login?email=${email}&password=${password}`)
-        .then(res => {
+        .then((res) => {
           context.commit("IsLogin", true);
           context.commit("UserInfo", res);
           alert("로그인 성공");
-          this.$router.push("/main")
+          this.$router.push("/main");
         })
-        .catch(err => {
+        .catch((err) => {
           alert("아이디 또는 비밀번호 실패입니다.");
         });
-    }
-  }
+    },
+  },
 });
