@@ -8,7 +8,7 @@ import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
-const SERVER_URL = "http://j3a104.p.ssafy.io/";
+const SERVER_URL = "http://j3a104.p.ssafy.io:8080/will/";
 Vue.prototype.$SERVER_URL = SERVER_URL;
 Vue.use(MaterialKit);
 
