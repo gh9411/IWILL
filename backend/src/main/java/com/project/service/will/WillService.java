@@ -10,6 +10,7 @@ import com.project.model.will.WillEntity;
 import com.project.util.HexToString;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,6 +27,12 @@ public class WillService {
 
     @Autowired
     JavaMailSender mailSender;
+
+    @Value("${global.coinbasekey}")
+    String coinbasekey;
+
+    // @Value("${global.coinbasepw}")
+	// String coinbasepw;
 
     FileService fs = new FileService();
     
@@ -65,7 +72,7 @@ public class WillService {
 		String inputString = "0x"+ob.toString();
         
         
-		String coinbase = "0x34ee5e2e9842d03c4000e9b2c70f398b04a69004";
+		//String coinbase = "0x34ee5e2e9842d03c4000e9b2c70f398b04a69004";
 
 
         JSONObject sendobj = new JSONObject();
@@ -74,7 +81,7 @@ public class WillService {
         JSONArray params = new JSONArray();
         JSONObject paramsobj = new JSONObject();
         paramsobj.put("from", userKey);
-        paramsobj.put("to", coinbase);
+        paramsobj.put("to", coinbasekey);
         paramsobj.put("data", "0x"+HexToString.stringtohex(inputString));
         params.put(paramsobj);
         sendobj.put("params", params);

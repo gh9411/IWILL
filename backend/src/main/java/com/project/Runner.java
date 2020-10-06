@@ -15,6 +15,7 @@ import com.project.service.will.WillService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,12 @@ public class Runner implements ApplicationRunner {
     @Autowired
     WillService service;
 
+    @Value("${global.coinbasekey}")
+    String coinbasekey;
+
+    @Value("${global.coinbasepw}")
+    String coinbasepw;
+    
     @Override
     public void run(ApplicationArguments args) throws Exception {
         checkDateForSendEmail ct = new checkDateForSendEmail();
@@ -32,16 +39,15 @@ public class Runner implements ApplicationRunner {
         //auto unlock
         FileService fs = new FileService();
 
-        String coinbase = "0x731256b1ef4e69a4d439bb0d6dc601bd0008cbed";
-
+        System.out.println("coinbase : " + coinbasekey);
 
         JSONObject sendobj = new JSONObject();
         sendobj.put("jsonrpc", "2.0");
         sendobj.put("method", "personal_unlockAccount");
         JSONArray params = new JSONArray();
 
-        params.put(coinbase);
-        params.put("");
+        params.put(coinbasekey);
+        params.put(coinbasepw);
         params.put(0);
         sendobj.put("params", params);
 		sendobj.put("id", 100);
