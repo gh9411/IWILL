@@ -3,6 +3,8 @@ package com.project.controller.will;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.project.model.will.WillEntity;
@@ -48,6 +50,8 @@ public class WillReceiveController {
         willreceiveservice.receivewillRegistser(ruid, will);
 
         List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
+        ArrayList result = new ArrayList<>();
+        ArrayList part = new ArrayList<>();
 
         for(WillReceiveEntity willentity : list){
             JSONObject jsonObj = new JSONObject(willentity.getFilepath());
@@ -57,22 +61,18 @@ public class WillReceiveController {
             BufferedReader in = new BufferedReader(reader);
             
             String line = "";
-            String result ="";
+            String tresult ="";
             if((line=in.readLine()) != null){
-                result = result.concat(line);
-                result = result.concat("\\n");
+                tresult += line + System.lineSeparator();
             }
-
-            System.out.println(result);
-
-                
-                
-                
+            part.add(willentity);
+            part.add(tresult);
+            System.out.println(tresult);
         }
 
 
 
-        return new ResponseEntity<Object>(willreceiveservice.searchAll(ruid), HttpStatus.OK);
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
 }
