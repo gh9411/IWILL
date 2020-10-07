@@ -243,17 +243,17 @@ export default {
         .post(this.$SERVER_URL + "user/update", data)
         .then(res => {
           console.log(res.data);
-          location.reload();
+          // location.reload();
         })
-        .then(err => {
+        .catch(err => {
           console.log(err);
         });
     },
     changepwd() {
       if (
-        length(this.password) == 0 ||
-        length(this.newpassword) == 0 ||
-        length(this.newpasswordcheck) == 0
+        this.password.length() == 0 ||
+        this.newpassword.length() == 0 ||
+        this.newpasswordcheck.length() == 0
       ) {
         alert("빈 칸이 존재합니다. 채워서 다시 변경해주세요.");
         return;

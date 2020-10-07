@@ -36,15 +36,7 @@
       <div class="content">
         <div class="content-left">
           <div class="mainImg">
-<<<<<<< HEAD
-            <img
-              src="../assets/img/faces/card-profile1-square.jpg"
-              alt="Circle Image"
-              class="rounded-circle"
-            />
-=======
             <img :src="imgurl" alt="Circle Image" class="rounded-circle" />
->>>>>>> a0e6811dfa30b8ec85ce4ec98cfbccda0139b2ba
           </div>
           <div class="underImg">
             <h4>{{ this.username }}</h4>
