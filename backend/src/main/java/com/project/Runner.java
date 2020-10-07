@@ -28,7 +28,7 @@ public class Runner implements ApplicationRunner {
 
     @Value("${global.coinbasekey}")
     String coinbasekey;
-
+    
     @Value("${global.coinbasepw}")
     String coinbasepw;
     
@@ -47,7 +47,7 @@ public class Runner implements ApplicationRunner {
         JSONArray params = new JSONArray();
 
         params.put(coinbasekey);
-        params.put(coinbasepw);
+        params.put("");
         params.put(0);
         sendobj.put("params", params);
 		sendobj.put("id", 100);
