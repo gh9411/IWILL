@@ -67,7 +67,7 @@ public class WillReceiveController {
             String tresult = "";
             while((tresult = in.readLine()) != null){
                 System.out.println(tresult);
-                tresult += line;    
+                line += tresult;    
             }
 
             in.close();
@@ -76,7 +76,7 @@ public class WillReceiveController {
 
             hm.put("uid", willentity.getUid());
             hm.put("title", willentity.getTitle());
-            hm.put("text", tresult);
+            hm.put("text", line);
             hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
             hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
             result.add(hm);
