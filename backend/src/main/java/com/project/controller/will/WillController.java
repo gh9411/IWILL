@@ -233,11 +233,11 @@ public class WillController {
     }
     
      //Read wills by id 
-     @GetMapping(value = "/will/user/{userId}")
-     public Object getReviewByUserId(@PathVariable String userId) throws Exception{
+     @PostMapping(value = "/will/user")
+     public Object getReviewByUserId(String email) throws Exception{
 
 
-        List<WillEntity> wills = willservice.getWillByUid(userId);
+        List<WillEntity> wills = willservice.getWillByUid(email);
 
 
         JSONArray result = new JSONArray();
