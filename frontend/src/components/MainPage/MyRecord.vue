@@ -1,23 +1,15 @@
 <template>
   <div class="MyRecord">
     <v-expansion-panels>
-      <v-expansion-panel v-for="(item,i) in 5" :key="i">
-        <v-expansion-panel-header>2020.{{i+1}}월의 기록입니다.</v-expansion-panel-header>
-        <v-expansion-panel-content>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        
-        <video
-          id="my-player"
-          class="video-js"
-          controls
-          preload="auto"
-          poster=""
-          data-setup='{}'
+      <v-expansion-panel v-for="(willlist, i) in willlists" :key="i">
+        <v-expansion-panel-header
+          >{{ willlist.date }}의 기록입니다.</v-expansion-panel-header
         >
-          <source src="../../../src/assets/video/test.mp4" type="video/mp4">
-        </video>
-        
-
+        <v-expansion-panel-content>
+          <h4 class="title">제목 : {{ willlist.title }}</h4>
+          <hr />
+          <img :src="willlist.image" />
+          <video controls :src="willlist.video"></video>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
@@ -25,12 +17,23 @@
 </template>
 
 <script>
-
 export default {
   name: "MyRecord",
-}
+  data() {
+    return {
+      willlists: []
+    };
+  },
+  created() {
+    const data = new FormData();
+    data.append("email", this.$cookies.get("UserInfo").email);
+    this.$axios.post(this.$SERVER_URL + "will/user", data).then(res => {
+      console.log(res.data);
+      this.willlists = res.data;
+    });
+  }
+};
 </script>
 
 <style>
-  
 </style>

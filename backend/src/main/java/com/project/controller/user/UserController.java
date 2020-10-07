@@ -73,14 +73,16 @@ public class UserController {
 	@PostMapping("/user/update")
 	@ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정 입니다.")
 	@ApiImplicitParam(name = "userdto", value = "UserDto", required = true, dataType = "Object")
-	public void update(UserEntity user) {
+	public Object update(UserEntity user) {
 		userservice.update(user);
+		
+		return userservice.detail(user.getEmail());
 	}
 
 	@PostMapping("/user/updatepw")
 	@ApiOperation(value = "비밀번호 수정", notes = "비밀번호 수정 입니다.")
 	@ApiImplicitParam(name = "userdto", value = "UserDto", required = true, dataType = "Object")
-	public Object updatepw(String email, String upw) {
+	public Object updatepw(@RequestParam String email, @RequestParam String upw) {
 		userservice.updatepassword(email, upw);
 
 		return userservice.detail(email);
