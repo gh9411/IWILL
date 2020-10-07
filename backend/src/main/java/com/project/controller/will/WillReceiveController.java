@@ -7,6 +7,7 @@ import com.project.model.will.WillReceiveEntity;
 import com.project.service.will.WillReceiveService;
 import com.project.service.will.WillService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +42,15 @@ public class WillReceiveController {
 
         WillEntity will =  willservice.getByTransactionHash(hash);
         willreceiveservice.receivewillRegistser(ruid, will);
+
+        List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
+
+        for(WillReceiveEntity willentity : list){
+            JSONObject jsonObj = new JSONObject(willentity.getFilepath());
+            System.out.println(jsonObj.getString("filepath"));
+        }
+
+
 
         return new ResponseEntity<Object>(willreceiveservice.searchAll(ruid), HttpStatus.OK);
     }
