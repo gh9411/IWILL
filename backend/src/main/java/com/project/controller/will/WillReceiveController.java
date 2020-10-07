@@ -62,12 +62,17 @@ public class WillReceiveController {
             InputStreamReader reader=new InputStreamReader(input,"UTF-8");
             BufferedReader in = new BufferedReader(reader);
             
+        
             String line = "";
             String tresult ="";
             if((line=in.readLine()) != null){
                 tresult += line + System.lineSeparator();
             }
             System.out.println(tresult);
+
+            in.close();
+            reader.close();
+            input.close();
 
             hm.put("uid", willentity.getUid());
             hm.put("title", willentity.getTitle());
