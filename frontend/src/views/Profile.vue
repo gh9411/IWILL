@@ -201,6 +201,7 @@ export default {
     this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
       this.email = res.data.email;
       this.username = res.data.name;
+      this.hash = res.data.accounthash;
     });
   },
   props: {

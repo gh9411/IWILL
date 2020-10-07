@@ -54,20 +54,23 @@
         <modal v-if="this.modal.logalcheck" class="text-center">
           <template slot="header">
             <div class="py-3 mb-0">
-              <h4 class="text-warning">영상이 법적효력을 가지는 방법!</h4>
+              <h4 class="text-danger" style="font-weight:bold">
+                영상이 법적효력을 가지는 방법!
+              </h4>
             </div>
           </template>
           <template slot="body">
-            <hr />
-            <h5 class="title mb-3">
+            <hr style="margin-bottom:30px;" />
+            <h5
+              class="my-5"
+              style="margin-top:10px; font-weight:bold; text-align:left"
+            >
               1. 1명 이상의 증인이 필요합니다.
             </h5>
-            <h5 class="title mb-3">
-              2. 성명과 유언 날짜를 음성으로 남겨야 합니다.
-              <br />
-              (당사자와 증인 모두)
+            <h5 class="my-5" style="font-weight:bold; text-align:left">
+              2. 성명과 날짜를 음성으로 남겨야 합니다. (본인, 증인 모두)
             </h5>
-            <h5 class="title mb-3">
+            <h5 class="my-5" style="font-weight:bold; text-align:left">
               3. 증인은 이익을 받는 가족과 미성년자는 불가합니다.
             </h5>
           </template>
