@@ -271,7 +271,7 @@ public class FileService {
 		
 		try {
 			System.out.println(str);
-			FileOutputStream output = new FileOutputStream(file.getName());
+			FileOutputStream output = new FileOutputStream(file);
 			OutputStreamWriter writer = new OutputStreamWriter(output,"UTF-8");
 			BufferedWriter out = new BufferedWriter(writer);
 			out.write(str);
