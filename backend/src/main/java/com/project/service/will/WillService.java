@@ -5,6 +5,7 @@ import java.util.List;
 import javax.mail.internet.MimeMessage;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.project.dao.user.UserDAO;
 import com.project.dao.will.WillDAO;
 import com.project.model.will.WillEntity;
 import com.project.util.HexToString;
@@ -24,6 +25,9 @@ public class WillService {
 
     @Autowired
     WillDAO willDao;
+
+    @Autowired
+    UserDAO userdao;
 
     @Autowired
     JavaMailSender mailSender;
@@ -174,20 +178,23 @@ public class WillService {
 
     //예약 날짜에 이메일 보내기
     public void sendEmail(String email,String hash){ 
-        System.out.println("sendEmail : "+email);
+        String name = userdao.getUserByEmail(willDao.getWillByTransactionhash(hash).getUid()).getName();
+
 
         String setfrom = "admin@gamil.com";
         String tomail = email; // 받는 사람 이메일
         String content =
-        
+        "안녕하세요 회원님"+name+"님으로부터 유언장이 도착했습니다."+
         System.getProperty("line.separator")+ //한줄씩 줄간격을 두기위해 작성
         System.getProperty("line.separator")+
-        "안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다"+
-        System.getProperty("line.separator")+
-        hash+
+        "IWILL에가입하신 후 받으신 인증번호를 통해서 확인하실수 있습니다."+
         System.getProperty("line.separator")+
         System.getProperty("line.separator")+
-        "받으신 인증번호를 홈페이지에 입력해 주시면 다음으로 넘어갑니다."; // 내용
+        System.getProperty("line.separator")+
+        System.getProperty("line.separator")+
+        "인증번호 : "+hash+
+        System.getProperty("line.separator")+
+        "IWILL : http://ubuntu@j3a104.p.ssafy.io";
         
         try {
             
