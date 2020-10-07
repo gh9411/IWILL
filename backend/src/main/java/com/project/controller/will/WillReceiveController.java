@@ -50,10 +50,12 @@ public class WillReceiveController {
         willreceiveservice.receivewillRegistser(ruid, will);
 
         List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
-        ArrayList result = new ArrayList<>();
-        ArrayList part = new ArrayList<>();
+        
+        ArrayList<HashMap<String,String>> result = new ArrayList<>();
+        
 
         for(WillReceiveEntity willentity : list){
+            HashMap<String,String> hm = new HashMap<>();
             JSONObject jsonObj = new JSONObject(willentity.getFilepath());
 
             FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
@@ -65,9 +67,14 @@ public class WillReceiveController {
             if((line=in.readLine()) != null){
                 tresult += line + System.lineSeparator();
             }
-            part.add(willentity);
-            part.add(tresult);
             System.out.println(tresult);
+
+            hm.put("uid", willentity.getUid());
+            hm.put("title", willentity.getTitle());
+            hm.put("text", tresult);
+            hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
+            hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
+            result.add(hm);
         }
 
 
