@@ -39,6 +39,7 @@ public class WillReceiveController {
 
     @PostMapping(value = "/will/savetransaction")
     public Object savetransaction(String hash,String ruid){
+        System.out.println("savetransaction");
 
         WillEntity will =  willservice.getByTransactionHash(hash);
         willreceiveservice.receivewillRegistser(ruid, will);
@@ -47,6 +48,7 @@ public class WillReceiveController {
 
         for(WillReceiveEntity willentity : list){
             JSONObject jsonObj = new JSONObject(willentity.getFilepath());
+            System.out.println(jsonObj);
             System.out.println(jsonObj.getString("filepath"));
         }
 
