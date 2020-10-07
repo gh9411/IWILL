@@ -63,14 +63,7 @@ export default {
     return {
       code: "",
       willlists: [],
-      imgurl: "",
-      imgarr: [],
-      texturl: "",
-      textarr: [],
-      videourl: "",
-      videoarr: [],
-      realtextarr: [],
-      jgarr: []
+      imgurl: ""
     };
   },
   created() {},

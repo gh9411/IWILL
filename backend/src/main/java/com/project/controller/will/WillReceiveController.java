@@ -1,5 +1,10 @@
 package com.project.controller.will;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.project.model.will.WillEntity;
@@ -7,6 +12,7 @@ import com.project.model.will.WillReceiveEntity;
 import com.project.service.will.WillReceiveService;
 import com.project.service.will.WillService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,12 +43,46 @@ public class WillReceiveController {
     }
 
     @PostMapping(value = "/will/savetransaction")
-    public Object savetransaction(String hash,String ruid){
+    public Object savetransaction(String hash,String ruid) throws Exception{
+        System.out.println("savetransaction");
 
         WillEntity will =  willservice.getByTransactionHash(hash);
-        willreceiveservice.receivewillRegistser(ruid, will);
+        // willreceiveservice.receivewillRegistser(ruid, will);
 
-        return new ResponseEntity<Object>("success", HttpStatus.OK);
+        // List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
+        
+        ArrayList<HashMap<String,String>> result = new ArrayList<>();
+        
+
+        HashMap<String,String> hm = new HashMap<>();
+        JSONObject jsonObj = new JSONObject(will.getFilepath());
+
+        FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
+        InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+        BufferedReader in = new BufferedReader(reader);
+        
+        
+        String line = "";
+        String tresult = "";
+        while((tresult = in.readLine()) != null){
+            System.out.println(tresult);
+            line += tresult+System.lineSeparator();    
+        }
+
+        in.close();
+        reader.close();
+        input.close();
+
+        hm.put("uid", will.getUid());
+        hm.put("title", will.getTitle());
+        hm.put("text", line);
+        hm.put("date", will.getCreatedate());
+        hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
+        hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
+        result.add(hm);
+        
+
+        return new ResponseEntity<Object>(hm, HttpStatus.OK);
     }
 
 }

@@ -1,7 +1,11 @@
 package com.project.controller.will;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.rmi.server.UID;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -100,8 +104,7 @@ public class WillController {
 
 
         if(!willdto.getVideo().isEmpty()){
-            videohm =  fileservice.upload(willdto.getVideo(),UID,DATE);
-            
+            videohm =  fileservice.upload(willdto.getVideo(),UID,DATE); 
         }
         if(!willdto.getImage().isEmpty()){
             imagehm = fileservice.upload(willdto.getImage(),UID,DATE);
@@ -234,18 +237,20 @@ public class WillController {
     }
     
      //Read wills by id 
-     @GetMapping(value = "/will/user/{userId}")
-     public Object getReviewByUserId(@PathVariable String userId) throws Exception{
+     @PostMapping(value = "/will/user")
+     public Object getReviewByUserId(String email) throws Exception{
 
 
-        List<WillEntity> wills = willservice.getWillByUid(userId);
+        List<WillEntity> wills = willservice.getWillByUid(email);
 
 
-        JSONArray result = new JSONArray();
+        ArrayList<HashMap<String,String>> result = new ArrayList<>();
 
         for(WillEntity will : wills){
-            System.out.println("==========================");
-            System.out.println(will);
+
+            HashMap<String,String> hm = new HashMap<>();
+            
+
             JSONObject pathobj = new JSONObject(will.getFilepath());
         
             String transkey = will.getTransactionhash();
@@ -256,18 +261,38 @@ public class WillController {
             JSONArray jsonarr = new JSONArray();
             jsonarr.put(will);
             jsonarr.put(pathobj);
+
+
+            FileInputStream input=new FileInputStream(pathobj.getString("textpath"));
+            InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+            BufferedReader in = new BufferedReader(reader);
             
-            System.out.println(flag);
-            System.out.println(jsonarr.toString());
+            String line = "";
+            String tresult = "";
+            while((tresult = in.readLine()) != null){
+                System.out.println(tresult);
+                line += tresult+System.lineSeparator();    
+            }
+
+            in.close();
+            reader.close();
+            input.close();
+
+            hm.put("uid", will.getUid());
+            hm.put("title", will.getTitle());
+            hm.put("date", will.getCreatedate());
+            hm.put("text", line);
+            hm.put("image","http://j3a104.p.ssafy.io/images/"+pathobj.getString("imagepath").substring(18));
+            hm.put("video","http://j3a104.p.ssafy.io/images/"+pathobj.getString("videopath").substring(18));
+            
             
             if(flag){
-                result.put(jsonarr);
+                result.add(hm);
             }
-            System.out.println("==========================");
         }
         System.out.println(result.toString());
         
-        return new ResponseEntity<>(result.toList(), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
 
      }
      

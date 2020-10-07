@@ -5,8 +5,10 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -67,7 +69,7 @@ public class FileService {
     public HashMap<String,String> upload(final MultipartFile multipartFile,String uid,String date) throws Exception {
 		
 		//폴더생성
-		String path = "c:\\data\\"+uid+"\\"+date; //폴더 경로
+		String path = "/home/ubuntu/image/"+uid+"/"+date; //폴더 경로
 		File Folder = new File(path);
 
 		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
@@ -85,7 +87,7 @@ public class FileService {
 		
 		//1. 파일 업로드
 
-		final File targetFile = new File(path+"\\"+ multipartFile.getOriginalFilename()); // 저장 위치 입력
+		final File targetFile = new File(path+"/"+ multipartFile.getOriginalFilename()); // 저장 위치 입력
 		try {
 			final InputStream fileStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(fileStream, targetFile);
@@ -245,7 +247,7 @@ public class FileService {
 	public HashMap<String,String> uploadtxt(String content,String uid,String date) throws Exception{
 
 		//폴더생성
-		String path = "c:\\data\\"+uid+"\\"+date; //폴더 경로
+		String path = "/home/ubuntu/image/"+uid+"/"+date; //폴더 경로
 		File Folder = new File(path);
 
 		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
@@ -263,14 +265,17 @@ public class FileService {
 		
 		//1. 파일 업로드
 
-		File file = new File(path+"\\content.txt");
+		File file = new File(path+"/content.txt");
 		String str = content;
 		HashMap<String,String> hm = new HashMap<>();
 		
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(str);
-			writer.close();
+			System.out.println(str);
+			FileOutputStream output = new FileOutputStream(file);
+			OutputStreamWriter writer = new OutputStreamWriter(output,"UTF-8");
+			BufferedWriter out = new BufferedWriter(writer);
+			out.write(str);
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
