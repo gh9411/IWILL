@@ -230,34 +230,37 @@ export default {
     },
     submitInfo() {
       const data = new FormData();
-      data.append("upw", this.$cookies.get("UserInfo").password);
-      data.append("email", this.$cookies.get("UserInfo".email));
+      data.append("uid", this.$cookies.get("UserInfo").uid);
+      data.append("upw", this.$cookies.get("UserInfo").upw);
+      data.append("accounthash", this.$cookies.get("UserInfo").accounthash);
+      data.append("email", this.$cookies.get("UserInfo").email);
       data.append("name", this.username);
       data.append("phone", this.phone);
       data.append("createdate", this.$cookies.get("UserInfo").createdate);
       data.append("senddate", this.$cookies.get("UserInfo").senddate);
       data.append("profile", this.imageUrl);
       data.append("usertype", this.$cookies.get("UserInfo").usertype);
-      data.append("explain", this.explain);
       this.$axios
         .post(this.$SERVER_URL + "user/update", data)
-        .then(res => {
-          console.log(res.data);
+        .then((res) => {
+          this.$cookies.remove('UserInfo');
+          this.$cookies.set('UserInfo', res.data);
           location.reload();
         })
         .then(err => {
           console.log(err);
         });
+      
     },
     changepwd() {
       if (
-        length(this.password) == 0 ||
-        length(this.newpassword) == 0 ||
-        length(this.newpasswordcheck) == 0
+        this.password.length == 0 ||
+        this.newpassword.length == 0 ||
+        this.newpasswordcheck.length == 0
       ) {
         alert("빈 칸이 존재합니다. 채워서 다시 변경해주세요.");
         return;
-      } else if (this.password != this.$cookies.get("UserInfo").password) {
+      } else if (this.password != this.$cookies.get("UserInfo").upw) {
         alert("현재 비밀번호를 잘못 적으셨습니다. 확인해주세요");
         return;
       } else if (this.newpassword != this.newpasswordcheck) {
@@ -265,12 +268,23 @@ export default {
         return;
       } else {
         const data = new FormData();
-        data.append("email", this.email);
-        data.append("password", this.newpassword);
+        data.append("uid", this.$cookies.get("UserInfo").uid);
+        data.append("upw", this.newpassword);
+        data.append("email", this.$cookies.get("UserInfo").email);
+        data.append("accounthash", this.$cookies.get("UserInfo").accounthash);
+        data.append("name", this.$cookies.get("UserInfo").name);
+        data.append("phone", this.$cookies.get("UserInfo").phone);
+        data.append("createdate", this.$cookies.get("UserInfo").createdate);
+        data.append("senddate", this.$cookies.get("UserInfo").senddate);
+        data.append("profile", this.$cookies.get("UserInfo").profile);
+        data.append("usertype", this.$cookies.get("UserInfo").usertype);
         this.$axios
           .post(this.$SERVER_URL + "user/updatepw", data)
           .then(res => {
             console.log(res);
+            this.$cookies.remove('UserInfo');
+            this.$cookies.set('UserInfo', res.data);
+            location.reload();
           })
           .then(err => {
             console.log(err);
