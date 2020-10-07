@@ -42,7 +42,7 @@ public class WillReceiveController {
         WillEntity will =  willservice.getByTransactionHash(hash);
         willreceiveservice.receivewillRegistser(ruid, will);
 
-        return new ResponseEntity<Object>("success", HttpStatus.OK);
+        return new ResponseEntity<Object>(willreceiveservice.searchAll(ruid), HttpStatus.OK);
     }
 
 }
