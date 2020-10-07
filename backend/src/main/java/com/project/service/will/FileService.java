@@ -245,7 +245,7 @@ public class FileService {
 	public HashMap<String,String> uploadtxt(String content,String uid,String date) throws Exception{
 
 		//폴더생성
-		String path = "/home/ubuntu/image"+uid+"/"+date; //폴더 경로
+		String path = "/home/ubuntu/image/"+uid+"/"+date; //폴더 경로
 		File Folder = new File(path);
 
 		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
