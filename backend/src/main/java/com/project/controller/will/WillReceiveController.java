@@ -1,5 +1,8 @@
 package com.project.controller.will;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import com.project.model.will.WillEntity;
@@ -38,7 +41,7 @@ public class WillReceiveController {
     }
 
     @PostMapping(value = "/will/savetransaction")
-    public Object savetransaction(String hash,String ruid){
+    public Object savetransaction(String hash,String ruid) throws Exception{
         System.out.println("savetransaction");
 
         WillEntity will =  willservice.getByTransactionHash(hash);
@@ -48,8 +51,13 @@ public class WillReceiveController {
 
         for(WillReceiveEntity willentity : list){
             JSONObject jsonObj = new JSONObject(willentity.getFilepath());
-            System.out.println(jsonObj);
-            System.out.println(jsonObj.getString("textpath"));
+
+            FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
+            InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+            BufferedReader in = new BufferedReader(reader);
+
+            System.out.println(in.toString());
+
         }
 
 
