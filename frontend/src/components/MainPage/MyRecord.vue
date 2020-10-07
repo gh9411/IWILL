@@ -42,7 +42,6 @@ export default {
     const data = new FormData();
     data.append("email", this.$cookies.get("UserInfo").email);
     this.$axios.post(this.$SERVER_URL + "will/user", data).then(res => {
-      console.log(res.data);
       this.willlists = res.data;
     });
   }

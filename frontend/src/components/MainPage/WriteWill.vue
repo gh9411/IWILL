@@ -197,6 +197,10 @@ export default {
       formData.append("witness", this.witness);
       formData.append("receive", this.receive);
       formData.append("senddata", createdDate);
+      console.log(formData);
+      if (this.form.content == "") {
+        return alert("내용을 적어주세요");
+      }
 
       if (this.willVideo == null) {
         const file = new File(["test"], "nofile.mp4", { type: "text/mp4" });
@@ -219,13 +223,12 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
+          alert("글을 남겼습니다.");
+          this.$router.go(0);
         })
         .catch(err => {
           console.error(err);
         });
-      alert("글을 남겼습니다.");
-      this.$router.go(0);
     }
   },
   computed: {

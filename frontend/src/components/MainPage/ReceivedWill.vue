@@ -116,9 +116,7 @@ export default {
     urlcheck(index) {
       return this.willlist[index];
     },
-    print(willlist) {
-      console.log(willlist);
-    },
+
     submitcode() {
       const data = new FormData();
       data.append("ruid", this.$cookies.get("UserInfo").email);

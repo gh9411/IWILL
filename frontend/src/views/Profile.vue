@@ -182,7 +182,7 @@ export default {
       username: "",
       email: "",
       phone: "",
-      imageUrl: require("@/assets/img/guest.jpg")
+      imageUrl: require("@/assets/img/jg.jpg")
     };
   },
   created() {
@@ -202,6 +202,7 @@ export default {
       this.email = res.data.email;
       this.username = res.data.name;
       this.hash = res.data.accounthash;
+      this.imgurl = res.data.profile;
     });
   },
   props: {
