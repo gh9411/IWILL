@@ -133,13 +133,19 @@ public class UserService {
 	}
 
 	public void update(UserEntity user) {
-		Optional<UserEntity> modify = userdao.findByUid(user.getUid());
+		Optional<UserEntity> modify = userdao.findByEmail(user.getEmail());
 
 		modify.ifPresent(selectUser -> {
-			selectUser.setUpw(user.getUpw());
+			//selectUser.setUid(user.getUid());
+			//selectUser.setUpw(user.getUpw());
+			//selectUser.setAccounthash(user.getAccounthash());
+			//selectUser.setEmail(user.getEmail());
+			selectUser.setName(user.getName());
 			selectUser.setPhone(user.getPhone());
+			//selectUser.setCreatedate(user.getCreatedate());
+			//selectUser.setSenddate(user.getSenddate());
 			selectUser.setProfile(user.getProfile());
-
+			//selectUser.setUsertype(user.getUsertype());
 			userdao.save(selectUser);
 			System.out.println("update!!");
 		});
