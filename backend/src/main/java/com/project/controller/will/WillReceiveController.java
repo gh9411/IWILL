@@ -66,7 +66,8 @@ public class WillReceiveController {
             String line = "";
             String tresult = "";
             while((tresult = in.readLine()) != null){
-                tresult += line;
+                System.out.println(tresult);
+                tresult += line;    
             }
 
             in.close();
