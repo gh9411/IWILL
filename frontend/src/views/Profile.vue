@@ -226,6 +226,7 @@ export default {
         alert("이미지만 업로드 가능합니다");
       } else {
         this.imageUrl = URL.createObjectURL(file);
+        console.log(this.imageUrl);
       }
     },
     submitInfo() {

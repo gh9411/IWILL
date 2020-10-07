@@ -1,15 +1,28 @@
 <template>
   <div class="MyRecord">
-    <v-expansion-panels>
+    <v-expansion-panels style="margin-bottom:300px;">
       <v-expansion-panel v-for="(willlist, i) in willlists" :key="i">
         <v-expansion-panel-header
           >{{ willlist.date }}의 기록입니다.</v-expansion-panel-header
         >
         <v-expansion-panel-content>
-          <h4 class="title">제목 : {{ willlist.title }}</h4>
+          <p>생성날짜 : {{ willlist.date }}</p>
+          <h2 style="font-weight:bold">{{ willlist.title }}</h2>
           <hr />
-          <img :src="willlist.image" />
-          <video controls :src="willlist.video"></video>
+          <pre style="margin-top:40px; margin-bottom:40px;">{{
+            willlist.text
+          }}</pre>
+          <hr />
+          <img
+            :src="willlist.image"
+            style="margin-bottom:30px; margin-top:30px;"
+          />
+          <hr />
+          <video
+            controls
+            :src="willlist.video"
+            style="margin-top:30px;"
+          ></video>
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
