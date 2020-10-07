@@ -11,14 +11,32 @@
               <p slot="description" class="description">정보를 입력해주세요</p>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>face</md-icon>
-                <label>이름...</label>
-                <md-input v-model="name"></md-input>
+
+                <md-input
+                  placeholder="이름..."
+                  alternative
+                  type="name"
+                  :valid="valid.name"
+                  v-model="model.name"
+                  @keydown.enter="Signup()"
+                >
+                </md-input>
               </md-field>
               <md-field class="md-form-group row" slot="inputs">
                 <md-icon>email</md-icon>
-                <label>이메일...</label>
-                <md-input v-model="email" type="email"></md-input
-                ><md-button
+                <label class="ml-3 text-warning text-sm" v-if="!valid.email"
+                  >이메일 형식과 다릅니다.</label
+                >
+                <md-input
+                  placeholder="Email..."
+                  alternative
+                  type="email"
+                  :valid="valid.email"
+                  v-model="model.email"
+                  @keydown.enter="Signup()"
+                >
+                </md-input>
+                <md-button
                   size="sm"
                   class=" md-just-icon md-round"
                   @click="emailcheck"
@@ -27,19 +45,37 @@
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
-                <label>비밀번호...</label>
-                <md-input v-model="password" type="password"></md-input>
+                <label class="ml-3 text-warning text-sm" v-if="!valid.password"
+                  >8글자 이상이어야 합니다.</label
+                >
+                <md-input
+                  placeholder="Password..."
+                  alternative
+                  type="password"
+                  :valid="valid.password"
+                  v-model="model.password"
+                  @keydown.enter="Signup()"
+                >
+                </md-input>
               </md-field>
               <md-field class="md-form-group" slot="inputs">
                 <md-icon>lock_outline</md-icon>
-                <label>비밀번호 확인...</label>
+                <label
+                  class="ml-3 text-warning text-sm"
+                  v-if="!valid.passwordconfirm"
+                  >비밀번호가 일치하지 않습니다.</label
+                >
                 <md-input
-                  v-model="passwordcheck"
+                  placeholder="Confirm..."
+                  alternative
                   type="password"
+                  :valid="valid.passwordconfirm"
+                  v-model="model.passwordconfirm"
                   @keydown.enter="Signup()"
                 ></md-input>
               </md-field>
               <md-button
+                :disabled="!isPossible"
                 slot="footer"
                 class="md-simple md-success md-lg"
                 @click="Signup()"
@@ -48,57 +84,8 @@
               </md-button>
             </login-card>
           </div>
-          <modal
-            v-if="this.modals.equalpassword"
-            gradient="danger"
-            class="text-center"
-          >
-            <template slot="header">
-              <div class="py-3 text-center mb-0">
-                <h4 class="text-danger">경고!</h4>
-              </div>
-            </template>
-            <template slot="body">
-              <h4 class="text-success mb-3">
-                비밀번호가 일치하지 않습니다! 다시 적어주세요!
-              </h4>
-            </template>
-            <template slot="footer">
-              <div class="text-center">
-                <md-button
-                  size="sm"
-                  type="secondary"
-                  @click="modals.equalpassword = false"
-                  >닫기</md-button
-                >
-              </div>
-            </template>
-          </modal>
 
-          <modal v-if="this.modals.empty" class="text-center">
-            <template slot="header">
-              <div class="py-3 text-center mb-0">
-                <h4 class="text-danger">경고!</h4>
-              </div>
-            </template>
-            <template slot="body">
-              <h4 class="text-success mb-3">
-                빈 칸이 존재합니다. 모두 채워주세요!
-              </h4>
-            </template>
-            <template slot="footer">
-              <div class="text-center">
-                <md-button
-                  size="sm"
-                  class="md-simple md-default"
-                  @click="modals.empty = false"
-                  >닫기</md-button
-                >
-              </div>
-            </template>
-          </modal>
-
-          <modal v-if="this.modals.duple" class="text-center">
+          <modal v-if="this.valid.duple" class="text-center">
             <template slot="header">
               <div class="py-3 text-center mb-0">
                 <h4 class="text-danger">경고!</h4>
@@ -114,37 +101,14 @@
                 <md-button
                   size="sm"
                   class="md-simple md-default"
-                  @click="modals.duple = false"
+                  @click="valid.duple = false"
                   >닫기</md-button
                 >
               </div>
             </template>
           </modal>
 
-          <modal v-if="this.modals.passwordlength" class="text-center">
-            <template slot="header">
-              <div class="py-3 text-center mb-0">
-                <h4 class="text-danger">경고!</h4>
-              </div>
-            </template>
-            <template slot="body">
-              <h4 class="text-success mb-3">
-                비밀번호는 8자리 입력해야합니다.
-              </h4>
-            </template>
-            <template slot="footer">
-              <div class="text-center">
-                <md-button
-                  size="sm"
-                  class="md-simple md-default"
-                  @click="modals.passwordlength = false"
-                  >닫기</md-button
-                >
-              </div>
-            </template>
-          </modal>
-
-          <modal v-if="this.modals.emailcheck" class="text-center">
+          <modal v-if="this.valid.emailcheck" class="text-center">
             <template slot="header">
               <div class="py-3 text-center mb-0">
                 <h4 class="text-danger">성공!</h4>
@@ -160,7 +124,7 @@
                 <md-button
                   size="sm"
                   class="md-simple md-default"
-                  @click="modals.emailcheck = false"
+                  @click="valid.emailcheck = false"
                   >닫기</md-button
                 >
               </div>
@@ -189,17 +153,31 @@ export default {
       duplemail: false,
       password: "",
       passwordcheck: "",
-      isPossible: false,
       phone: "",
       createdate: "",
       usertype: 0,
       imageUrl: require("@/assets/img/guest.jpg"),
-      modals: {
-        empty: false,
-        equalpassword: false,
+
+      isPossible: false,
+      model: {
+        email: "",
+        name: "",
+        password: "",
+        passwordconfirm: ""
+      },
+      error: {
+        email: false,
+        name: false,
+        password: false,
+        passwordconfirm: false
+      },
+      valid: {
+        email: false,
+        emailcheck: false,
+        name: false,
         duple: false,
-        passwordlength: false,
-        emailcheck: false
+        password: false,
+        passwordconfirm: false
       }
     };
   },
@@ -216,22 +194,30 @@ export default {
       };
     }
   },
+  watch: {
+    model: {
+      deep: true,
+      handler() {
+        this.validCheck(this.model);
+      }
+    }
+  },
   methods: {
     emailcheck() {
       const data = new FormData();
-      data.append("email", this.email);
-      if (this.email == "") {
+      data.append("email", this.model.email);
+      if (this.model.email == "") {
         alert("이메일을 적어주세요");
         return;
       }
       this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
-        if ((this.email = res.data.email)) {
+        if ((this.model.email = res.data.email)) {
           alert("기존에 존재하는 이메일입니다.");
-          this.email = "";
+          this.model.email = "";
         } else {
-          this.modals.emailcheck = true;
-          this.duplemail = true;
-          this.email = data.email;
+          this.valid.emailcheck = true;
+          this.valid.duple = true;
+          this.model.email = data.email;
         }
       });
     },
@@ -245,49 +231,51 @@ export default {
       this.createdate = `${year}.${month}.${date}-${hour}.${minute}`;
       const senddate = null;
       const SignData = new FormData();
-      SignData.append("name", this.name);
-      SignData.append("email", this.email);
-      SignData.append("upw", this.password);
+      SignData.append("name", this.model.name);
+      SignData.append("email", this.model.email);
+      SignData.append("upw", this.model.password);
       SignData.append("createdate", this.createdate);
       SignData.append("profile", this.imageUrl);
       SignData.append("senddate", senddate);
       SignData.append("phone", this.phone);
       SignData.append("usertype", this.usertype);
+
+      this.$axios
+        .post(this.$SERVER_URL + "user/signup", SignData)
+        .then(res => {
+          this.$router.push({ name: "login" });
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
+    validCheck(model) {
+      if (/^\w+([.-]?\w+)@\w+([.-]?\w+)*(.\w{2,3})+$/.test(model.email)) {
+        this.valid.email = true;
+      } else this.valid.email = false;
+
+      if (model.password.length > 7) {
+        this.valid.password = true;
+      } else this.valid.password = false;
+
+      if (model.passwordconfirm == model.password) {
+        this.valid.passwordconfirm = true;
+      } else this.valid.passwordconfirm = false;
+
       if (
-        this.password == this.passwordcheck &&
-        this.password != "" &&
-        this.passwordcheck != "" &&
-        this.duplemail == true
+        this.valid.email &&
+        this.valid.password &&
+        this.valid.passwordconfirm &&
+        this.valid.emailcheck &&
+        this.valid.duple
       ) {
-        this.$axios
-          .post(this.$SERVER_URL + "user/signup", SignData)
-          .then(res => {
-            this.$router.push({ name: "login" });
-            location.reload();
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else if (
-        this.name == "" ||
-        this.email == "" ||
-        this.password == "" ||
-        this.passwordcheck == ""
-      ) {
-        this.modals.empty = true;
-      } else if (this.duplemail == false) {
-        this.modals.duple = true;
-        this.email = "";
-      } else if (this.password.length <= 7) {
-        this.modals.passwordlength = true;
-      } else {
-        (this.modals.equalpassword = true),
-          (this.password = ""),
-          (this.passwordcheck = "");
-      }
+        this.isPossible = true;
+      } else this.valid.isPossible = false;
     }
   }
 };
 </script>
 
-<style lang="css"></style>
+<style lang="css"></style>'

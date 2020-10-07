@@ -40,7 +40,14 @@
           ></v-file-input>
 
           <md-switch v-model="switch3" style="margin-top: 1em"><span v-if="switch3" style="color: black">영상 추가하기</span><span v-if="switch3==false">영상 추가하기</span></md-switch>
-          <v-file-input v-if="switch3" @change="uploadFileVideo" small-chips  label="Video input" accept="video/mp4, video/avi" style="margin-right:1em; margin-left:0.5em;"></v-file-input>
+          <v-file-input 
+            v-if="switch3" 
+            @change="uploadFileVideo" 
+            small-chips  
+            label="Video input" 
+            accept="video/mp4, video/avi" 
+            style="margin-right:1em; margin-left:0.5em;"
+          ></v-file-input>
       
 
         <div style="margin-top: 1em; margin-right: 1em;" >
@@ -58,7 +65,6 @@
               md-placeholder="Add people email..." 
               style="margin-top: 0px; padding-top: .2em;"
             ></md-chips>
-
             
           </div>
           <!-- 유언장 전달일자 -->
@@ -69,7 +75,6 @@
         </div>
 
         <div class="box"></div>
-
         <!-- submit -->
         <div class="buttoncenter">
           <md-button class="md-button" @click="submit()"><span style="font-size: 1rem;">글 남기기</span></md-button>
@@ -82,7 +87,7 @@
 <script>
 export default {
   name: "WriteWill",
-  components: {    
+  components: {   
   },
   data() {
     let dateFormat = this.$material.locale.dateFormat || 'yyyy-MM-dd'
@@ -96,7 +101,6 @@ export default {
       switch1: false,
       switch2: false,
       switch3: false,
-      senddate: "",
       form: Object.assign({}, defaultForm),
       rules: {
         name: [val => (val || '').length > 0 || '제목은 필수사항입니다.'],
@@ -104,23 +108,23 @@ export default {
       content: "",
       willImage: null,
       willVideo: null,
-      witness: "",
+      witness:  null,
       receive: [],
-      
+      senddate: null,
     };
   },
   created() {
     this.userdata = this.$cookies.get("UserInfo")
   },
   methods: {
-    uploadFileImage: function (e) {
-        this.willImage = e
+    uploadFileImage(e) {
+      this.willImage = e
+      
     },
     uploadFileVideo(e) {
       this.willVideo = e
     },
     submit () {
-      var fs = require("fs");
       let today = new Date();
       let year = today.getFullYear(); // 년도
       let month = today.getMonth() + 1;  // 월
@@ -138,10 +142,22 @@ export default {
       formData.append("witness", this.witness);
       formData.append("receive", this.receive);
       formData.append("senddata", createdDate);
-      // multipartfile 구성
-      formData.append("video", this.willVideo, this.willVideo.name);
-      formData.append("image", this.willImage, this.willImage.name);
-      
+
+      if (this.willVideo == null) {
+        const file = new File(["test"], "nofile.mp4", { type: "text/mp4", });
+        formData.append("video", file, file.name);
+      }
+      else {
+        formData.append("video", this.willVideo, this.willVideo.name);
+      }
+
+      if (this.willImage == null) {
+        const file = new File(["test"], "nofile.png", { type: "text/png", });
+        formData.append("image", file, file.name);
+      }
+      else {
+        formData.append("image", this.willImage, this.willImage.name);
+      }
 
       this.$axios.post(this.$SERVER_URL + "will/register", formData, {headers: {
         "content-Type": "multipart/form-data"
@@ -151,9 +167,8 @@ export default {
           res => {console.log(res)}
         )
         .catch(
-          err => {console.log(err)}
-        )         
-
+          err => {console.error(err)}
+        )
       alert("글을 남겼습니다.")
     },
   },
