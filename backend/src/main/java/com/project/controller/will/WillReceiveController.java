@@ -49,7 +49,7 @@ public class WillReceiveController {
         for(WillReceiveEntity willentity : list){
             JSONObject jsonObj = new JSONObject(willentity.getFilepath());
             System.out.println(jsonObj);
-            System.out.println(jsonObj.getString("filepath"));
+            System.out.println(jsonObj.getString("textpath"));
         }
 
 
