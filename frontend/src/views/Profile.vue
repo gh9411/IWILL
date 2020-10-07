@@ -64,7 +64,7 @@
                       <md-field class="md-form-group" slot="inputs">
                         <md-icon>face</md-icon>
                         <label>이름...</label>
-                        <md-input v-model="name"></md-input>
+                        <md-input v-model="username"></md-input>
                       </md-field>
                     </div>
                     <div class="col">
@@ -243,6 +243,7 @@ export default {
         .post(this.$SERVER_URL + "user/update", data)
         .then(res => {
           console.log(res.data);
+          location.reload();
         })
         .then(err => {
           console.log(err);

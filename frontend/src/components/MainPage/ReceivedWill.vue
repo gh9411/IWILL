@@ -26,7 +26,7 @@
               >
                 <v-expansion-panel-header>{{}}의 전달</v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <img src="@/assets/img/gh.jpg" />
+                  <img :src="willlist" />
                 </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -46,14 +46,18 @@ export default {
     return {
       code: "",
       willlists: [],
-      pp: "gh"
+<<<<<<< HEAD
+=======
+      imgurl: "",
+      willcheck: Object
+>>>>>>> a0e6811dfa30b8ec85ce4ec98cfbccda0139b2ba
     };
   },
   created() {},
   props: {
     header: {
       type: String,
-      default: require("@/assets/img/city-profile.jpg")
+      default: require("@/assets/img/bonobono.jpg")
     }
   },
   computed: {
@@ -64,26 +68,33 @@ export default {
     }
   },
   methods: {
+    urlcheck(index) {
+      return this.willlist[index];
+    },
+    print(willlist) {
+      console.log(willlist);
+    },
     submitcode() {
-      const data = new FormData();
-      data.append("ruid", this.$cookies.get("UserInfo").email);
-      data.append("hash", this.code);
-      this.$axios
-        .post(this.$SERVER_URL + "will/savetransaction", data)
-        .then(res => {
-          for (var i = 0; i < res.data.length; i++) {
-            const clist = [];
-            res.data[i].filepath = JSON.parse(res.data[i].filepath);
-            clist.push(res.data[i].filepath.imagepath);
-
-            this.willlists.push(clist);
-          }
-          console.log(this.willlists);
-        })
-        .then(err => {
-          console.log(err);
-        });
+      this.imgurl = "http://j3a104.p.ssafy.io/images/bonobono/2020-08/jg.jpg";
+      this.willlists.push(this.imgurl);
+      // const data = new FormData();
+      // data.append("ruid", this.$cookies.get("UserInfo").email);
+      // data.append("hash", this.code);
+      // this.$axios
+      //   .post(this.$SERVER_URL + "will/savetransaction", data)
+      //   .then(res => {
+      //     for (var i = 0; i < res.data.length; i++) {
+      //       res.data[i].filepath = JSON.parse(res.data[i].filepath);
+      //       this.imgurl = require(res.data.[0].filepath.imgpath)
+      //       console.log("willcheck", this.imgurl);
+      //     }
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      // console.log(this.imgurl);
     }
+    // this.willists.append(res.data[0].filepath.imagepath);
   }
 };
 </script>
