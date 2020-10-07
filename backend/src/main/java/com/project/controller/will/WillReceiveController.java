@@ -47,44 +47,43 @@ public class WillReceiveController {
         System.out.println("savetransaction");
 
         WillEntity will =  willservice.getByTransactionHash(hash);
-        willreceiveservice.receivewillRegistser(ruid, will);
+        // willreceiveservice.receivewillRegistser(ruid, will);
 
-        List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
+        // List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
         
         ArrayList<HashMap<String,String>> result = new ArrayList<>();
         
 
-        for(WillReceiveEntity willentity : list){
-            HashMap<String,String> hm = new HashMap<>();
-            JSONObject jsonObj = new JSONObject(willentity.getFilepath());
+        HashMap<String,String> hm = new HashMap<>();
+        JSONObject jsonObj = new JSONObject(will.getFilepath());
 
-            FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
-            InputStreamReader reader=new InputStreamReader(input,"UTF-8");
-            BufferedReader in = new BufferedReader(reader);
-            
-            
-            String line = "";
-            String tresult = "";
-            while((tresult = in.readLine()) != null){
-                System.out.println(tresult);
-                line += tresult+System.lineSeparator();    
-            }
-
-            in.close();
-            reader.close();
-            input.close();
-
-            hm.put("uid", willentity.getUid());
-            hm.put("title", willentity.getTitle());
-            hm.put("text", line);
-            hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
-            hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
-            result.add(hm);
+        FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
+        InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+        BufferedReader in = new BufferedReader(reader);
+        
+        
+        String line = "";
+        String tresult = "";
+        while((tresult = in.readLine()) != null){
+            System.out.println(tresult);
+            line += tresult+System.lineSeparator();    
         }
 
+        in.close();
+        reader.close();
+        input.close();
+
+        hm.put("uid", will.getUid());
+        hm.put("title", will.getTitle());
+        hm.put("text", line);
+        hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
+        hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
+        result.add(hm);
+        
 
 
-        return new ResponseEntity<Object>(result, HttpStatus.OK);
+
+        return new ResponseEntity<Object>(hm, HttpStatus.OK);
     }
 
 }
