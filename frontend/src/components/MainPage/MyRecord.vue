@@ -9,9 +9,10 @@
           <p>생성날짜 : {{ willlist.date }}</p>
           <h2 style="font-weight:bold">{{ willlist.title }}</h2>
           <hr />
-          <pre style="margin-top:40px; margin-bottom:40px;">{{
-            willlist.text
-          }}</pre>
+          <pre
+            style="margin-top:40px; margin-bottom:40px;  white-space: pre-wrap; "
+            >{{ willlist.text }}</pre
+          >
           <hr />
           <img
             :src="willlist.image"

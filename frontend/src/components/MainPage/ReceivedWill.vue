@@ -19,7 +19,7 @@
       <div style="margin-bottom:200px;">
         <div class="col">
           <div style="margin-bottom:100px;">
-            <v-expansion-panels v-if="reveal">
+            <v-expansion-panels v-if="reveal" style="width:1200px;">
               <v-expansion-panel>
                 <v-expansion-panel-header
                   >{{ jgarr.uid }}님의 전달</v-expansion-panel-header
@@ -29,9 +29,11 @@
                   <p>생성날짜 : {{ jgarr.date }}</p>
                   <h2 style="font-weight:bold">{{ jgarr.title }}</h2>
                   <hr />
-                  <pre style="margin-top:40px; margin-bottom:40px;">{{
-                    jgarr.text
-                  }}</pre>
+                  <pre
+                    class="preclass"
+                    style="margin-top:40px; margin-bottom:40px; white-space: pre-wrap;"
+                    >{{ jgarr.text }}</pre
+                  >
                   <hr />
                   <img
                     :src="jgarr.image"

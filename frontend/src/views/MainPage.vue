@@ -35,7 +35,7 @@
       <!-- content 시작 -->
       <div class="content">
         <div class="content-left">
-          <div class="mainImg">
+          <div class="mainImg text-center">
             <img :src="imgurl" alt="Circle Image" class="rounded-circle" />
           </div>
           <div class="underImg">

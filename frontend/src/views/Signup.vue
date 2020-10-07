@@ -97,7 +97,7 @@ import { Modal } from "@/components";
 
 export default {
   components: {
-    LoginCard,
+    LoginCard
   },
   bodyClass: "login-page",
   data() {
@@ -164,22 +164,19 @@ export default {
       if (this.model.email == "") {
         alert("이메일을 적어주세요");
         return;
-      }
-      else {
+      } else {
         this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
-          if ((this.model.email == res.data.email)) {
+          if (this.model.email == res.data.email) {
             alert("기존에 존재하는 이메일입니다.");
             this.valid.emailcheck = false;
-          } 
-          else {
+          } else {
             this.valid.emailcheck = true;
 
-            if (this.valid.emailcheck){
-                alert("중복된 아이디가 없습니다.")
-                this.valid.duple = true;
-            }
-            else {
-                this.valid.duple = false;
+            if (this.valid.emailcheck) {
+              alert("중복된 아이디가 없습니다.");
+              this.valid.duple = true;
+            } else {
+              this.valid.duple = false;
             }
           }
         });
@@ -216,18 +213,14 @@ export default {
     },
 
     validCheck(model) {
-
-      if(model.name.length > 0)
-        this.valid.name = true;
+      if (model.name.length > 0) this.valid.name = true;
       else this.vaild.name = false;
 
       if (/^\w+([.-]?\w+)@\w+([.-]?\w+)*(.\w{2,3})+$/.test(model.email))
         this.valid.email = true;
       else this.valid.email = false;
-        
 
-      if (model.password.length > 7)
-        this.valid.password = true;
+      if (model.password.length > 7) this.valid.password = true;
       else this.valid.password = false;
 
       if (model.passwordconfirm == model.password)
@@ -240,9 +233,9 @@ export default {
         this.valid.passwordconfirm &&
         this.valid.emailcheck &&
         this.valid.duple
-      )   this.isPossible = true;
-      
-      else  this.isPossible = false;
+      )
+        this.isPossible = true;
+      else this.isPossible = false;
     }
   }
 };
