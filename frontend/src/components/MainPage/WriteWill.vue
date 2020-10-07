@@ -225,6 +225,7 @@ export default {
           console.error(err);
         });
       alert("글을 남겼습니다.");
+      this.$router.go(0);
     }
   },
   computed: {
