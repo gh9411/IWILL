@@ -76,12 +76,11 @@ public class WillReceiveController {
         hm.put("uid", will.getUid());
         hm.put("title", will.getTitle());
         hm.put("text", line);
+        hm.put("date", will.getCreatedate());
         hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
         hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
         result.add(hm);
         
-
-
 
         return new ResponseEntity<Object>(hm, HttpStatus.OK);
     }
