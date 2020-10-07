@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       code: "",
+      willlists: [],
       imgurl: "",
     };
   },
