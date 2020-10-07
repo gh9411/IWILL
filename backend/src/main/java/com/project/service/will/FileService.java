@@ -270,7 +270,8 @@ public class FileService {
 		HashMap<String,String> hm = new HashMap<>();
 		
 		try {
-			FileOutputStream output = new FileOutputStream(file,true);
+			System.out.println(str);
+			FileOutputStream output = new FileOutputStream(file.getName());
 			OutputStreamWriter writer = new OutputStreamWriter(output,"UTF-8");
 			BufferedWriter out = new BufferedWriter(writer);
 			out.write(str);
