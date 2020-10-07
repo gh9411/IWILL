@@ -46,11 +46,7 @@ export default {
     return {
       code: "",
       willlists: [],
-<<<<<<< HEAD
-=======
       imgurl: "",
-      willcheck: Object
->>>>>>> a0e6811dfa30b8ec85ce4ec98cfbccda0139b2ba
     };
   },
   created() {},
