@@ -100,8 +100,7 @@ public class WillController {
 
 
         if(!willdto.getVideo().isEmpty()){
-            videohm =  fileservice.upload(willdto.getVideo(),UID,DATE);
-            
+            videohm =  fileservice.upload(willdto.getVideo(),UID,DATE); 
         }
         if(!willdto.getImage().isEmpty()){
             imagehm = fileservice.upload(willdto.getImage(),UID,DATE);
