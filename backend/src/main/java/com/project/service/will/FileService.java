@@ -5,8 +5,10 @@ import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -268,9 +270,12 @@ public class FileService {
 		HashMap<String,String> hm = new HashMap<>();
 		
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			writer.write(str);
-			writer.close();
+			System.out.println(str);
+			FileOutputStream output = new FileOutputStream(file);
+			OutputStreamWriter writer = new OutputStreamWriter(output,"UTF-8");
+			BufferedWriter out = new BufferedWriter(writer);
+			out.write(str);
+			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
