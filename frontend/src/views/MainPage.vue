@@ -19,7 +19,7 @@
     </parallax>
 
     <!-- 메인 페이지 헤더 -->
-    <div class="main">
+    <div class="main" style="height:1300px;">
       <div class="headerblank"></div>
       <div class="header">
         <div class="header-left"></div>
