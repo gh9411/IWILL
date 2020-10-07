@@ -55,9 +55,19 @@ public class WillReceiveController {
             FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
             InputStreamReader reader=new InputStreamReader(input,"UTF-8");
             BufferedReader in = new BufferedReader(reader);
+            
+            String line = "";
+            String result ="";
+            if((line=in.readLine()) != null){
+                result = result.concat(line);
+                result = result.concat("\\n");
+            }
 
-            System.out.println(in.toString());
+            System.out.println(result);
 
+                
+                
+                
         }
 
 
