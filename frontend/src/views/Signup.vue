@@ -39,6 +39,7 @@
                 <md-button
                   size="sm"
                   class=" md-just-icon md-round"
+                  :disabled="!valid.email"
                   @click="emailcheck"
                   ><md-icon>done</md-icon></md-button
                 >
@@ -84,52 +85,6 @@
               </md-button>
             </login-card>
           </div>
-
-          <modal v-if="this.valid.duple" class="text-center">
-            <template slot="header">
-              <div class="py-3 text-center mb-0">
-                <h4 class="text-danger">경고!</h4>
-              </div>
-            </template>
-            <template slot="body">
-              <h4 class="text-success mb-3">
-                이메일 중복체크가 되지 않았습니다!
-              </h4>
-            </template>
-            <template slot="footer">
-              <div class="text-center">
-                <md-button
-                  size="sm"
-                  class="md-simple md-default"
-                  @click="valid.duple = false"
-                  >닫기</md-button
-                >
-              </div>
-            </template>
-          </modal>
-
-          <modal v-if="this.valid.emailcheck" class="text-center">
-            <template slot="header">
-              <div class="py-3 text-center mb-0">
-                <h4 class="text-danger">성공!</h4>
-              </div>
-            </template>
-            <template slot="body">
-              <h4 class="text-success mb-3">
-                중복된 이메일이 없습니다!
-              </h4>
-            </template>
-            <template slot="footer">
-              <div class="text-center">
-                <md-button
-                  size="sm"
-                  class="md-simple md-default"
-                  @click="valid.emailcheck = false"
-                  >닫기</md-button
-                >
-              </div>
-            </template>
-          </modal>
         </div>
       </div>
     </div>
@@ -143,7 +98,6 @@ import { Modal } from "@/components";
 export default {
   components: {
     LoginCard,
-    Modal
   },
   bodyClass: "login-page",
   data() {
@@ -206,20 +160,30 @@ export default {
     emailcheck() {
       const data = new FormData();
       data.append("email", this.model.email);
+
       if (this.model.email == "") {
         alert("이메일을 적어주세요");
         return;
       }
-      this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
-        if ((this.model.email = res.data.email)) {
-          alert("기존에 존재하는 이메일입니다.");
-          this.model.email = "";
-        } else {
-          this.valid.emailcheck = true;
-          this.valid.duple = true;
-          this.model.email = data.email;
-        }
-      });
+      else {
+        this.$axios.post(this.$SERVER_URL + "user/detail", data).then(res => {
+          if ((this.model.email == res.data.email)) {
+            alert("기존에 존재하는 이메일입니다.");
+            this.valid.emailcheck = false;
+          } 
+          else {
+            this.valid.emailcheck = true;
+
+            if (this.valid.emailcheck){
+                alert("중복된 아이디가 없습니다.")
+                this.valid.duple = true;
+            }
+            else {
+                this.valid.duple = false;
+            }
+          }
+        });
+      }
     },
     Signup() {
       const today = new Date();
@@ -252,17 +216,23 @@ export default {
     },
 
     validCheck(model) {
-      if (/^\w+([.-]?\w+)@\w+([.-]?\w+)*(.\w{2,3})+$/.test(model.email)) {
+
+      if(model.name.length > 0)
+        this.valid.name = true;
+      else this.vaild.name = false;
+
+      if (/^\w+([.-]?\w+)@\w+([.-]?\w+)*(.\w{2,3})+$/.test(model.email))
         this.valid.email = true;
-      } else this.valid.email = false;
+      else this.valid.email = false;
+        
 
-      if (model.password.length > 7) {
+      if (model.password.length > 7)
         this.valid.password = true;
-      } else this.valid.password = false;
+      else this.valid.password = false;
 
-      if (model.passwordconfirm == model.password) {
+      if (model.passwordconfirm == model.password)
         this.valid.passwordconfirm = true;
-      } else this.valid.passwordconfirm = false;
+      else this.valid.passwordconfirm = false;
 
       if (
         this.valid.email &&
@@ -270,9 +240,9 @@ export default {
         this.valid.passwordconfirm &&
         this.valid.emailcheck &&
         this.valid.duple
-      ) {
-        this.isPossible = true;
-      } else this.valid.isPossible = false;
+      )   this.isPossible = true;
+      
+      else  this.isPossible = false;
     }
   }
 };
