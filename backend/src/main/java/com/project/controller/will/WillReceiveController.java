@@ -47,42 +47,51 @@ public class WillReceiveController {
         System.out.println("savetransaction");
 
         WillEntity will =  willservice.getByTransactionHash(hash);
-        // willreceiveservice.receivewillRegistser(ruid, will);
-
-        // List<WillReceiveEntity> list =  willreceiveservice.searchAll(ruid); 
-        
         ArrayList<HashMap<String,String>> result = new ArrayList<>();
-        
 
-        HashMap<String,String> hm = new HashMap<>();
         JSONObject jsonObj = new JSONObject(will.getFilepath());
+        
+        String transkey = will.getTransactionhash();
+        System.out.println("key : " + transkey);
+        JSONObject hashobj =  willservice.getFilehashByTranskey(transkey);
 
-        FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
-        InputStreamReader reader=new InputStreamReader(input,"UTF-8");
-        BufferedReader in = new BufferedReader(reader);
-        
-        
-        String line = "";
-        String tresult = "";
-        while((tresult = in.readLine()) != null){
-            System.out.println(tresult);
-            line += tresult+System.lineSeparator();    
+        boolean flag = willservice.compareTosha256(jsonObj, hashobj);
+
+        if(flag){
+            HashMap<String,String> hm = new HashMap<>();
+            FileInputStream input=new FileInputStream(jsonObj.getString("textpath"));
+            InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+            BufferedReader in = new BufferedReader(reader);
+            
+            
+            String line = "";
+            String tresult = "";
+            while((tresult = in.readLine()) != null){
+                System.out.println(tresult);
+                line += tresult+System.lineSeparator();    
+            }
+
+            in.close();
+            reader.close();
+            input.close();
+
+            hm.put("uid", will.getUid());
+            hm.put("title", will.getTitle());
+            hm.put("text", line);
+            hm.put("date", will.getCreatedate());
+            hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
+            hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
+            result.add(hm);
+            
+
+            return new ResponseEntity<Object>(hm, HttpStatus.OK);
         }
-
-        in.close();
-        reader.close();
-        input.close();
-
-        hm.put("uid", will.getUid());
-        hm.put("title", will.getTitle());
-        hm.put("text", line);
-        hm.put("date", will.getCreatedate());
-        hm.put("image","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("imagepath").substring(18));
-        hm.put("video","http://j3a104.p.ssafy.io/images/"+jsonObj.getString("videopath").substring(18));
-        result.add(hm);
+        else{
+            return new ResponseEntity<Object>("fail", HttpStatus.OK);
+        }
         
 
-        return new ResponseEntity<Object>(hm, HttpStatus.OK);
+        
     }
 
 }
