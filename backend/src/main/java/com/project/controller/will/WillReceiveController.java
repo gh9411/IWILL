@@ -62,13 +62,12 @@ public class WillReceiveController {
             InputStreamReader reader=new InputStreamReader(input,"UTF-8");
             BufferedReader in = new BufferedReader(reader);
             
-        
+            
             String line = "";
-            String tresult ="";
-            if((line=in.readLine()) != null){
-                tresult += line + System.lineSeparator();
+            String tresult = "";
+            while((tresult = in.readLine()) != null){
+                tresult += line;
             }
-            System.out.println(tresult);
 
             in.close();
             reader.close();
