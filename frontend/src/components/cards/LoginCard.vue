@@ -10,7 +10,6 @@
     <md-card-content>
       <slot name="description"></slot>
       <slot name="inputs"></slot>
-
     </md-card-content>
 
     <md-card-actions>
@@ -18,8 +17,8 @@
     </md-card-actions>
 
     <md-card-plus>
-      <slot name="hr"></slot>
-      <slot name="a"></slot>
+      <slot name="hrtag"></slot>
+      <slot name="atag"></slot>
     </md-card-plus>
   </md-card>
 </template>

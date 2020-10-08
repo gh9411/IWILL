@@ -5,117 +5,24 @@
     class="md-transparent md-absolute"
     :class="extraNavClasses"
     :color-on-scroll="colorOnScroll"
-    style="padding: 0"
+    style="padding: 0;"
   >
     <div class="md-toolbar-row md-collapse-lateral">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title" style="font-size:1.4em; font-weight: 600"><a href="/main">IWILL</a></h3>
+        <h3
+          class="md-title"
+          style="font-size:1.4em; font-weight: 600; margin-top:20px;"
+        >
+          <h1 style="color: white; " @click="move">IWILL</h1>
+        </h3>
       </div>
       <div class="md-toolbar-section-end">
-        <md-button
-          class="md-just-icon md-simple md-toolbar-toggle"
-          :class="{ toggled: toggledClass }"
-          @click="toggleNavbarMobile()"
-        >
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </md-button>
-
-        <div class="md-collapse">
-          <div class="md-collapse-wrapper">
-            <mobile-menu nav-mobile-section-start="false">
-              <!-- Here you can add your items from the section-start of your toolbar -->
-            </mobile-menu>
-            <md-list>
-              <li class="md-list-item" v-if="!showDownload">
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
-                  <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">apps</i>
-                        <p>Components</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/">
-                            <i class="material-icons">layers</i>
-                            <p>All Components</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                          >
-                            <i class="material-icons">content_paste</i>
-                            <p>Documentation</p>
-                          </a>
-                        </li>
-                      </ul>
-                    </drop-down>
-                  </div>
-                </a>
-              </li>
-
-              <md-list-item
-                href="https://demos.creative-tim.com/vue-material-kit/documentation/"
-                target="_blank"
-                v-if="showDownload"
-              >
-                <i class="material-icons">content_paste</i>
-                <p>Documentation</p>
-              </md-list-item>
-
-              <li class="md-list-item" v-else>
-                <a
-                  href="javascript:void(0)"
-                  class="md-list-item-router md-list-item-container md-button-clean dropdown"
-                >
-                  <div class="md-list-item-content">
-                    <drop-down direction="down">
-                      <md-button
-                        slot="title"
-                        class="md-button md-button-link md-white md-simple dropdown-toggle"
-                        data-toggle="dropdown"
-                      >
-                        <i class="material-icons">view_carousel</i>
-                        <p>Examples</p>
-                      </md-button>
-                      <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
-                          <a href="#/landing">
-                            <i class="material-icons">view_day</i>
-                            <p>Landing Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/login">
-                            <i class="material-icons">fingerprint</i>
-                            <p>Login Page</p>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#/profile">
-                            <i class="material-icons">account_circle</i>
-                            <p>Profile Page</p>
-                          </a>
-                        </li>
-                      </ul>
-                    </drop-down>
-                  </div>
-                </a>
-              </li>
-
-            </md-list>
-          </div>
-        </div>
+        <h3 class="md-title" style="font-size:1.4em; font-weight: 600; ">
+          <h3 style="color: white; " @click="movemypage">Mypage</h3>
+        </h3>
+        <h3 class="md-title" style="font-size:1.4em; font-weight: 600; ">
+          <h3 style="color: white;" @click="log">{{ this.logstate }}</h3>
+        </h3>
       </div>
     </div>
   </md-toolbar>
@@ -135,11 +42,9 @@ function resizeThrottler(actualResizeHandler) {
   }
 }
 
-import MobileMenu from "@/layout/MobileMenu";
 export default {
-  components: {
-    MobileMenu
-  },
+  name: "MainNavbar",
+  components: {},
   props: {
     type: {
       type: String,
@@ -164,7 +69,8 @@ export default {
   data() {
     return {
       extraNavClasses: "",
-      toggledClass: false
+      toggledClass: false,
+      logstate: "LogIn"
     };
   },
   computed: {
@@ -173,7 +79,27 @@ export default {
       return excludedRoutes.every(r => r !== this.$route.name);
     }
   },
+  created() {
+    if (this.$cookies.get("UserInfo") == null) {
+      this.logstate = "LogIn";
+    } else {
+      this.logstate = "LogOut";
+    }
+  },
   methods: {
+    log() {
+      if (this.$cookies.get("UserInfo") == null) {
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+          location.reload();
+        });
+      } else {
+        this.$cookies.remove("UserInfo");
+        location.reload();
+      }
+    },
     bodyClick() {
       let bodyClick = document.getElementById("bodyClick");
 
@@ -189,10 +115,36 @@ export default {
         bodyClick.remove();
       }
     },
-    toggleNavbarMobile() {
-      this.NavbarStore.showNavbar = !this.NavbarStore.showNavbar;
-      this.toggledClass = !this.toggledClass;
-      this.bodyClick();
+    move() {
+      if (this.$cookies.get("UserInfo") == null) {
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      } else {
+        this.$router.push("/index").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      }
+    },
+    movemypage() {
+      if (this.$cookies.get("UserInfo") == null) {
+        alert("로그인이 필요합니다.");
+        this.$router.push("/").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      } else {
+        this.$router.push("/main").catch(error => {
+          if (error.name === "NavigationDuplicated") {
+            location.reload();
+          }
+        });
+      }
     },
     handleScroll() {
       let scrollValue =

@@ -44,6 +44,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -92,6 +93,28 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		
+
+		<!--이메일 인증-->
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.2.6.RELEASE</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+			
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 
 

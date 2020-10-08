@@ -13,9 +13,8 @@
 <script>
 import http from "../src/util/http-common";
 
-
 export default {
   name: "App"
-
-}
+};
 </script>
+
