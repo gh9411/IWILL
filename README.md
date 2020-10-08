@@ -3,12 +3,13 @@
 
 ### Member
 
-|NAME|X|EMAIL|
-|이동옥|X|okdong23@naver.com|
-|최현민|X|hunmin8788@naver.com|
-|이원호|X|dldnjsgh71@naver.com|
-|박기훈|X|gh9411@gmail.com|
-|김종관|X|colinder@naver.com|
+| NAME   | X    | EMAIL                |
+| ------ | ---- | -------------------- |
+| 이동옥 | X    | okdong23@naver.com   |
+| 최현민 | X    | hunmin8788@naver.com |
+| 이원호 | X    | dldnjsgh71@naver.com |
+| 박기훈 | X    | gh9411@gmail.com     |
+| 김종관 | X    | colinder@naver.com   |
 
 ​      		
 
@@ -68,6 +69,8 @@
 
 ### Work_flow
 
-<img src="/assets/flow_01.jpg" width="auto" alt="flow1"></img>
+<img src="/assets/User_flow_input.jpg" width="auto"></img>
 
-<img src="/assets/flow_02.jpg" width="auto" alt="flow2"></img>
+<img src="/assets/User_flow_search.jpg" width="auto"></img>
+
+<img src="/assets/User_flow_deliver.jpg" width="auto" alt="flow2"></img>
